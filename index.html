@@ -14,6 +14,7 @@
       <div class="links">
         <a href="index.html" class="active">首頁</a>
         <a href="blog.html">文章</a>
+        <a href="gallery.html">圖庫</a>
         <a href="instagram.html">Instagram</a>
         <a href="x.html">X</a>
         <a href="youtube.html">YouTube</a>
@@ -28,7 +29,7 @@
       <h1>筳筳<br>htw0702</h1>
       <p class="lede">寫字、拍照，偶爾做影片。動態分別在 Instagram、X、YouTube 與 Bilibili。</p>
     </div>
-    <div class="portrait"><img src="images/avatar.jpg" alt="筳筳" /></div>
+    <div class="portrait"><img src="images/IMG_5309.jpeg" alt="筳筳" /></div>
   </header>
   <section class="section">
     <div class="wrap socials">
@@ -41,20 +42,14 @@
   <section class="section">
     <div class="wrap">
       <h2>最新文章</h2>
-      <div class="posts">
-        <article class="post">
-          <time datetime="2026-09-06">2026.09.06</time>
-          <div>
-            <h3><a href="posts/hello.html">先打個招呼</a></h3>
-            <p>這個站會放文章，以及四個平台上的內容。</p>
-          </div>
-        </article>
-      </div>
+      <div class="posts" id="home-posts"></div>
     </div>
   </section>
   <footer class="wrap footer">
     <span>© 2026 htw0702.com</span>
     <span>taiwan@htw0702.com</span>
   </footer>
+  <script src="js/content.js"></script>
+  <script>renderBlogList("#home-posts");</script>
 </body>
 </html>
