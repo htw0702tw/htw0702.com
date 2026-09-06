@@ -75,9 +75,8 @@ $("publish").onclick = async () => {
   const path = `posts/${slug}.html`;
   setStatus("發布中…");
   try {
-    const html = postHtml(title, iso, body);
     const existing = await ghGet(path);
-    await ghPut(path, utf8ToB64(html), existing ? `Update post ${slug}` : `Add post ${slug}`, existing && existing.sha);
+    await ghPut(path, utf8ToB64(postHtml(title, iso, body)), existing ? `Update post ${slug}` : `Add post ${slug}`, existing && existing.sha);
     const man = await loadManifest();
     const posts = (man.posts || []).filter((p) => p.slug !== slug);
     posts.unshift({ slug, title, excerpt: excerptOf(body), published: iso, path });
@@ -96,7 +95,7 @@ $("upload").onclick = async () => {
     const bytes = new Uint8Array(await file.arrayBuffer());
     let bin = ""; const chunk = 0x8000;
     for (let i = 0; i < bytes.length; i += chunk) bin += String.fromCharCode(...bytes.subarray(i, i + chunk));
-    const safe = file.name.replace([^\w.\-()\u4e00-\u9fff]+/g, "_");
+    const safe = file.name.replace(/[^\w.\-()\u4e00-\u9fff]+/g, "_");
     const dest = `media/${Date.now()}-${safe}`;
     await ghPut(dest, btoa(bin), `Upload ${safe}`);
     const man = await loadManifest();
