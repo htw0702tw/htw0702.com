@@ -3,9 +3,10 @@
     {
       "slug": "hello",
       "title": "先打個招呼",
-      "excerpt": "這個站會放文章，以及四個平台上的內容。",
+      "excerpt": "這個網站會以文章為核心，記錄生活、科技、學習、旅行，也會整理來自 X、Instagram 與 YouTube 的內容。",
       "published": "2026-09-06T11:00:00+08:00",
-      "path": "posts/hello.html"
+      "path": "posts/hello.html",
+      "category": "隨筆"
     }
   ],
   "media": [
