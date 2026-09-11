@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /tw/admin
-Disallow: /en/admin
-Disallow: /jp/admin
+Disallow: /deploy/
+Disallow: /data/
 Sitemap: https://htw0702.com/sitemap.xml
