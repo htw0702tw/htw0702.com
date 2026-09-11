@@ -1,0 +1,15 @@
+name = "moohsia-cloud"
+main = "src/index.js"
+compatibility_date = "2026-09-11"
+
+[ai]
+binding = "AI"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "moohsia-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[vars]
+AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
+# MOOHSIA_TOKEN must be stored using: npx wrangler secret put MOOHSIA_TOKEN
