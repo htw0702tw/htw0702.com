@@ -1,6 +1,7 @@
 .git/
 .github/
 deploy/
+data/
 README.md
 DEPLOY.md
 wrangler.jsonc
