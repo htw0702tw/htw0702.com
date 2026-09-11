@@ -1,237 +1,143 @@
-const json = (value, status = 200, headers = {}) =>
-  new Response(JSON.stringify(value), {
-    status,
-    headers: {
-      "content-type": "application/json; charset=utf-8",
-      "cache-control": "no-store",
-      ...headers,
-    },
-  });
+import { addActivity, activityRow, aiReply, auth, braveSearch, dashboard, getSearchUsage, indexSearchResults, json, knowledgeRow, nowISO, taskRow, upsertKnowledge, watchlistRow } from "./core.js";
+import { getIntegrationRows, scheduledSync, syncNamedIntegrations } from "./integrations.js";
 
-const iso = (d) => new Date(d).toISOString();
+async function handleFetch(req, env) {
+  const url = new URL(req.url);
 
-function auth(req, env) {
-  if (!env.MOOHSIA_TOKEN) return true;
-  return req.headers.get("authorization") === `Bearer ${env.MOOHSIA_TOKEN}`;
-}
-
-function extractFinalText(out) {
-  if (!out) return "";
-  if (typeof out === "string") return out.trim();
-  if (typeof out.response === "string" && out.response.trim()) return out.response.trim();
-  if (typeof out.result?.response === "string" && out.result.response.trim()) return out.result.response.trim();
-  const directChoice = out.choices?.[0]?.message?.content;
-  if (typeof directChoice === "string" && directChoice.trim()) return directChoice.trim();
-  const resultChoice = out.result?.choices?.[0]?.message?.content;
-  if (typeof resultChoice === "string" && resultChoice.trim()) return resultChoice.trim();
-  return "";
-}
-
-async function knowledgeContext(prompt, env) {
-  const q = `%${prompt.slice(0, 120)}%`;
-  try {
-    const r = await env.DB.prepare(
-      `SELECT title, body, category, source_url
-       FROM knowledge
-       WHERE title LIKE ? OR body LIKE ?
-       ORDER BY updated_at DESC
-       LIMIT 5`
-    ).bind(q, q).all();
-    const rows = r.results || [];
-    if (!rows.length) return "";
-    return rows.map((x, i) => {
-      const source = x.source_url ? `\n來源：${x.source_url}` : "";
-      return `[索引 ${i + 1}] ${x.title}（${x.category}）\n${x.body}${source}`;
-    }).join("\n\n");
-  } catch {
-    return "";
-  }
-}
-
-async function aiReply(prompt, env) {
-  if (!env.AI) {
-    return `MOOHSIA Cloud 已上線，但 Workers AI binding 尚未啟用。你說的是：「${prompt.slice(0, 300)}」`;
+  if (url.pathname === "/health") {
+    return json({
+      ok: true,
+      service: "MOOHSIA Cloud",
+      version: "0.4.0",
+      capabilities: ["chat", "messages", "live-web-search", "knowledge-index", "knowledge-rag", "activity-feed", "watchlists", "notion-sync", "slack-sync", "github-sync", "remote-task-queue"],
+    });
   }
 
-  const model = env.AI_MODEL || "@cf/zai-org/glm-4.7-flash";
-  const context = await knowledgeContext(prompt, env);
-  const contextText = context
-    ? `\n\n以下是暮霞自己的長期索引，只有在與問題相關時才使用；不要假裝它是最新網路資料：\n${context}`
-    : "";
+  if (!auth(req, env)) return json({ error: "unauthorized" }, 401);
 
-  const out = await env.AI.run(model, {
-    messages: [
-      {
-        role: "system",
-        content:
-          "你是暮霞 MOOHSIA，使用繁體中文（台灣）。你是使用者的 Cloud-first 個人 AI 助理。誠實、清楚、可操作，不得虛構已執行的外部動作。只輸出給使用者看的最終回答，不輸出思考過程、reasoning、token 資訊或原始 JSON。" +
-          contextText,
-      },
-      { role: "user", content: prompt },
-    ],
-    max_tokens: 1000,
-  });
+  if (url.pathname === "/v1/dashboard" && req.method === "GET") return json(await dashboard(env));
 
-  const text = extractFinalText(out);
-  if (!text) throw new Error("Workers AI returned no displayable final text");
-  return text;
-}
+  if (url.pathname === "/v1/messages" && req.method === "GET") {
+    const r = await env.DB.prepare("SELECT id,role,text,created_at FROM messages ORDER BY created_at ASC LIMIT 1000").all();
+    return json((r.results || []).map((x) => ({ id: x.id, role: x.role, text: x.text, createdAt: new Date(x.created_at).toISOString() })));
+  }
 
-function knowledgeRow(x) {
-  return {
-    id: x.id,
-    title: x.title,
-    body: x.body,
-    category: x.category,
-    sourceURL: x.source_url,
-    sourceType: x.source_type,
-    createdAt: iso(x.created_at),
-    updatedAt: iso(x.updated_at),
-  };
-}
+  if (url.pathname === "/v1/messages" && req.method === "POST") {
+    const message = await req.json();
+    if (!message.id || !["user", "assistant"].includes(message.role) || typeof message.text !== "string") return json({ error: "bad_request" }, 400);
+    const createdAt = message.createdAt || nowISO();
+    await env.DB.prepare("INSERT OR REPLACE INTO messages(id,role,text,created_at) VALUES(?,?,?,?)").bind(message.id, message.role, message.text, createdAt).run();
+    return json({ id: message.id, role: message.role, text: message.text, createdAt }, 201);
+  }
 
-function taskRow(x) {
-  return {
-    id: x.id,
-    action: x.action,
-    payload: x.payload || "",
-    createdAt: iso(x.created_at),
-    status: x.status,
-    result: x.result,
-  };
+  if (url.pathname === "/v1/chat" && req.method === "POST") {
+    try {
+      const body = await req.json();
+      const prompt = String(body.prompt || "").trim();
+      if (!prompt) return json({ error: "empty_prompt" }, 400);
+      let liveResults = [];
+      if (body.liveSearch !== false && env.BRAVE_SEARCH_API_KEY) {
+        try { liveResults = await braveSearch(prompt, env, { count: 6 }); await indexSearchResults(env, liveResults, "AI 即時搜尋"); }
+        catch (error) { console.error("MOOHSIA live search skipped", error); }
+      }
+      const reply = await aiReply(prompt, env, liveResults);
+      await addActivity(env, { kind: "chat", title: liveResults.length ? "AI 回答使用即時網路" : "AI 回答完成", detail: prompt.slice(0, 240) });
+      return json({ ...reply, usedLiveSearch: liveResults.length > 0, sources: liveResults });
+    } catch (error) {
+      console.error("MOOHSIA chat error", error);
+      return json({ error: "ai_response_error", detail: error.message }, 502);
+    }
+  }
+
+  if (url.pathname === "/v1/search" && req.method === "POST") {
+    try {
+      const body = await req.json();
+      const query = String(body.query || "").trim();
+      if (!query) return json({ error: "empty_query" }, 400);
+      const results = await braveSearch(query, env, { count: 12 });
+      if (body.save !== false) {
+        const inserted = await indexSearchResults(env, results, "網路搜尋");
+        await addActivity(env, { kind: "search", title: `網路搜尋：${query.slice(0, 80)}`, detail: `取得 ${results.length} 筆結果，新增 ${inserted} 筆到長期索引。` });
+      }
+      return json({ provider: "Brave Search", query, results });
+    } catch (error) {
+      const status = error.code === "search_not_configured" ? 503 : error.code === "search_budget_exhausted" ? 429 : 502;
+      return json({ error: error.code || "search_error", detail: error.message }, status);
+    }
+  }
+
+  if (url.pathname === "/v1/knowledge" && req.method === "GET") {
+    const q = (url.searchParams.get("q") || "").trim();
+    let r;
+    if (q) {
+      const like = `%${q}%`;
+      r = await env.DB.prepare(`SELECT id,title,body,category,source_url,source_type,created_at,updated_at FROM knowledge WHERE title LIKE ? OR body LIKE ? OR category LIKE ? ORDER BY updated_at DESC LIMIT 300`).bind(like, like, like).all();
+    } else {
+      r = await env.DB.prepare(`SELECT id,title,body,category,source_url,source_type,created_at,updated_at FROM knowledge ORDER BY updated_at DESC LIMIT 300`).all();
+    }
+    return json((r.results || []).map(knowledgeRow));
+  }
+
+  if (url.pathname === "/v1/knowledge" && req.method === "POST") {
+    const body = await req.json();
+    const title = String(body.title || "").trim();
+    const text = String(body.body || "").trim();
+    if (!title || !text) return json({ error: "bad_request" }, 400);
+    const result = await upsertKnowledge(env, { title, body: text, category: String(body.category || "未分類").trim() || "未分類", sourceURL: body.sourceURL ? String(body.sourceURL) : null, sourceType: String(body.sourceType || "manual") });
+    await addActivity(env, { kind: "memory", title: `加入索引：${title.slice(0, 120)}`, detail: String(body.category || "未分類"), sourceURL: body.sourceURL || null });
+    return json(result.item, result.inserted ? 201 : 200);
+  }
+
+  if (url.pathname === "/v1/activity" && req.method === "GET") {
+    const r = await env.DB.prepare(`SELECT id,kind,title,detail,source_url,severity,created_at FROM activity ORDER BY created_at DESC LIMIT 300`).all();
+    return json((r.results || []).map(activityRow));
+  }
+
+  if (url.pathname === "/v1/integrations" && req.method === "GET") return json(await getIntegrationRows(env));
+
+  if (url.pathname === "/v1/integrations/sync" && req.method === "POST") {
+    const body = await req.json().catch(() => ({}));
+    const names = Array.isArray(body.names) ? body.names.map(String) : [];
+    return json(await syncNamedIntegrations(env, names));
+  }
+
+  if (url.pathname === "/v1/watchlists" && req.method === "GET") {
+    const r = await env.DB.prepare(`SELECT id,name,query,category,enabled,interval_minutes,last_run_at,created_at FROM watchlists ORDER BY created_at ASC`).all();
+    return json((r.results || []).map(watchlistRow));
+  }
+
+  if (url.pathname === "/v1/tasks" && req.method === "GET") {
+    const r = await env.DB.prepare(`SELECT id,action,payload,status,result,created_at FROM remote_tasks ORDER BY created_at DESC LIMIT 200`).all();
+    return json((r.results || []).map(taskRow));
+  }
+
+  if (url.pathname === "/v1/tasks" && req.method === "POST") {
+    const body = await req.json();
+    const action = String(body.action || "").trim();
+    if (!["openPages", "openNotes", "openURL"].includes(action)) return json({ error: "unsupported_action" }, 400);
+    const id = crypto.randomUUID(), payload = String(body.payload || ""), createdAt = nowISO();
+    await env.DB.prepare(`INSERT INTO remote_tasks(id,action,payload,status,result,created_at) VALUES(?,?,?,?,?,?)`).bind(id, action, payload, "pending", null, createdAt).run();
+    return json({ id, action, payload, status: "pending", result: null, createdAt }, 201);
+  }
+
+  const taskMatch = url.pathname.match(/^\/v1\/tasks\/([0-9a-fA-F-]+)$/);
+  if (taskMatch && req.method === "PATCH") {
+    const body = await req.json();
+    const status = String(body.status || "");
+    if (!["pending", "approved", "rejected", "completed", "failed"].includes(status)) return json({ error: "bad_status" }, 400);
+    await env.DB.prepare("UPDATE remote_tasks SET status=?,result=? WHERE id=?").bind(status, body.result ? String(body.result) : null, taskMatch[1]).run();
+    const row = await env.DB.prepare("SELECT id,action,payload,status,result,created_at FROM remote_tasks WHERE id=?").bind(taskMatch[1]).first();
+    return row ? json(taskRow(row)) : json({ error: "not_found" }, 404);
+  }
+
+  if (url.pathname === "/v1/search-usage" && req.method === "GET") return json({ used: await getSearchUsage(env), limit: Number(env.SEARCH_MONTHLY_BUDGET || 900) });
+  return json({ error: "not_found" }, 404);
 }
 
 export default {
   async fetch(req, env) {
-    const u = new URL(req.url);
-
-    if (u.pathname === "/health") {
-      return json({
-        ok: true,
-        service: "MOOHSIA Cloud",
-        version: "0.3.0",
-        capabilities: ["chat", "messages", "knowledge-index", "knowledge-rag", "remote-task-queue"],
-      });
-    }
-
-    if (!auth(req, env)) return json({ error: "unauthorized" }, 401);
-
-    if (u.pathname === "/v1/messages" && req.method === "GET") {
-      const r = await env.DB.prepare(
-        "SELECT id,role,text,created_at FROM messages ORDER BY created_at ASC LIMIT 500"
-      ).all();
-      return json((r.results || []).map((x) => ({
-        id: x.id,
-        role: x.role,
-        text: x.text,
-        createdAt: iso(x.created_at),
-      })));
-    }
-
-    if (u.pathname === "/v1/messages" && req.method === "POST") {
-      const m = await req.json();
-      if (!m.id || !["user", "assistant"].includes(m.role) || typeof m.text !== "string") {
-        return json({ error: "bad_request" }, 400);
-      }
-      const created = m.createdAt || new Date().toISOString();
-      await env.DB.prepare(
-        "INSERT OR REPLACE INTO messages(id,role,text,created_at) VALUES(?,?,?,?)"
-      ).bind(m.id, m.role, m.text, created).run();
-      return json({ id: m.id, role: m.role, text: m.text, createdAt: created }, 201);
-    }
-
-    if (u.pathname === "/v1/chat" && req.method === "POST") {
-      try {
-        const b = await req.json();
-        const prompt = String(b.prompt || "").trim();
-        if (!prompt) return json({ error: "empty_prompt" }, 400);
-        const text = await aiReply(prompt, env);
-        return json({
-          text,
-          provider: env.AI ? "Cloudflare Workers AI" : "MOOHSIA Cloud",
-          model: env.AI_MODEL || null,
-        });
-      } catch (error) {
-        console.error("MOOHSIA chat error:", error);
-        return json({ error: "ai_response_error" }, 502);
-      }
-    }
-
-    if (u.pathname === "/v1/knowledge" && req.method === "GET") {
-      const q = (u.searchParams.get("q") || "").trim();
-      let r;
-      if (q) {
-        const like = `%${q}%`;
-        r = await env.DB.prepare(
-          `SELECT id,title,body,category,source_url,source_type,created_at,updated_at
-           FROM knowledge
-           WHERE title LIKE ? OR body LIKE ? OR category LIKE ?
-           ORDER BY updated_at DESC LIMIT 200`
-        ).bind(like, like, like).all();
-      } else {
-        r = await env.DB.prepare(
-          `SELECT id,title,body,category,source_url,source_type,created_at,updated_at
-           FROM knowledge ORDER BY updated_at DESC LIMIT 200`
-        ).all();
-      }
-      return json((r.results || []).map(knowledgeRow));
-    }
-
-    if (u.pathname === "/v1/knowledge" && req.method === "POST") {
-      const b = await req.json();
-      const title = String(b.title || "").trim();
-      const body = String(b.body || "").trim();
-      if (!title || !body) return json({ error: "bad_request" }, 400);
-      const id = crypto.randomUUID();
-      const now = new Date().toISOString();
-      const category = String(b.category || "未分類").trim() || "未分類";
-      const sourceURL = b.sourceURL ? String(b.sourceURL) : null;
-      const sourceType = String(b.sourceType || "manual");
-      await env.DB.prepare(
-        `INSERT INTO knowledge(id,title,body,category,source_url,source_type,created_at,updated_at)
-         VALUES(?,?,?,?,?,?,?,?)`
-      ).bind(id, title, body, category, sourceURL, sourceType, now, now).run();
-      return json({
-        id,
-        title,
-        body,
-        category,
-        sourceURL,
-        sourceType,
-        createdAt: now,
-        updatedAt: now,
-      }, 201);
-    }
-
-    if (u.pathname === "/v1/tasks" && req.method === "GET") {
-      const r = await env.DB.prepare(
-        `SELECT id,action,payload,status,result,created_at
-         FROM remote_tasks ORDER BY created_at DESC LIMIT 100`
-      ).all();
-      return json((r.results || []).map(taskRow));
-    }
-
-    if (u.pathname === "/v1/tasks" && req.method === "POST") {
-      const b = await req.json();
-      const action = String(b.action || "").trim();
-      if (!action) return json({ error: "bad_request" }, 400);
-      const id = crypto.randomUUID();
-      const payload = String(b.payload || "");
-      const createdAt = new Date().toISOString();
-      await env.DB.prepare(
-        `INSERT INTO remote_tasks(id,action,payload,status,result,created_at)
-         VALUES(?,?,?,?,?,?)`
-      ).bind(id, action, payload, "pending", null, createdAt).run();
-      return json({
-        id,
-        action,
-        payload,
-        status: "pending",
-        result: null,
-        createdAt,
-      }, 201);
-    }
-
-    return json({ error: "not_found" }, 404);
+    try { return await handleFetch(req, env); }
+    catch (error) { console.error("MOOHSIA unhandled error", error); return json({ error: "internal_error", detail: error.message }, 500); }
   },
+  async scheduled(_event, env, ctx) { ctx.waitUntil(scheduledSync(env).catch((error) => console.error("MOOHSIA scheduled sync failed", error))); },
 };
