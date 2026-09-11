@@ -5,11 +5,18 @@ struct CloudConfig {
 }
 
 enum CloudAPIError: LocalizedError {
-    case invalidResponse, http(Int, String)
+    case invalidResponse
+    case unauthorized
+    case http(Int, String)
+
     var errorDescription: String? {
         switch self {
-        case .invalidResponse: return "MOOHSIA Cloud 回應格式不正確。"
-        case let .http(code, text): return "MOOHSIA Cloud HTTP \(code)：\(text)"
+        case .invalidResponse:
+            return "MOOHSIA Cloud 回應格式不正確。"
+        case .unauthorized:
+            return "MOOHSIA Cloud 已上線，但這台裝置尚未授權。"
+        case let .http(code, text):
+            return "MOOHSIA Cloud HTTP \(code)：\(text)"
         }
     }
 }
@@ -25,30 +32,35 @@ actor CloudAPI {
 
     private func request(path: String, method: String = "GET", body: Data? = nil) async throws -> Data {
         guard let url = URL(string: path, relativeTo: baseURL) else { throw CloudAPIError.invalidResponse }
-        var r = URLRequest(url: url)
-        r.httpMethod = method
-        r.timeoutInterval = 40
-        r.setValue("application/json", forHTTPHeaderField: "Accept")
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.timeoutInterval = 45
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         if let token, !token.isEmpty {
-            r.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         if let body {
-            r.httpBody = body
-            r.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = body
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
 
-        let (data, response) = try await URLSession.shared.data(for: r)
+        let (data, response) = try await URLSession.shared.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw CloudAPIError.invalidResponse }
+        if http.statusCode == 401 { throw CloudAPIError.unauthorized }
         guard (200..<300).contains(http.statusCode) else {
             throw CloudAPIError.http(http.statusCode, String(data: data, encoding: .utf8) ?? "")
         }
         return data
     }
 
-    func health() async throws -> Bool {
+    func health() async throws -> CloudHealth {
         let data = try await request(path: "/health")
-        let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-        return obj?["ok"] as? Bool == true
+        return try JSONDecoder.moohsia.decode(CloudHealth.self, from: data)
+    }
+
+    func dashboard() async throws -> DashboardSnapshot {
+        let data = try await request(path: "/v1/dashboard")
+        return try JSONDecoder.moohsia.decode(DashboardSnapshot.self, from: data)
     }
 
     func listMessages() async throws -> [CloudMessage] {
@@ -63,14 +75,20 @@ actor CloudAPI {
         return try JSONDecoder.moohsia.decode(CloudMessage.self, from: out)
     }
 
-    func chat(_ prompt: String) async throws -> String {
-        let body = try JSONSerialization.data(withJSONObject: ["prompt": prompt])
+    func chat(_ prompt: String, liveSearch: Bool = true) async throws -> ChatReply {
+        let body = try JSONSerialization.data(withJSONObject: [
+            "prompt": prompt,
+            "liveSearch": liveSearch
+        ])
         let data = try await request(path: "/v1/chat", method: "POST", body: body)
-        guard
-            let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let text = obj["text"] as? String
-        else { throw CloudAPIError.invalidResponse }
-        return text
+        return try JSONDecoder.moohsia.decode(ChatReply.self, from: data)
+    }
+
+    func webSearch(_ query: String, save: Bool = true) async throws -> [SearchResultItem] {
+        let body = try JSONSerialization.data(withJSONObject: ["query": query, "save": save])
+        let data = try await request(path: "/v1/search", method: "POST", body: body)
+        struct Wrapper: Codable { let results: [SearchResultItem] }
+        return try JSONDecoder.moohsia.decode(Wrapper.self, from: data).results
     }
 
     func listKnowledge(query: String = "") async throws -> [KnowledgeItem] {
@@ -95,6 +113,27 @@ actor CloudAPI {
         return try JSONDecoder.moohsia.decode(KnowledgeItem.self, from: data)
     }
 
+    func listActivity() async throws -> [ActivityEvent] {
+        let data = try await request(path: "/v1/activity")
+        return try JSONDecoder.moohsia.decode([ActivityEvent].self, from: data)
+    }
+
+    func listIntegrations() async throws -> [IntegrationStatus] {
+        let data = try await request(path: "/v1/integrations")
+        return try JSONDecoder.moohsia.decode([IntegrationStatus].self, from: data)
+    }
+
+    func syncIntegrations(_ names: [String] = []) async throws -> [IntegrationStatus] {
+        let body = try JSONSerialization.data(withJSONObject: ["names": names])
+        let data = try await request(path: "/v1/integrations/sync", method: "POST", body: body)
+        return try JSONDecoder.moohsia.decode([IntegrationStatus].self, from: data)
+    }
+
+    func listWatchlists() async throws -> [Watchlist] {
+        let data = try await request(path: "/v1/watchlists")
+        return try JSONDecoder.moohsia.decode([Watchlist].self, from: data)
+    }
+
     func enqueueRemote(action: String, payload: String) async throws -> RemoteCommand {
         let data = try JSONSerialization.data(withJSONObject: ["action": action, "payload": payload])
         let out = try await request(path: "/v1/tasks", method: "POST", body: data)
@@ -105,20 +144,29 @@ actor CloudAPI {
         let data = try await request(path: "/v1/tasks")
         return try JSONDecoder.moohsia.decode([RemoteCommand].self, from: data)
     }
+
+    func updateRemoteTask(id: UUID, status: RemoteCommand.Status, result: String? = nil) async throws -> RemoteCommand {
+        var payload: [String: Any] = ["status": status.rawValue]
+        if let result { payload["result"] = result }
+        let body = try JSONSerialization.data(withJSONObject: payload)
+        let data = try await request(path: "/v1/tasks/\(id.uuidString)", method: "PATCH", body: body)
+        return try JSONDecoder.moohsia.decode(RemoteCommand.self, from: data)
+    }
 }
 
 extension JSONDecoder {
     static var moohsia: JSONDecoder {
-        let d = JSONDecoder()
-        d.dateDecodingStrategy = .iso8601
-        return d
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
     }
 }
 
 extension JSONEncoder {
     static var moohsia: JSONEncoder {
-        let e = JSONEncoder()
-        e.dateEncodingStrategy = .iso8601
-        return e
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        return encoder
     }
 }
