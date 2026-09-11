@@ -9,6 +9,24 @@ on:
   workflow_dispatch:
 
 jobs:
+  cloud-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Validate Worker JavaScript
+        run: |
+          node --check MOOHSIA-Apple/Cloudflare/src/core.js
+          node --check MOOHSIA-Apple/Cloudflare/src/integrations.js
+          node --check MOOHSIA-Apple/Cloudflare/src/index.js
+      - name: Package Cloud upgrade
+        run: |
+          chmod +x MOOHSIA-Apple/Upgrade-Cloud-0.4.command
+          zip -r MOOHSIA-Cloud-0.4.0.zip MOOHSIA-Apple/Cloudflare MOOHSIA-Apple/Upgrade-Cloud-0.4.command
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MOOHSIA-Cloud-0.4.0
+          path: MOOHSIA-Cloud-0.4.0.zip
+
   macos-build:
     runs-on: macos-15
     steps:
@@ -22,11 +40,11 @@ jobs:
         run: |
           APP=$(find MOOHSIA-Apple/build -name 'MOOHSIA.app' -type d | head -1)
           test -n "$APP"
-          ditto -c -k --sequesterRsrc --keepParent "$APP" MOOHSIA-macOS.zip
+          ditto -c -k --sequesterRsrc --keepParent "$APP" MOOHSIA-macOS-0.4.0.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: MOOHSIA-macOS
-          path: MOOHSIA-macOS.zip
+          name: MOOHSIA-macOS-0.4.0
+          path: MOOHSIA-macOS-0.4.0.zip
 
   ios-compile-check:
     runs-on: macos-15
@@ -41,8 +59,9 @@ jobs:
         working-directory: MOOHSIA-Apple
         run: xcodebuild -project MOOHSIA.xcodeproj -scheme MOOHSIA-iOS -sdk iphonesimulator -configuration Release CODE_SIGNING_ALLOWED=NO build
       - name: Package iOS source for Personal Team signing
-        run: zip -r MOOHSIA-iOS-source.zip MOOHSIA-Apple/iOS MOOHSIA-Apple/Shared MOOHSIA-Apple/project.yml MOOHSIA-Apple/Prepare-iPhone.command
+        run: |
+          zip -r MOOHSIA-iOS-0.4.0-source.zip MOOHSIA-Apple/iOS MOOHSIA-Apple/Shared MOOHSIA-Apple/project.yml MOOHSIA-Apple/Prepare-iPhone.command
       - uses: actions/upload-artifact@v4
         with:
-          name: MOOHSIA-iOS-source
-          path: MOOHSIA-iOS-source.zip
+          name: MOOHSIA-iOS-0.4.0-source
+          path: MOOHSIA-iOS-0.4.0-source.zip
