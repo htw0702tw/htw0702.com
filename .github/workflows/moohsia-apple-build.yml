@@ -1,13 +1,18 @@
 name: MOOHSIA Apple Build
 
 on:
+  push:
+    branches: [moohsia-dev]
+    paths:
+      - 'MOOHSIA-Apple/**'
+      - '.github/workflows/moohsia-apple-build.yml'
   workflow_dispatch:
 
 jobs:
   macos-build:
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build macOS app
         working-directory: MOOHSIA-Apple
         run: |
@@ -26,7 +31,7 @@ jobs:
   ios-compile-check:
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install XcodeGen
         run: brew install xcodegen
       - name: Generate project
