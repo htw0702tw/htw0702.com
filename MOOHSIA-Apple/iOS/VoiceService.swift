@@ -18,9 +18,17 @@ final class VoiceService: NSObject, ObservableObject {
         speaker.speak(utterance)
     }
 
+    private func authorizationStatus() async -> SFSpeechRecognizerAuthorizationStatus {
+        await withCheckedContinuation { continuation in
+            SFSpeechRecognizer.requestAuthorization { status in
+                continuation.resume(returning: status)
+            }
+        }
+    }
+
     func toggle() async {
         if listening { stop(); return }
-        let auth = await SFSpeechRecognizer.requestAuthorization()
+        let auth = await authorizationStatus()
         guard auth == .authorized else { return }
         do {
             let session = AVAudioSession.sharedInstance()
@@ -34,13 +42,24 @@ final class VoiceService: NSObject, ObservableObject {
                 request.append(buffer)
             }
             task = recognizer?.recognitionTask(with: request) { [weak self] result, _ in
-                Task { @MainActor in self?.transcript = result?.bestTranscription.formattedString ?? self?.transcript ?? "" }
+                Task { @MainActor in
+                    guard let self else { return }
+                    if let value = result?.bestTranscription.formattedString { self.transcript = value }
+                }
             }
-            engine.prepare(); try engine.start(); listening = true
+            engine.prepare()
+            try engine.start()
+            listening = true
         } catch { stop() }
     }
 
     func stop() {
-        engine.stop(); engine.inputNode.removeTap(onBus: 0); request?.endAudio(); task?.cancel(); listening = false
+        engine.stop()
+        engine.inputNode.removeTap(onBus: 0)
+        request?.endAudio()
+        task?.cancel()
+        request = nil
+        task = nil
+        listening = false
     }
 }
