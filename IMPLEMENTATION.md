@@ -2,6 +2,18 @@
 
 本版沿用既有 GitHub / Cloudflare Pages 架構。尚未部署，不等於正式網站已更新。
 
+## 更新：實際專案是 Workers Builds
+
+使用者提供的 Cloudflare 畫面顯示專案 `htw0702-com` 採用 Workers Builds，部署命令為 `npx wrangler versions upload`，不是 Pages。已增加 `wrangler.jsonc` 與 `worker/index.mjs`，保留共用 API／驗證逻輯，改由 Workers 靜態資產 binding 提供 dist。
+
+Wrangler 的 custom build 已設為 `node scripts/build.mjs`，因此即使 Cloudflare 的「組建命令」欄位留空，執行 `npx wrangler versions upload` 時也會先產生 dist。根目錄維持 `/`。請執行最新提交的建置，不要重試先前缺少設定的舊提交。
+
+此命令上傳版本供預覽，並不等同將正式網域流量切到新版。確認新版本預覽與必要設定後，再在 Workers 部署介面選擇部署該版本。無須為此重建 Pages 專案。以下 Pages 說明僅保留為另選 Pages 主機時的參考；目前以 Workers 流程為準。
+
+D1 仍需建立並在 Wrangler 配置加入真實 `d1_databases` 資料庫 ID 與 `binding: DB` 後部署；目前沒有虛構 ID。Apple／Notion 的環境變數與 Secrets 改在此 Worker 設定。未設定時管理 API 仍拒絕存取。
+
+官方依據：https://developers.cloudflare.com/workers/wrangler/custom-builds/
+
 ## 已完成的程式
 
 - 台日海岸／花火視覺，42 個三語頁面（含各語言管理介面），根目錄與未帶語系路徑導向 /tw。
