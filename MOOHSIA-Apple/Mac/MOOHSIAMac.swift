@@ -175,7 +175,7 @@ struct MacContentView: View {
                         .id(message.id)
                     }
                     .listStyle(.plain)
-                    .onChange(of: store.messages.count) { _ in
+                    .onChange(of: store.messages.count) {
                         if let id = store.messages.last?.id { proxy.scrollTo(id, anchor: .bottom) }
                     }
                 }
@@ -336,9 +336,9 @@ struct MacContentView: View {
     }
 
     private var addKnowledgeView: some View {
-        MacAddKnowledgeView { title, body, category, sourceURL in
+        MacAddKnowledgeView { title, contentText, category, sourceURL in
             Task {
-                await store.addKnowledge(title: title, body: body, category: category, sourceURL: sourceURL)
+                await store.addKnowledge(title: title, body: contentText, category: category, sourceURL: sourceURL)
                 showingAddKnowledge = false
             }
         }
@@ -347,7 +347,7 @@ struct MacContentView: View {
 
 private struct MacAddKnowledgeView: View {
     @State private var title = ""
-    @State private var body = ""
+    @State private var contentText = ""
     @State private var category = "一般"
     @State private var sourceURL = ""
     let onSave: (String, String, String, String?) -> Void
@@ -358,7 +358,7 @@ private struct MacAddKnowledgeView: View {
             TextField("標題", text: $title).textFieldStyle(.roundedBorder)
             TextField("分類", text: $category).textFieldStyle(.roundedBorder)
             TextField("來源網址（可留空）", text: $sourceURL).textFieldStyle(.roundedBorder)
-            TextEditor(text: $body)
+            TextEditor(text: $contentText)
                 .frame(height: 180)
                 .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.secondary.opacity(0.3)))
             HStack {
@@ -367,13 +367,13 @@ private struct MacAddKnowledgeView: View {
                     let source = sourceURL.trimmingCharacters(in: .whitespacesAndNewlines)
                     onSave(
                         title.trimmingCharacters(in: .whitespacesAndNewlines),
-                        body.trimmingCharacters(in: .whitespacesAndNewlines),
+                        contentText.trimmingCharacters(in: .whitespacesAndNewlines),
                         category.trimmingCharacters(in: .whitespacesAndNewlines),
                         source.isEmpty ? nil : source
                     )
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || body.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || contentText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
         }
         .padding(24)
