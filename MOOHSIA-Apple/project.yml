@@ -1,0 +1,24 @@
+name: MOOHSIA
+options:
+  bundleIdPrefix: com.moohsia.personal
+settings:
+  base:
+    SWIFT_VERSION: 5.0
+targets:
+  MOOHSIA-iOS:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: iOS
+      - path: Shared
+    info:
+      path: iOS/Info.plist
+    entitlements:
+      path: iOS/MOOHSIA-iOS.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.moohsia.personal.ios
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+    dependencies: []
