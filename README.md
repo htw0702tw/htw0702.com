@@ -1,11 +1,17 @@
 # htw0702.com
 
-Interactive personal website deployed to Cloudflare Workers from the `main` branch.
+Wang Hao Ting（筳筳）的個人世界官網。
 
-Public routes:
-- `/` — interactive world homepage
-- `/blog` — public notes
-- `/wiki` — public wiki and works
-- `/games/aov` — public Arena of Valor lab
+## Public routes
+- /tw /en /jp — multilingual home
+- /tw/wiki /en/wiki /jp/wiki — personal wiki & portfolio
+- /tw/blog /en/blog /jp/blog — blog
+- /tw/games/aov /en/games/aov /jp/games/aov — Arena of Valor profile, catalog & match analysis
+- /tw/store /en/store /jp/store — personal merchandise / support
+- /tw/plans/animation /en/plans/animation /jp/plans/animation
+- /tw/plans/ai /en/plans/ai /jp/plans/ai
+- /tw/plans/metaverse /en/plans/metaverse /jp/plans/metaverse
 
-The site uses in-browser language switching instead of `/tw`, `/en`, or `/jp` URL prefixes. Private notes, internal plans, credentials, and unpublished records are not part of the public site bundle.
+The public website only exposes records explicitly marked Publish=true and Visibility=public. Private planning notes remain in Notion and are never rendered into public pages.
+
+Infrastructure target: Cloudflare Workers + GitHub + Notion CMS + Slack notifications, with Apple Sign in for admin. Secrets and payment credentials must stay in Cloudflare secrets, never in this public repository.
