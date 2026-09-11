@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>CFBundleDisplayName</key><string>暮霞 MOOHSIA</string>
+<key>CFBundleIdentifier</key><string>com.moohsia.personal.ios</string>
+<key>CFBundleName</key><string>MOOHSIA</string>
+<key>CFBundleShortVersionString</key><string>0.2.0</string>
+<key>CFBundleVersion</key><string>1</string>
+<key>UILaunchScreen</key><dict/>
+<key>NSSpeechRecognitionUsageDescription</key><string>暮霞需要語音辨識以接受你的語音指令。</string>
+<key>NSMicrophoneUsageDescription</key><string>暮霞需要麥克風以接受你的語音指令。</string>
+</dict></plist>
