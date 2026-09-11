@@ -1,0 +1,42 @@
+name: MOOHSIA Apple Build
+
+on:
+  push:
+    branches: [moohsia-dev]
+    paths:
+      - 'MOOHSIA-Apple/**'
+      - '.github/workflows/moohsia-apple-build.yml'
+  workflow_dispatch:
+
+jobs:
+  macos-build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build macOS app
+        working-directory: MOOHSIA-Apple
+        run: |
+          chmod +x Build-Mac.command
+          ./Build-Mac.command </dev/null || true
+          test -d "暮霞 MOOHSIA.app" || test -d "build/暮霞 MOOHSIA.app"
+      - name: Package macOS app
+        run: |
+          APP=$(find MOOHSIA-Apple -name '暮霞 MOOHSIA.app' -type d | head -1)
+          ditto -c -k --sequesterRsrc --keepParent "$APP" MOOHSIA-macOS.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MOOHSIA-macOS
+          path: MOOHSIA-macOS.zip
+
+  ios-compile-check:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate project
+        working-directory: MOOHSIA-Apple
+        run: xcodegen generate
+      - name: Compile iOS simulator target
+        working-directory: MOOHSIA-Apple
+        run: xcodebuild -project MOOHSIA.xcodeproj -scheme MOOHSIA-iOS -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build
