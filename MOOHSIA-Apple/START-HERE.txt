@@ -1,0 +1,7 @@
+暮霞 MOOHSIA 0.2.0 Cloud-first
+
+1. Cloud 24/7：雙擊 Setup-Cloudflare.command，完成 Cloudflare 官方登入授權。
+2. Mac：目前仍需在真正 macOS 環境編譯；GitHub Actions 配置已包含於專案。
+3. iPhone：雙擊 Prepare-iPhone.command；Xcode 開啟後，Signing & Capabilities 選你的 Personal Team，再 Run 到 iPhone。
+4. 免費 Apple Personal Team 的 iPhone 安裝約 7 天需重新簽，這是 Apple 限制。
+5. API/Token 永遠不要放 GitHub、Notion、Slack。
