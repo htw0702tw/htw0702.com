@@ -1,12 +1,10 @@
 # htw0702.com
 
-Personal site. GitHub + Cloudflare Pages. Photos on R2.
+Personal website for Wang Hao Ting (筳筳), deployed on Cloudflare Pages from the main branch.
 
-Repo: https://github.com/htw0702tw/htw0702.com
+- Traditional Chinese: /tw
+- English: /en
+- Japanese: /jp
+- Public shortcuts: /wiki, /blog, /games/aov
 
-## Live stack
-- Pages: site HTML/CSS/JS (unlimited bandwidth on free plan for typical personal traffic)
-- R2: photos and large files (10 GB storage free)
-- iCloud: email MX unchanged
-
-See DEPLOY.md
+Private studio authentication and Notion sync are intentionally disabled until secure server-side integration is configured.

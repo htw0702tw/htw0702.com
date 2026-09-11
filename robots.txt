@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tw/admin
+Disallow: /en/admin
+Disallow: /jp/admin
+Sitemap: https://htw0702.com/sitemap.xml
