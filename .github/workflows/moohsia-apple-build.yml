@@ -1,11 +1,6 @@
 name: MOOHSIA Apple Build
 
 on:
-  push:
-    branches: [moohsia-dev]
-    paths:
-      - 'MOOHSIA-Apple/**'
-      - '.github/workflows/moohsia-apple-build.yml'
   workflow_dispatch:
 
 jobs:
@@ -17,11 +12,11 @@ jobs:
         working-directory: MOOHSIA-Apple
         run: |
           chmod +x Build-Mac.command
-          ./Build-Mac.command </dev/null || true
-          test -d "暮霞 MOOHSIA.app" || test -d "build/暮霞 MOOHSIA.app"
+          ./Build-Mac.command </dev/null
       - name: Package macOS app
         run: |
-          APP=$(find MOOHSIA-Apple -name '暮霞 MOOHSIA.app' -type d | head -1)
+          APP=$(find MOOHSIA-Apple/build -name 'MOOHSIA.app' -type d | head -1)
+          test -n "$APP"
           ditto -c -k --sequesterRsrc --keepParent "$APP" MOOHSIA-macOS.zip
       - uses: actions/upload-artifact@v4
         with:
@@ -39,4 +34,10 @@ jobs:
         run: xcodegen generate
       - name: Compile iOS simulator target
         working-directory: MOOHSIA-Apple
-        run: xcodebuild -project MOOHSIA.xcodeproj -scheme MOOHSIA-iOS -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build
+        run: xcodebuild -project MOOHSIA.xcodeproj -scheme MOOHSIA-iOS -sdk iphonesimulator -configuration Release CODE_SIGNING_ALLOWED=NO build
+      - name: Package iOS source for Personal Team signing
+        run: zip -r MOOHSIA-iOS-source.zip MOOHSIA-Apple/iOS MOOHSIA-Apple/Shared MOOHSIA-Apple/project.yml MOOHSIA-Apple/Prepare-iPhone.command
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MOOHSIA-iOS-source
+          path: MOOHSIA-iOS-source.zip
