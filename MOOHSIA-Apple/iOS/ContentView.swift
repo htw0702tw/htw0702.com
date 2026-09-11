@@ -5,6 +5,7 @@ struct ContentView: View {
     @StateObject private var voice = VoiceService()
     @State private var input = ""
     @State private var showSearch = false
+    @State private var showSettings = false
     @State private var searchURL = URL(string: "https://www.google.com")!
 
     var body: some View {
@@ -20,7 +21,7 @@ struct ContentView: View {
                 List(store.messages) { msg in
                     VStack(alignment: .leading, spacing: 4) {
                         Text(msg.role == "user" ? "你" : "暮霞").font(.caption).foregroundStyle(.secondary)
-                        Text(msg.text)
+                        Text(msg.text).textSelection(.enabled)
                     }
                 }
 
@@ -28,21 +29,48 @@ struct ContentView: View {
                     TextField("問暮霞…", text: $input, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
                     Button(voice.listening ? "停止" : "語音") {
-                        Task { await voice.toggle(); if !voice.transcript.isEmpty { input = voice.transcript } }
+                        Task {
+                            await voice.toggle()
+                            if !voice.transcript.isEmpty { input = voice.transcript }
+                        }
                     }
-                    Button("送出") { send() }.disabled(input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    Button("送出") { send() }
+                        .disabled(input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }.padding()
             }
             .navigationTitle("暮霞 MOOHSIA")
             .toolbar {
-                Menu("Mac") {
-                    Button("請 Mac 開啟 Pages") { Task { await store.enqueueRemote(action: "openPages", payload: "") } }
-                    Button("請 Mac 開啟備忘錄") { Task { await store.enqueueRemote(action: "openNotes", payload: "") } }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Menu("Mac") {
+                        Button("請 Mac 開啟 Pages") { Task { await store.enqueueRemote(action: "openPages", payload: "") } }
+                        Button("請 Mac 開啟備忘錄") { Task { await store.enqueueRemote(action: "openNotes", payload: "") } }
+                    }
+                    Button("設定") { showSettings = true }
                 }
             }
         }
         .task { await store.load() }
         .sheet(isPresented: $showSearch) { SearchView(url: searchURL).ignoresSafeArea() }
+        .sheet(isPresented: $showSettings) {
+            NavigationStack {
+                Form {
+                    Section("MOOHSIA Cloud") {
+                        SecureField("Cloud Token", text: $store.token)
+                        Button("儲存到 Keychain") {
+                            store.saveToken()
+                            showSettings = false
+                            Task { await store.load() }
+                        }
+                    }
+                    Section {
+                        Text("Token 只保存在這台 iPhone 的 Keychain，不會寫入 GitHub、Notion 或 Slack。")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .navigationTitle("暮霞設定")
+            }
+        }
     }
 
     private func send() {
