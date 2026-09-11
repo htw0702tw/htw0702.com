@@ -228,9 +228,9 @@ struct ContentView: View {
     }
 
     private var addKnowledgeView: some View {
-        AddKnowledgeView { title, body, category, sourceURL in
+        AddKnowledgeView { title, contentText, category, sourceURL in
             Task {
-                await store.addKnowledge(title: title, body: body, category: category, sourceURL: sourceURL)
+                await store.addKnowledge(title: title, body: contentText, category: category, sourceURL: sourceURL)
                 showAddKnowledge = false
             }
         }
@@ -239,7 +239,7 @@ struct ContentView: View {
 
 private struct AddKnowledgeView: View {
     @State private var title = ""
-    @State private var body = ""
+    @State private var contentText = ""
     @State private var category = "一般"
     @State private var sourceURL = ""
     let onSave: (String, String, String, String?) -> Void
@@ -251,7 +251,7 @@ private struct AddKnowledgeView: View {
                 TextField("分類", text: $category)
                 TextField("來源網址（可留空）", text: $sourceURL)
                     .textInputAutocapitalization(.never)
-                TextField("內容", text: $body, axis: .vertical)
+                TextField("內容", text: $contentText, axis: .vertical)
                     .lineLimit(6...14)
             }
             .navigationTitle("加入索引")
@@ -260,12 +260,12 @@ private struct AddKnowledgeView: View {
                     Button("儲存") {
                         onSave(
                             title.trimmingCharacters(in: .whitespacesAndNewlines),
-                            body.trimmingCharacters(in: .whitespacesAndNewlines),
+                            contentText.trimmingCharacters(in: .whitespacesAndNewlines),
                             category.trimmingCharacters(in: .whitespacesAndNewlines),
                             sourceURL.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : sourceURL
                         )
                     }
-                    .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || body.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || contentText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
         }
