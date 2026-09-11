@@ -1,15 +1,1 @@
-/ /tw 302
-/wiki /tw/wiki 302
-/blog /tw/blog 302
-/games/aov /tw/games/aov 302
-/works /tw/works 302
-/world /tw/world 302
-/store /tw/store 302
-/contact /tw/contact 302
-/admin /tw/admin 302
-/tw /index.html 200
-/tw/* /index.html 200
-/en /index.html 200
-/en/* /index.html 200
-/jp /index.html 200
-/jp/* /index.html 200
+/* /index.html 200
