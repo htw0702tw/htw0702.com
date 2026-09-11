@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /deploy/
-Disallow: /data/
+Disallow: /admin/
 Sitemap: https://htw0702.com/sitemap.xml
