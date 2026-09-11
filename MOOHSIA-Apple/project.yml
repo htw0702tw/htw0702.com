@@ -22,5 +22,7 @@ targets:
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: ""
         MARKETING_VERSION: "0.4.0"
-        CURRENT_PROJECT_VERSION: "4"
-    dependencies: []
+        CURRENT_PROJECT_VERSION: "5"
+        CODE_SIGN_ENTITLEMENTS: iOS/MOOHSIA-iOS.entitlements
+    dependencies:
+      - sdk: CloudKit.framework
