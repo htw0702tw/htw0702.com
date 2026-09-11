@@ -58,10 +58,16 @@ jobs:
       - name: Compile iOS simulator target
         working-directory: MOOHSIA-Apple
         run: xcodebuild -project MOOHSIA.xcodeproj -scheme MOOHSIA-iOS -sdk iphonesimulator -configuration Release CODE_SIGNING_ALLOWED=NO build
-      - name: Package iOS source for Personal Team signing
+      - name: Package iOS Apple Developer project
         run: |
-          zip -r MOOHSIA-iOS-0.4.0-source.zip MOOHSIA-Apple/iOS MOOHSIA-Apple/Shared MOOHSIA-Apple/project.yml MOOHSIA-Apple/Prepare-iPhone.command
+          zip -r MOOHSIA-iOS-0.4.0-Developer.zip \
+            MOOHSIA-Apple/MOOHSIA.xcodeproj \
+            MOOHSIA-Apple/iOS \
+            MOOHSIA-Apple/Shared \
+            MOOHSIA-Apple/project.yml \
+            MOOHSIA-Apple/Prepare-iPhone.command \
+            MOOHSIA-Apple/README-Apple-Developer.md
       - uses: actions/upload-artifact@v4
         with:
-          name: MOOHSIA-iOS-0.4.0-source
-          path: MOOHSIA-iOS-0.4.0-source.zip
+          name: MOOHSIA-iOS-0.4.0-Developer
+          path: MOOHSIA-iOS-0.4.0-Developer.zip
