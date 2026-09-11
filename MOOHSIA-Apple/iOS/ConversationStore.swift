@@ -4,7 +4,9 @@ import Foundation
 final class ConversationStore: ObservableObject {
     @Published var messages: [CloudMessage] = []
     @Published var statusText = "連線 MOOHSIA Cloud…"
-    private var api = CloudAPI()
+    @Published var token = TokenStore.load() ?? ""
+
+    private var api: CloudAPI { CloudAPI(token: token.isEmpty ? nil : token) }
 
     func load() async {
         do {
@@ -12,7 +14,7 @@ final class ConversationStore: ObservableObject {
             messages = try await api.listMessages()
             statusText = "MOOHSIA Cloud 已同步"
         } catch {
-            statusText = "雲端尚未部署：\(error.localizedDescription)"
+            statusText = "雲端尚未部署或尚未授權：\(error.localizedDescription)"
         }
     }
 
@@ -35,7 +37,15 @@ final class ConversationStore: ObservableObject {
         } catch { statusText = "AI 雲端請求失敗：\(error.localizedDescription)" }
     }
 
+    func saveToken() {
+        if TokenStore.save(token) {
+            statusText = "Cloud Token 已安全存入 Keychain"
+        } else {
+            statusText = "Cloud Token 儲存失敗"
+        }
+    }
+
     func enqueueRemote(action: String, payload: String) async {
-        statusText = "此動作需要 Mac 在線；雲端版將在後續加入安全工作佇列。"
+        statusText = "此動作需要 Mac 在線；目前僅排入後續安全工作佇列功能。"
     }
 }
