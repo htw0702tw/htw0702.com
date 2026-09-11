@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://htw0702.com/</loc></url>
-  <url><loc>https://htw0702.com/blog</loc></url>
-  <url><loc>https://htw0702.com/wiki</loc></url>
-  <url><loc>https://htw0702.com/games/aov</loc></url>
+  <url><loc>https://htw0702.com/tw</loc></url>
+  <url><loc>https://htw0702.com/tw/wiki</loc></url>
+  <url><loc>https://htw0702.com/tw/blog</loc></url>
+  <url><loc>https://htw0702.com/tw/works</loc></url>
+  <url><loc>https://htw0702.com/tw/world</loc></url>
+  <url><loc>https://htw0702.com/tw/games/aov</loc></url>
+  <url><loc>https://htw0702.com/tw/store</loc></url>
+  <url><loc>https://htw0702.com/tw/plans/animation</loc></url>
+  <url><loc>https://htw0702.com/tw/plans/ai</loc></url>
+  <url><loc>https://htw0702.com/tw/plans/metaverse</loc></url>
+  <url><loc>https://htw0702.com/en</loc></url>
+  <url><loc>https://htw0702.com/en/wiki</loc></url>
+  <url><loc>https://htw0702.com/en/blog</loc></url>
+  <url><loc>https://htw0702.com/en/works</loc></url>
+  <url><loc>https://htw0702.com/en/world</loc></url>
+  <url><loc>https://htw0702.com/en/games/aov</loc></url>
+  <url><loc>https://htw0702.com/en/store</loc></url>
+  <url><loc>https://htw0702.com/en/plans/animation</loc></url>
+  <url><loc>https://htw0702.com/en/plans/ai</loc></url>
+  <url><loc>https://htw0702.com/en/plans/metaverse</loc></url>
+  <url><loc>https://htw0702.com/jp</loc></url>
+  <url><loc>https://htw0702.com/jp/wiki</loc></url>
+  <url><loc>https://htw0702.com/jp/blog</loc></url>
+  <url><loc>https://htw0702.com/jp/works</loc></url>
+  <url><loc>https://htw0702.com/jp/world</loc></url>
+  <url><loc>https://htw0702.com/jp/games/aov</loc></url>
+  <url><loc>https://htw0702.com/jp/store</loc></url>
+  <url><loc>https://htw0702.com/jp/plans/animation</loc></url>
+  <url><loc>https://htw0702.com/jp/plans/ai</loc></url>
+  <url><loc>https://htw0702.com/jp/plans/metaverse</loc></url>
 </urlset>
