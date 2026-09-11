@@ -19,7 +19,20 @@ printf '1/3 編譯暮霞 macOS 0.4.0…\n'
 
 stage="$(mktemp -d "$PWD/build/stage.XXXXXX")"
 app="$stage/MOOHSIA.app"
+patched_mac="$stage/MOOHSIAMac.swift"
 mkdir -p "$app/Contents/MacOS"
+
+python3 - "$patched_mac" <<'PY'
+from pathlib import Path
+import sys
+source = Path("Mac/MOOHSIAMac.swift").read_text(encoding="utf-8")
+bad = 'ForEach(store.integrations) { IntegrationRow(item: $0) { Task { await store.syncIntegrations([$0.name]) } } }'
+good = 'ForEach(store.integrations) { integration in IntegrationRow(item: integration) { Task { await store.syncIntegrations([integration.name]) } } }'
+count = source.count(bad)
+if count != 2:
+    raise SystemExit(f"Expected 2 integration closure fixes, found {count}")
+Path(sys.argv[1]).write_text(source.replace(bad, good), encoding="utf-8")
+PY
 
 xcrun swiftc -swift-version 5 -O -target "$(uname -m)-apple-macos14.0" \
   Shared/CloudModels.swift \
@@ -28,7 +41,7 @@ xcrun swiftc -swift-version 5 -O -target "$(uname -m)-apple-macos14.0" \
   Shared/MOOHSIAStore.swift \
   Mac/MacVoiceService.swift \
   Mac/MacTaskExecutor.swift \
-  Mac/MOOHSIAMac.swift \
+  "$patched_mac" \
   -framework SwiftUI \
   -framework AppKit \
   -framework Security \
@@ -61,5 +74,7 @@ codesign --force --sign - "$app"
 codesign --verify --deep --strict "$app"
 
 release_dir="$PWD/build/release-$(date +%Y%m%d-%H%M%S)"
-mv "$stage" "$release_dir"
+mkdir -p "$release_dir"
+mv "$app" "$release_dir/MOOHSIA.app"
+rm -rf "$stage"
 printf '3/3 建置成功：%s\n' "$release_dir/MOOHSIA.app"
