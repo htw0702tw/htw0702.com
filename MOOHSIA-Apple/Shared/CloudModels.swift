@@ -7,6 +7,17 @@ struct CloudMessage: Identifiable, Codable, Hashable {
     let createdAt: Date
 }
 
+struct KnowledgeItem: Identifiable, Codable, Hashable {
+    let id: UUID
+    let title: String
+    let body: String
+    let category: String
+    let sourceURL: String?
+    let sourceType: String
+    let createdAt: Date
+    let updatedAt: Date
+}
+
 struct RemoteCommand: Identifiable, Codable, Hashable {
     enum Status: String, Codable { case pending, approved, rejected, completed, failed }
     let id: UUID
