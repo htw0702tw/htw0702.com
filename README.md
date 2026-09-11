@@ -1,10 +1,11 @@
 # htw0702.com
 
-Personal website for Wang Hao Ting (筳筳), deployed on Cloudflare Pages from the main branch.
+Interactive personal website deployed to Cloudflare Workers from the `main` branch.
 
-- Traditional Chinese: /tw
-- English: /en
-- Japanese: /jp
-- Public shortcuts: /wiki, /blog, /games/aov
+Public routes:
+- `/` — interactive world homepage
+- `/blog` — public notes
+- `/wiki` — public wiki and works
+- `/games/aov` — public Arena of Valor lab
 
-Private studio authentication and Notion sync are intentionally disabled until secure server-side integration is configured.
+The site uses in-browser language switching instead of `/tw`, `/en`, or `/jp` URL prefixes. Private notes, internal plans, credentials, and unpublished records are not part of the public site bundle.
