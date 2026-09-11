@@ -21,4 +21,6 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.moohsia.personal.ios
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: ""
+        MARKETING_VERSION: "0.4.0"
+        CURRENT_PROJECT_VERSION: "4"
     dependencies: []
