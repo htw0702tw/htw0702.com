@@ -1,9 +1,10 @@
 Cloudflare production redeploy trigger
-Requested: 2026-09-12 08:31 Asia/Taipei
+Requested: 2026-09-12 09:10 Asia/Taipei
 Website: htw0702.com
 Project: htw0702-com
-Experience: Cinematic v5
-Worker commit: c7b7f7e6897453256622c95513a79eecb997fa5d
+Experience: Cinematic v5 recovery
+Worker base: f95eb65dfcf0c20736c87f4bd39d10ff0db0ae1a
+Recovery: v6 removed from production branch after site failure report
 Assets:
 - /assets/cinematic-v5.css?v=20260912-5
 - /assets/cinematic-v5.js?v=20260912-5
