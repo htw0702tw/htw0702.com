@@ -1,33 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "htw0702-com",
-  "main": "./src/worker.js",
   "compatibility_date": "2026-09-12",
-  "assets": {
-    "directory": "./",
-    "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
-    "html_handling": "none",
-    "run_worker_first": [
-      "/api/*",
-      "/",
-      "/tw",
-      "/tw/*",
-      "/en",
-      "/en/*",
-      "/jp",
-      "/jp/*",
-      "/wiki",
-      "/blog",
-      "/works",
-      "/world",
-      "/games/*",
-      "/store",
-      "/plans/*",
-      "/admin"
-    ]
-  },
+  "pages_build_output_dir": "./dist",
   "vars": {
+    "ADMIN_ORIGIN": "https://admin.htw0702.com",
     "NOTION_DATA_SOURCE_ID": "95498a7d-a777-4c54-9755-eeea21933331"
   }
 }

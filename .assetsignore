@@ -5,3 +5,10 @@ README.md
 DEPLOY.md
 wrangler.jsonc
 .assetsignore
+
+server/
+functions/
+migrations/
+tests/
+package.json
+*.md
