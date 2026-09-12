@@ -38,8 +38,14 @@ function cinematic(response){
   const type=response.headers.get("content-type")||"";
   if(!type.includes("text/html"))return response;
   return new HTMLRewriter()
-    .on("head",{element(el){el.append('<link rel="stylesheet" href="/assets/cinematic-v4.css?v=20260912-4">',{html:true})}})
-    .on("body",{element(el){el.append('<script src="/assets/cinematic-v4.js?v=20260912-4" defer></script>',{html:true})}})
+    .on("head",{element(el){
+      el.append('<link rel="stylesheet" href="/assets/cinematic-v4.css?v=20260912-4">',{html:true});
+      el.append('<link rel="stylesheet" href="/assets/cinematic-v5.css?v=20260912-5">',{html:true});
+    }})
+    .on("body",{element(el){
+      el.append('<script src="/assets/cinematic-v4.js?v=20260912-4" defer></script>',{html:true});
+      el.append('<script src="/assets/cinematic-v5.js?v=20260912-5" defer></script>',{html:true});
+    }})
     .transform(response)
 }
 export default{async fetch(request,env){const u=new URL(request.url),path=u.pathname.replace(/\/+$/,"")||"/";
