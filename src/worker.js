@@ -34,20 +34,6 @@ async function officialHeroes(){
   if(!items.some(x=>x.name==="勇"))items.unshift({name:"勇",id:5,url:"https://moba.garena.tw/game/hero/5"});
   return{source,checked_at:new Date().toISOString(),heroes:items};
 }
-function cinematic(response){
-  const type=response.headers.get("content-type")||"";
-  if(!type.includes("text/html"))return response;
-  return new HTMLRewriter()
-    .on("head",{element(el){
-      el.append('<link rel="stylesheet" href="/assets/cinematic-v4.css?v=20260912-4">',{html:true});
-      el.append('<link rel="stylesheet" href="/assets/cinematic-v5.css?v=20260912-5">',{html:true});
-    }})
-    .on("body",{element(el){
-      el.append('<script src="/assets/cinematic-v4.js?v=20260912-4" defer></script>',{html:true});
-      el.append('<script src="/assets/cinematic-v5.js?v=20260912-5" defer></script>',{html:true});
-    }})
-    .transform(response)
-}
 export default{async fetch(request,env){const u=new URL(request.url),path=u.pathname.replace(/\/+$/,"")||"/";
   if(request.method==="GET"){const r=alias(path);if(r)return Response.redirect(new URL(r,u.origin),302)}
   if(path==="/api/health")return json({ok:true,notionConfigured:Boolean(env.NOTION_TOKEN),appleConfigured:Boolean(env.APPLE_CLIENT_ID&&env.APPLE_TEAM_ID&&env.APPLE_KEY_ID&&env.APPLE_PRIVATE_KEY&&env.SESSION_SECRET)});
@@ -57,5 +43,5 @@ export default{async fetch(request,env){const u=new URL(request.url),path=u.path
   if(path==="/api/payments")return json({wise:safeUrl(env.WISE_PAYMENT_URL),paypal:safeUrl(env.PAYPAL_PAYMENT_URL),bitcoin:(env.BTC_ADDRESS||"").trim()||null});
   if(path==="/api/admin/status")return json({appleConfigured:Boolean(env.APPLE_CLIENT_ID&&env.APPLE_TEAM_ID&&env.APPLE_KEY_ID&&env.APPLE_PRIVATE_KEY&&env.SESSION_SECRET),locked:true});
   if(path.startsWith("/api/"))return json({error:"not_found"},404);
-  return cinematic(await env.ASSETS.fetch(request))
+  return env.ASSETS.fetch(request)
 }};
