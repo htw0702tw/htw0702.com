@@ -8,7 +8,24 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
     "html_handling": "none",
-    "run_worker_first": ["/api/*", "/"]
+    "run_worker_first": [
+      "/api/*",
+      "/",
+      "/tw",
+      "/tw/*",
+      "/en",
+      "/en/*",
+      "/jp",
+      "/jp/*",
+      "/wiki",
+      "/blog",
+      "/works",
+      "/world",
+      "/games/*",
+      "/store",
+      "/plans/*",
+      "/admin"
+    ]
   },
   "vars": {
     "NOTION_DATA_SOURCE_ID": "95498a7d-a777-4c54-9755-eeea21933331"
