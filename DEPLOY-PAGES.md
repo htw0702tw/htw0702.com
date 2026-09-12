@@ -1,3 +1,7 @@
+# Active deployment: existing Cloudflare Worker
+
+The default `wrangler.jsonc` now targets the existing `htw0702-com` Worker to deploy through its already-connected GitHub build. It builds public assets into `dist` and keeps existing remote variables. The Pages configuration below is retained as `wrangler.pages.jsonc` for a future migration; it is not the active deployment.
+
 # htw0702.com — Cloudflare Pages
 
 This branch is for **Pages**, not the existing Workers Builds project. Do not run `wrangler versions upload` against this configuration. The existing live Worker must remain until a Pages deployment passes checks.
