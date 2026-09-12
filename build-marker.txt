@@ -1,0 +1,5 @@
+Cloudflare production redeploy trigger
+Requested: 2026-09-12 07:56 Asia/Taipei
+Website: htw0702.com
+Project: htw0702-com
+Base complete-site commit: f030db00e4be26cae05142ad701e01cb169f7f5f
