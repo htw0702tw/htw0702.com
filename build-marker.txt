@@ -1,14 +1,17 @@
 Cloudflare production redeploy trigger
-Requested: 2026-09-12 09:10 Asia/Taipei
+Requested: 2026-09-12 09:18 Asia/Taipei
 Website: htw0702.com
 Project: htw0702-com
-Experience: Cinematic v5 recovery
-Worker base: f95eb65dfcf0c20736c87f4bd39d10ff0db0ae1a
-Recovery: v6 removed from production branch after site failure report
-Assets:
-- /assets/cinematic-v5.css?v=20260912-5
-- /assets/cinematic-v5.js?v=20260912-5
+Experience: Premium game-inspired v7
+Frontend:
+- /assets/game-site-v7.css?v=20260912-7
+- /assets/game-site-v7.js?v=20260912-7
+Architecture:
+- Legacy world-v2 / experience-v3 not loaded by index
+- Legacy cinematic v4/v5 injection removed from Worker
+- Notion/API/AOV backend retained
 Core routes:
+- /tw
 - /tw/wiki
 - /tw/blog
 - /tw/works
