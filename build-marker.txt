@@ -1,5 +1,16 @@
 Cloudflare production redeploy trigger
-Requested: 2026-09-12 07:56 Asia/Taipei
+Requested: 2026-09-12 08:31 Asia/Taipei
 Website: htw0702.com
 Project: htw0702-com
-Base complete-site commit: f030db00e4be26cae05142ad701e01cb169f7f5f
+Experience: Cinematic v5
+Worker commit: c7b7f7e6897453256622c95513a79eecb997fa5d
+Assets:
+- /assets/cinematic-v5.css?v=20260912-5
+- /assets/cinematic-v5.js?v=20260912-5
+Core routes:
+- /tw/wiki
+- /tw/blog
+- /tw/works
+- /tw/world
+- /tw/games/aov
+- /tw/plans/*
