@@ -1,1 +1,77 @@
-<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#192938"><meta name="description" content="筳筳的個人世界。台灣的日常、海岸與花火，還有正在成形的作品與夢想。"><title>筳筳｜htw0702</title><link rel="stylesheet" href="/assets/world-2026.css"><script type="module" src="/assets/world-2026.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="/tw"><span class="mark">筳</span><span>筳筳<small>HTW0702 · PERSONAL WORLD</small></span></a><nav id="nav"></nav><div class="controls"><a class="moohsia" href="https://moohsia.com/tw">暮霞 MOOHSIA ↗</a><select id="language" aria-label="Language"></select><button id="menu" aria-label="Menu" aria-controls="nav" aria-expanded="false">☰</button></div></header><main id="main"></main><footer><p class="footer-name">筳筳<span>htw0702.com</span></p><p id="peace"></p><div><a href="mailto:taiwan@htw0702.com">taiwan@htw0702.com</a><a href="mailto:japan@htw0702.com">japan@htw0702.com</a></div><small>© 2026 Wang Hao Ting</small></footer><div class="environment"><button id="sound" aria-pressed="true">♫</button><select id="scene" aria-label="Theme"></select><span id="clock"></span></div><noscript>請啟用 JavaScript 以瀏覽互動內容。Please enable JavaScript. JavaScript を有効にしてください。</noscript></body></html>
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#07090e" />
+    <meta
+      name="description"
+      content="筳筳的個人世界。台灣海岸、日本祭典與花火，做成一座會動的夜色。"
+    />
+    <title>筳筳｜htw0702</title>
+    <link rel="stylesheet" href="/assets/world-2026.css" />
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        if (
+          matchMedia("(prefers-reduced-motion: reduce)").matches ||
+          sessionStorage.getItem("hud-boot") === "1"
+        )
+          document.documentElement.classList.add("booted");
+      } catch {}
+    </script>
+    <script type="module" src="/assets/world-2026.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div id="boot" aria-hidden="true">
+      <div class="boot-inner">
+        <span class="mark">筳</span>
+        <strong>HTW0702</strong>
+        <em>PERSONAL WORLD</em>
+        <i class="boot-bar"></i>
+      </div>
+    </div>
+    <div class="film" aria-hidden="true"></div>
+    <div id="cursor" aria-hidden="true"></div>
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <header>
+      <a class="brand" href="/tw"
+        ><span class="mark">筳</span
+        ><span>筳筳<small>HTW0702 · PERSONAL WORLD</small></span></a
+      >
+      <nav id="nav"></nav>
+      <div class="controls">
+        <select id="language" aria-label="Language"></select
+        ><button
+          id="menu"
+          aria-label="Menu"
+          aria-controls="nav"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+    <main id="main"></main>
+    <footer>
+      <p class="footer-name">筳筳<span>htw0702.com · PERSONAL</span></p>
+      <p id="peace"></p>
+      <div class="footer-links">
+        <a href="mailto:taiwan@htw0702.com">taiwan@htw0702.com</a>
+        <a href="mailto:japan@htw0702.com">japan@htw0702.com</a>
+        <a href="/tw/social">Instagram · Threads · X</a>
+      </div>
+      <small>© 2026 Wang Hao Ting</small>
+    </footer>
+    <div class="environment">
+      <button id="sound" aria-pressed="true">♫</button
+      ><select id="scene" aria-label="Theme"></select
+      ><span id="clock"></span>
+    </div>
+    <noscript
+      >請啟用 JavaScript 以瀏覽互動內容。Please enable JavaScript. JavaScript
+      を有効にしてください。</noscript
+    >
+  </body>
+</html>

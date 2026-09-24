@@ -10,6 +10,7 @@ Wang Hao Ting（筳筳）的個人世界官網。
 - /tw/world /en/world /jp/world — Taiwan × Japan inspired imaginary world
 - /tw/games/aov /en/games/aov /jp/games/aov — Arena of Valor official-reference catalog, public matches & analysis
 - /tw/store /en/store /jp/store — personal merchandise / support
+- /tw/social /en/social /jp/social — personal social channels (Instagram, Threads, X). `/me` stays as an alias of the same page.
 - /tw/plans/animation /en/plans/animation /jp/plans/animation
 - /tw/plans/ai /en/plans/ai /jp/plans/ai
 - /tw/plans/metaverse /en/plans/metaverse /jp/plans/metaverse
