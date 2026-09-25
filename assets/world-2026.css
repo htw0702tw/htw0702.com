@@ -566,8 +566,12 @@ body[data-motion="false"] .line-b {
 }
 html[data-play="off"] .sweep,
 html[data-play="off"] .hero-photo,
+html[data-play="off"] .marquee-track,
+html[data-play="off"] .line-a.kinetic span,
 body[data-motion="false"] .sweep,
-body[data-motion="false"] .hero-photo { animation-play-state: paused; }
+body[data-motion="false"] .hero-photo,
+body[data-motion="false"] .marquee-track,
+body[data-motion="false"] .line-a.kinetic span { animation-play-state: paused; }
 html[data-play="off"] .sweep,
 body[data-motion="false"] .sweep { opacity: 0; }
 main.page-enter { animation: rise 0.45s var(--ease) both; }
@@ -633,6 +637,80 @@ main.page-enter { animation: rise 0.45s var(--ease) both; }
   }
   #pause-dock .pause { padding: 8px 10px; }
 }
+.line-a.kinetic span {
+  display: inline-block;
+  animation: lineIn 0.72s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+.marquee {
+  overflow: hidden;
+  background: var(--night);
+  color: var(--cream);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 36s linear infinite;
+}
+.marquee-track span {
+  padding: 13px 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  white-space: pre;
+}
+.story { position: relative; background: var(--paper); }
+.story-pin {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: calc(var(--header-h) + 18px) 0 22px;
+  overflow: hidden;
+}
+.story-head { padding: 0 max(22px, env(safe-area-inset-left)); max-width: 760px; }
+.story-head .index { margin: 0 0 6px; color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: 0.16em; }
+.story-head h2 { margin: 0; font-size: clamp(36px, 5vw, 64px); letter-spacing: -0.045em; line-height: 0.98; }
+.story-head p { margin: 8px 0 0; color: var(--muted); max-width: 40rem; }
+.story-bar { height: 2px; margin-top: 16px; background: var(--line); overflow: hidden; }
+.story-bar i { display: block; height: 100%; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; }
+.rail-window { flex: 1; min-height: 0; overflow: hidden; }
+.rail { display: flex; gap: 16px; width: max-content; height: 100%; padding: 6px 22px 10px; align-items: stretch; will-change: transform; }
+.live-rail { display: flex; gap: 16px; }
+.rail .piece { width: min(34vw, 390px); height: 100%; min-height: 0; }
+.rail .viz { height: min(26vh, 210px); flex: 0 0 auto; }
+.piece.is-focus { box-shadow: 0 0 0 2px var(--accent); }
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), margin 0.3s var(--ease), opacity 0.2s, background 0.3s;
+}
+#cursor.on { opacity: 0.9; }
+#cursor.hot { width: 44px; height: 44px; margin: -22px 0 0 -22px; background: color-mix(in srgb, var(--accent) 18%, transparent); }
+@keyframes ticker { to { transform: translateX(-50%); } }
+@media (hover: hover) and (pointer: fine) {
+  a, button, .magnetic { cursor: none; }
+}
+@media (max-width: 800px) {
+  .story { height: auto !important; }
+  .story-pin { position: static; height: auto; overflow: visible; padding-bottom: 8px; }
+  .rail-window { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .rail { height: auto; transform: none !important; }
+  .rail .piece { width: min(78vw, 320px); height: auto; scroll-snap-align: start; }
+  #cursor { display: none; }
+  a, button, .magnetic { cursor: pointer; }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -641,4 +719,8 @@ main.page-enter { animation: rise 0.45s var(--ease) both; }
     scroll-behavior: auto !important;
   }
   .reveal, .line-a, .line-b { opacity: 1 !important; transform: none !important; }
+  .story { height: auto !important; }
+  .story-pin { position: static; height: auto; overflow: visible; }
+  .rail { transform: none !important; height: auto; }
+  .rail-window { overflow-x: auto; }
 }

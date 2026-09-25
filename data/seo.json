@@ -4,51 +4,27 @@
     "tw": {
       "home": {
         "title": "筳筳｜htw0702",
-        "description": "筳筳的個人網站。王顥筳，來自台灣。維基、手記、作品、社群與長期計畫都放在 htw0702.com。"
+        "description": "筳筳的個人網站。王顥筳，來自台灣。維基、手記、作品與社群都放在 htw0702.com。"
       },
       "wiki": {
         "title": "個人維基｜筳筳",
-        "description": "王顥筳（筳筳）的公開維基。來自台灣。作品、興趣與旅行裡，願意公開的部分。"
+        "description": "王顥筳（筳筳）的公開維基。來自台灣。只顯示 Notion 中已發布且公開的紀錄。"
       },
       "blog": {
         "title": "手記｜筳筳",
-        "description": "筳筳的手記。生活、科技、學習、旅行與沿路的想法，依更新時間排列。"
+        "description": "筳筳的手記。Notion 中 Publish 為 true、Visibility 為 public 的文章，依更新時間排列。"
       },
       "works": {
         "title": "作品｜筳筳",
         "description": "筳筳的公開作品。目前收錄個人網站 htw0702.com，繁體中文為主，並提供英文與日文。"
       },
-      "world": {
-        "title": "未來的計畫｜筳筳",
-        "description": "可以走進去的世界仍是長期計畫，不是已經存在的地方。這一頁只說明這一點。"
-      },
       "store": {
         "title": "小賣所｜筳筳",
-        "description": "個人周邊與支持的入口。目前沒有上架商品。付款連結只在設定完成後出現。"
+        "description": "個人周邊與支持的入口。付款連結只在設定完成後出現。"
       },
       "social": {
         "title": "社群｜筳筳",
         "description": "筳筳的 Instagram、Threads 與 X，以及 taiwan@htw0702.com、japan@htw0702.com。"
-      },
-      "plans": {
-        "title": "長期計畫｜筳筳",
-        "description": "三個公開的長期希望：自己的動畫電影、自己的 AI 助理，以及可以走進去的世界。"
-      },
-      "plans/animation": {
-        "title": "動畫電影｜筳筳",
-        "description": "希望有一天完成一部屬於自己的動畫電影。這裡只放公開進度。"
-      },
-      "plans/ai": {
-        "title": "AI 助理｜筳筳",
-        "description": "希望打造一位可靠的個人 AI 助理：理解文字與語音，協助生活，並尊重權限與隱私。"
-      },
-      "plans/metaverse": {
-        "title": "可以走進去的世界｜筳筳",
-        "description": "希望將來做出可以走進去的虛擬世界。它還不存在。這一頁只記錄這個方向。"
-      },
-      "games/lol": {
-        "title": "League of Legends｜筳筳",
-        "description": "帳號 htw0702rg#0702 的公開對戰紀錄。只顯示已經同步、可以公開的場次。"
       },
       "search": {
         "title": "搜尋｜筳筳",
@@ -70,51 +46,27 @@
     "en": {
       "home": {
         "title": "Ting Ting｜htw0702",
-        "description": "Ting Ting’s personal website. Wang Hao Ting, from Taiwan. Wiki, journal, works, social, and long-term plans live on htw0702.com."
+        "description": "Ting Ting’s personal website. Wang Hao Ting, from Taiwan. Wiki, journal, works, and social live on htw0702.com."
       },
       "wiki": {
         "title": "Wiki｜Ting Ting",
-        "description": "Wang Hao Ting’s public wiki. From Taiwan: projects, interests, and travel that are meant to be public."
+        "description": "Wang Hao Ting’s public wiki. From Taiwan. Only records published in Notion as public are shown."
       },
       "blog": {
         "title": "Journal｜Ting Ting",
-        "description": "Ting Ting’s journal. Life, technology, learning, travel, and ideas along the way."
+        "description": "Ting Ting’s journal. Entries appear when Notion marks them Publish and Visibility public."
       },
       "works": {
         "title": "Works｜Ting Ting",
         "description": "Public works. The site listed here is htw0702.com, Traditional Chinese first, with English and Japanese."
       },
-      "world": {
-        "title": "A future plan｜Ting Ting",
-        "description": "A world you can step into is still a long-term plan, not a place that exists."
-      },
       "store": {
         "title": "Shop｜Ting Ting",
-        "description": "A door for personal goods and support. Nothing is listed for sale. Payment links appear only after they are configured."
+        "description": "A door for personal goods and support. Payment links appear only after they are configured."
       },
       "social": {
         "title": "Social｜Ting Ting",
         "description": "Instagram, Threads and X, plus taiwan@htw0702.com and japan@htw0702.com."
-      },
-      "plans": {
-        "title": "Plans｜Ting Ting",
-        "description": "Three public long-term hopes: an animated film, an AI assistant, and a world you can step into."
-      },
-      "plans/animation": {
-        "title": "Animated film｜Ting Ting",
-        "description": "A hope to one day finish an animated film. Only public progress is shown."
-      },
-      "plans/ai": {
-        "title": "AI assistant｜Ting Ting",
-        "description": "A hope to build a reliable personal AI assistant that respects permissions, privacy and security."
-      },
-      "plans/metaverse": {
-        "title": "A world you can enter｜Ting Ting",
-        "description": "A hope to someday build a virtual world people can step into. It does not exist yet."
-      },
-      "games/lol": {
-        "title": "League of Legends｜Ting Ting",
-        "description": "Public match records for htw0702rg#0702. Only synced, published games are shown."
       },
       "search": {
         "title": "Search｜Ting Ting",
@@ -136,51 +88,27 @@
     "jp": {
       "home": {
         "title": "筳筳｜htw0702",
-        "description": "筳筳の個人サイト。王顥筳、台湾出身。ウィキ、手記、作品、ソーシャルと長期の計画を htw0702.com に置いています。"
+        "description": "筳筳の個人サイト。王顥筳、台湾出身。ウィキ、手記、作品、ソーシャルを htw0702.com に置いています。"
       },
       "wiki": {
         "title": "ウィキ｜筳筳",
-        "description": "王顥筳（筳筳）の公開ウィキ。台湾出身。作品、興味、旅のうち、公開しているもの。"
+        "description": "王顥筳（筳筳）の公開ウィキ。台湾出身。Notion で公開した記録だけを表示します。"
       },
       "blog": {
         "title": "手記｜筳筳",
-        "description": "筳筳の手記。暮らし、技術、学び、旅、そして道の途中の考え。"
+        "description": "筳筳の手記。Notion で Publish かつ Visibility が public の文章を、更新順に並べます。"
       },
       "works": {
         "title": "作品｜筳筳",
         "description": "公開作品。いま収録しているのは個人サイト htw0702.com。繁体字中国語が中心で、英語と日本語もあります。"
       },
-      "world": {
-        "title": "これからの計画｜筳筳",
-        "description": "歩いて入れる世界は、まだ長期の計画です。存在する場所ではありません。"
-      },
       "store": {
         "title": "売店｜筳筳",
-        "description": "個人の品とサポートの入口。いま販売している品はありません。決済リンクは設定後だけ表示します。"
+        "description": "個人の品とサポートの入口。決済リンクは設定後だけ表示します。"
       },
       "social": {
         "title": "ソーシャル｜筳筳",
         "description": "Instagram、Threads、X。メールは taiwan@htw0702.com と japan@htw0702.com。"
-      },
-      "plans": {
-        "title": "計画｜筳筳",
-        "description": "三つの公開している長期の希望。アニメ映画、AIアシスタント、歩いて入れる世界。"
-      },
-      "plans/animation": {
-        "title": "アニメ映画｜筳筳",
-        "description": "いつか自分のアニメ映画を完成させたい。公開できる進捗だけを載せます。"
-      },
-      "plans/ai": {
-        "title": "AIアシスタント｜筳筳",
-        "description": "文字と音声を理解し、暮らしを助け、権限とプライバシーを大切にする個人AIを作りたい。"
-      },
-      "plans/metaverse": {
-        "title": "歩いて入れる世界｜筳筳",
-        "description": "いつか、歩いて入れる仮想世界を作りたい。いまは存在しません。"
-      },
-      "games/lol": {
-        "title": "League of Legends｜筳筳",
-        "description": "htw0702rg#0702 の公開対戦記録。同期され、公開された試合だけを表示します。"
       },
       "search": {
         "title": "検索｜筳筳",

@@ -1,9 +1,8 @@
-import {riotMatches} from '../server/riot.mjs';
 import {onRequest as studio} from '../server/studio.mjs';
 import {KNOWN, renderDocument} from '../server/document.mjs';
 import {SEARCH_KINDS, fallbackItems, guideItems, hrefFor, normalizePublic} from '../server/public-content.mjs';
 const NOTION_VERSION="2025-09-03";
-const allowedLocales=new Set(["tw","en","jp"]),allowedKinds=new Set(["blog","works","wiki","world","now","match","catalog","store","plan-animation","plan-ai","plan-metaverse"]);
+const allowedLocales=new Set(["tw","en","jp"]),allowedKinds=new Set(["blog","works","wiki","now","store"]);
 function json(data,status=200,cache="no-store"){return new Response(JSON.stringify(data),{status,headers:{"content-type":"application/json; charset=utf-8","cache-control":cache}})}
 function textProp(p){return(p?.title||p?.rich_text||[]).map(x=>x?.plain_text||x?.text?.content||"").join("")}
 function selectProp(p){return p?.select?.name||null}
@@ -18,8 +17,9 @@ function itemFromPage(page){const p=page.properties||{};return{
 }}
 async function notionQuery(env,{locale,kind,pageSize=100}){if(!env.NOTION_TOKEN)return{items:[],configured:false};const filters=[{property:"Visibility",select:{equals:"public"}},{property:"Publish",checkbox:{equals:true}},{property:"Locale",select:{equals:locale}},{property:"Kind",select:{equals:kind}}];const r=await fetch(`https://api.notion.com/v1/data_sources/${env.NOTION_DATA_SOURCE_ID}/query`,{method:"POST",headers:{authorization:`Bearer ${env.NOTION_TOKEN}`,"content-type":"application/json","Notion-Version":NOTION_VERSION},body:JSON.stringify({filter:{and:filters},sorts:[{timestamp:"last_edited_time",direction:"descending"}],page_size:pageSize})});if(!r.ok)throw new Error(`Notion ${r.status}`);const d=await r.json();return{items:(d.results||[]).map(itemFromPage),configured:true}}
 function safeUrl(v){if(!v)return null;try{const u=new URL(v);return u.protocol==="https:"?u.href:null}catch{return null}}
-function alias(path){return({"/":"/tw","/me":"/tw/me","/plans":"/tw/plans","/games/lol":"/tw/games/lol","/wiki":"/tw/wiki","/blog":"/tw/blog","/works":"/tw/works","/world":"/tw/world","/store":"/tw/store","/social":"/tw/social","/search":"/tw/search","/now":"/tw/now","/plans/animation":"/tw/plans/animation","/plans/ai":"/tw/plans/ai","/plans/metaverse":"/tw/plans/metaverse","/admin":"/tw/admin"})[path]||null}
+function alias(path){return({"/":"/tw","/me":"/tw/me","/wiki":"/tw/wiki","/blog":"/tw/blog","/works":"/tw/works","/store":"/tw/store","/social":"/tw/social","/search":"/tw/search","/now":"/tw/now","/admin":"/tw/admin"})[path]||null}
 function isAovPath(path){const p=path.toLowerCase();return /(?:^|\/)games\/aov(?:\/|$)/.test(p)||/(?:^|\/)aov(?:\/|$)/.test(p)||p.includes("htw0702aov")}
+function isRetiredPath(path){const p=path.toLowerCase();return /(?:^|\/)games\/lol(?:\/|$)/.test(p)||/(?:^|\/)plans(?:\/|$)/.test(p)||/(?:^|\/)world(?:\/|$)/.test(p)}
 function isStatic(path){return path.startsWith("/assets/")||path.startsWith("/images/")||path==="/robots.txt"||path==="/sitemap.xml"||path==="/favicon.ico"||/\.[a-z0-9]{1,8}$/i.test(path)}
 function localeHome(path){const m=path.toLowerCase().match(/^\/(tw|en|jp)(?:\/|$)/);return m?`/${m[1]}`:"/tw"}
 async function published(env,locale,kind){let remote=[];try{remote=(await notionQuery(env,{locale,kind})).items||[]}catch{remote=[]}remote=normalizePublic(remote);if(remote.length)return remote;return fallbackItems(locale,kind)}
@@ -27,11 +27,10 @@ async function searchItems(env,locale,q){const chunks=await Promise.all(SEARCH_K
 async function document(request,env,status,locale,route){const shell=await env.ASSETS.fetch(new Request(new URL("/index.html",request.url)));const html=renderDocument(await shell.text(),{locale,route,status,query:Boolean(new URL(request.url).searchParams.get("q"))});const headers={"content-type":"text/html; charset=utf-8","cache-control":route==="admin"?"no-store":"public, max-age=300","x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin"};return new Response(request.method==="HEAD"?null:html,{status,headers})}
 export default{async fetch(request,env){const u=new URL(request.url),path=u.pathname.replace(/\/+$/,"")||"/";
   if(u.hostname==='admin.htw0702.com'&&path==='/')return Response.redirect(new URL('/tw/admin',u.origin),302);
-  if(/^\/api\/(health|appearance|public|me|entries|auth\/.*|notion\/.*|riot\/.*|slack\/.*)$/.test(path))return studio({request,env});
-  if(path==='/api/lol/matches')return json(await riotMatches(env));
-  if(path==="/api/aov"||path.startsWith("/api/aov/"))return json({error:"not_found"},404);
+  if(/^\/api\/(health|appearance|public|me|entries|auth\/.*|notion\/.*|slack\/.*)$/.test(path))return studio({request,env});
+  if(path==="/api/aov"||path.startsWith("/api/aov/")||path==="/api/lol"||path.startsWith("/api/lol/")||path==="/api/riot"||path.startsWith("/api/riot/"))return json({error:"not_found"},404);
   const reading=request.method==="GET"||request.method==="HEAD";
-  if(reading&&isAovPath(path))return Response.redirect(new URL(localeHome(path),u.origin),301);
+  if(reading&&(isAovPath(path)||isRetiredPath(path)))return Response.redirect(new URL(localeHome(path),u.origin),301);
   if(reading){const r=alias(path);if(r)return Response.redirect(new URL(r,u.origin),302)}
   if(path==="/api/content"){const locale=u.searchParams.get("locale")||"tw",kind=u.searchParams.get("kind")||"blog";if(!allowedLocales.has(locale)||!allowedKinds.has(kind))return json({error:"invalid query"},400);const items=await published(env,locale,kind);return json({items,configured:Boolean(env.NOTION_TOKEN),source:items.some(x=>x.source==="site")?"site":"cms"})}
   if(path==="/api/search"){const locale=u.searchParams.get("locale")||"tw",q=u.searchParams.get("q")||"";if(!allowedLocales.has(locale)||q.length>80)return json({error:"invalid query"},400);return json({locale,query:q,items:await searchItems(env,locale,q)},200,"public, max-age=60")}
