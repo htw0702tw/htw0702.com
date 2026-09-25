@@ -3,15 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <meta name="theme-color" content="#141311" />
+    <meta name="theme-color" content="#07080d" />
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/og.jpg" />
-    <link rel="preload" as="image" href="/images/IMG_5309.jpeg" />
+    <link rel="apple-touch-icon" href="/assets/og.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,680;1,9..144,560&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;600;700&display=swap"
     />
     <!--seo-->
     <title>筳筳｜htw0702</title>
@@ -28,6 +27,7 @@
   </head>
   <body data-theme="dusk">
     <a class="skip" href="#main">Skip to content</a>
+    <canvas id="field" aria-hidden="true"></canvas>
     <div id="progress" aria-hidden="true"></div>
     <div id="cursor" aria-hidden="true"></div>
     <header>
@@ -36,6 +36,11 @@
         <span class="brand-name">筳筳<small>htw0702</small></span>
       </a>
       <nav id="nav"></nav>
+      <div class="top-social" aria-label="Social">
+        <a href="https://instagram.com/htw0702ig" target="_blank" rel="me noopener">Instagram</a>
+        <a href="https://x.com/htw0702x" target="_blank" rel="me noopener">X</a>
+        <a href="https://www.threads.net/@htw0702threads" target="_blank" rel="me noopener">Threads</a>
+      </div>
       <div class="controls">
         <span id="pause-dock">
           <button class="pause" id="pause-motion" type="button" aria-pressed="false"><b>00</b> <span>暫停</span></button>
@@ -59,6 +64,7 @@
           <a data-route="wiki" href="/tw/wiki">維基</a>
           <a data-route="blog" href="/tw/blog">手記</a>
           <a data-route="works" href="/tw/works">作品</a>
+          <a data-route="games" href="/tw/games">遊戲</a>
           <a data-route="social" href="/tw/social">社群</a>
           <a data-route="store" href="/tw/store">小賣所</a>
           <a data-route="now" href="/tw/now">現在</a>
@@ -68,6 +74,7 @@
       <div class="footer-mail">
         <a href="mailto:taiwan@htw0702.com">taiwan@htw0702.com</a>
         <a href="mailto:japan@htw0702.com">japan@htw0702.com</a>
+        <a href="https://www.youtube.com/@htw0702yt" target="_blank" rel="noopener">YouTube · htw0702yt</a>
       </div>
       <small>© 2026 Wang Hao Ting</small>
     </footer>

@@ -5,6 +5,7 @@
 ## Public routes
 
 - `/tw` `/en` `/jp` — home
+- `/tw/games` `/en/games` `/jp/games` — games door. 暮霞｜MOS links out to https://moohsia.com
 - `/tw/wiki` `/en/wiki` `/jp/wiki` — public wiki
 - `/tw/blog` `/en/blog` `/jp/blog` — journal
 - `/tw/works` `/en/works` `/jp/works` — public works
@@ -13,7 +14,9 @@
 - `/tw/search` `/en/search` `/jp/search` — search over public pages
 - `/tw/now` `/en/now` `/jp/now` — what is public right now
 
-Short aliases (`/wiki`, `/blog`, `/social`, `/store`, `/search`, `/now`, `/me`) redirect to the Traditional Chinese route.
+Short aliases (`/wiki`, `/blog`, `/social`, `/store`, `/search`, `/now`, `/games`, `/me`) redirect to the Traditional Chinese route.
+
+YouTube preview: change `youtube.videoId` in `data/media.json` (copied to `/assets/media.json` at build). While `placeholder` is true, the home player is labeled as a preview clip. The channel handle is `htw0702yt`.
 
 These old paths redirect home with `301`, the same way old Arena of Valor URLs do:
 
