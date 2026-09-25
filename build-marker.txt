@@ -1,20 +1,20 @@
-Cloudflare production redeploy trigger
-Requested: 2026-09-12 09:18 Asia/Taipei
+Cloudflare production build
 Website: htw0702.com
 Project: htw0702-com
-Experience: Premium game-inspired v7
 Frontend:
-- /assets/game-site-v7.css?v=20260912-7
-- /assets/game-site-v7.js?v=20260912-7
+- /assets/world-2026.css
+- /assets/world-2026.js
+- /assets/coast.webp
 Architecture:
-- Legacy world-v2 / experience-v3 not loaded by index
-- Legacy cinematic v4/v5 injection removed from Worker
-- Notion/API/AOV backend retained
+- Worker serves locale pages, search, and SEO tags
+- Notion, D1 studio, Apple sign-in, Slack, and League of Legends sync stay in place
+- Battle-lab game pages are not part of the public site
 Core routes:
 - /tw
 - /tw/wiki
 - /tw/blog
 - /tw/works
 - /tw/world
-- /tw/games/aov
+- /tw/social
+- /tw/search
 - /tw/plans/*

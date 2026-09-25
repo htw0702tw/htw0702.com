@@ -152,7 +152,7 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 14px 3.2vw;
+  padding: max(14px, env(safe-area-inset-top)) max(3.2vw, env(safe-area-inset-right)) 14px max(3.2vw, env(safe-area-inset-left));
   color: #fff;
   background: linear-gradient(180deg, rgba(5, 7, 11, 0.92), rgba(5, 7, 11, 0.55) 70%, transparent);
   border-bottom: 1px solid rgba(126, 231, 255, 0.18);
@@ -227,10 +227,13 @@ nav a[aria-current] { color: var(--accent); }
 #menu span {
   display: block;
   height: 1px;
-  margin: 5px 10px;
+  margin: 6px 10px;
   background: #fff;
   transition: transform 0.3s;
 }
+#menu[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(40deg); }
+#menu[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+#menu[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-40deg); }
 
 .hero {
   position: relative;
@@ -247,7 +250,7 @@ nav a[aria-current] { color: var(--accent); }
   background:
     linear-gradient(90deg, rgba(5, 8, 14, 0.88) 8%, rgba(5, 8, 14, 0.25) 70%),
     linear-gradient(180deg, rgba(5, 8, 14, 0.2), rgba(5, 8, 14, 0.78)),
-    url("/assets/coast.png") center/cover;
+    url("/assets/coast.webp") center/cover;
   animation: drift 22s ease-in-out infinite alternate;
   transition: filter 0.7s ease, transform 0.7s ease;
 }
@@ -439,7 +442,7 @@ body[data-scene="city"] .hero-media { filter: saturate(0.85) hue-rotate(190deg) 
   background:
     linear-gradient(100deg, rgba(255, 77, 109, 0.16), transparent 42%),
     linear-gradient(180deg, rgba(8, 12, 20, 0.2), rgba(8, 12, 20, 0.85)),
-    url("/assets/coast.png") center 60%/cover;
+    url("/assets/coast.webp") center 60%/cover;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .promise h2 { font-size: clamp(36px, 5vw, 72px); line-height: 0.98; margin: 8px 0 0; }
@@ -449,7 +452,7 @@ body[data-scene="city"] .hero-media { filter: saturate(0.85) hue-rotate(190deg) 
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(5, 8, 14, 0.92), rgba(5, 8, 14, 0.55)),
-    url("/assets/coast.png") center 40%/cover;
+    url("/assets/coast.webp") center 40%/cover;
 }
 .subhero::after {
   content: "";
@@ -470,7 +473,7 @@ footer {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: 18px 40px;
-  padding: 64px 8vw 120px;
+  padding: 64px max(8vw, env(safe-area-inset-right)) calc(120px + env(safe-area-inset-bottom)) max(8vw, env(safe-area-inset-left));
   background: #05070b;
   border-top: 1px solid rgba(126, 231, 255, 0.18);
 }
@@ -482,8 +485,8 @@ footer {
 .environment {
   position: fixed;
   z-index: 55;
-  right: 18px;
-  bottom: 16px;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
   display: flex;
   align-items: center;
   gap: 8px;
@@ -511,6 +514,17 @@ footer {
 .blog-layout { grid-template-columns: 1fr 260px; }
 .studio-grid { grid-template-columns: 250px 1fr; }
 .panel, .post, .match, .appearance { padding: 22px; }
+.post { scroll-margin-top: 96px; }
+.wiki-layout { display: grid; grid-template-columns: minmax(180px, 280px) 1fr; gap: 28px; align-items: start; }
+.portrait { margin: 0; border: 1px solid var(--line); background: rgba(8, 12, 18, 0.72); overflow: hidden; }
+.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 3/4; object-fit: cover; }
+.portrait figcaption { padding: 10px 14px 14px; color: var(--accent); letter-spacing: 0.16em; font-size: 11px; }
+.search-form { display: flex; gap: 10px; margin: 8px 0 22px; }
+.search-form input { flex: 1; min-width: 0; }
+.result { display: block; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.result small { color: var(--accent); letter-spacing: 0.14em; font-size: 11px; }
+.result strong { display: block; margin: 4px 0; font: 600 22px/1.3 var(--display); }
+.lost .cta-row { margin-top: 8px; }
 .panel h2, .post h2 { margin: 0 0 12px; font-size: 28px; }
 .chart { width: 100%; height: auto; }
 .chart text { font: 11px var(--sans); fill: var(--muted); }
@@ -586,9 +600,14 @@ textarea { min-height: 180px; }
   .hero h1 { font-size: 44px; }
   .vertical { display: none; }
   .hud-frame { inset: 84px 12px 16px; }
-  .districts, .portals, .stalls, .plans-grid, .social-grid, .metrics, .blog-layout, .studio-grid, .form-grid, footer {
+  .districts, .portals, .stalls, .plans-grid, .social-grid, .metrics, .blog-layout, .studio-grid, .form-grid, .wiki-layout, footer {
     grid-template-columns: 1fr;
   }
+  .portrait { max-width: 280px; }
+  input, textarea, select { font-size: 16px; }
+  .search-form { flex-direction: column; }
+  .hero h1 { font-size: clamp(40px, 12vw, 56px); }
+  header { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
   .blog-layout aside, .studio-grid aside { border: 0; padding: 0; }
   .section { padding: 64px 6vw; }
   .subhero { padding: 132px 6vw 42px; }

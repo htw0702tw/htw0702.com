@@ -45,19 +45,16 @@ Apple web sign-in callback: `https://admin.htw0702.com/api/auth/callback`. The o
 
 - Taiwan Chinese, US English, Japanese; same-page language switching
 - Original coast hero, gentle motion, responsive styles, day/dusk/night, browser-compatible ambient sound controls
-- `/me`, `/plans` with 3 dedicated project pages, `/blog`, `/works`, `/wiki`, `/world`, `/store`, `/games/aov`, `/games/lol`
+- `/me`, `/social`, `/search`, `/plans` with 3 dedicated project pages, `/blog`, `/works`, `/wiki`, `/world`, `/store`, `/now`, `/games/lol`
 - Server-side owner Apple session, CSRF, content drafts/publication, optimistic conflict detection
 - D1 appearance settings: theme, accent, motion, default sound, localized home headlines
 - Notion public reads and explicit owner import; Notion-owned rows are edited in Notion
-- AOV real screenshot snapshot with dated KDA chart, winner/loser filters and review prompts
-- Riot server adapter: resolves `htw0702rg#0702`, reads last 10 matches, stores snapshot on explicit admin refresh, never leaks API key or other players' IDs
+- Riot server adapter: resolves `htw0702rg#0702`, reads last 10 matches, stores snapshot on explicit admin refresh, never leaks API key or other players' IDs. The public page shows those records only.
 - Slack explicit test notification only; no automatic messages or two-way Slack sync
 
 ## Not complete until provider setup / additional work
 
-Cloudflare deployment/domain cutover, Apple live login, database provisioning, Riot account/region and production key verification, full AOV automatic match API, numeric radar dimensions, replay/LLM analysis, live Instagram/Threads/X feeds, automatic Notion/Riot scheduling, two-way Slack sync, a product/order/payment checkout, and separate domains for the plans.
-
-AOV screenshots are reference snapshots dated 2026-09-12, not an API feed. The four visible matches are a partial sample. Unknown hero/time fields are not invented. Current season, ranked, and lifetime totals remain separate. Audio is synthesized wave ambience, not a field recording and not narration. Browser autoplay policies can require the first interaction.
+Cloudflare deployment/domain cutover, Apple live login, database provisioning, Riot account/region and production key verification, automatic Notion/Riot scheduling, two-way Slack sync, a product/order/payment checkout, and separate domains for the plans. Social pages link to profiles; they do not embed live feeds. Audio is synthesized wave ambience, not a field recording and not narration. Browser autoplay policies can require the first interaction.
 
 ## Validation
 

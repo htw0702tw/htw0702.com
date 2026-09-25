@@ -23,9 +23,9 @@ const nav = [
   ["works", t("作品", "Works", "作品")],
   ["blog", t("手記", "Journal", "手記")],
   ["wiki", t("維基", "Wiki", "ウィキ")],
-  ["games/aov", t("研究室", "Lab", "研究室")],
   ["social", t("社群", "Social", "ソーシャル")],
   ["store", t("小賣所", "Shop", "売店")],
+  ["search", t("搜尋", "Search", "検索")],
 ];
 const navKey = route === "me" || route === "contact" ? "social" : route;
 $("#nav").innerHTML = nav
@@ -35,8 +35,9 @@ $("#nav").innerHTML = nav
   })
   .join("");
 $(".brand").href = link("");
-const socialFoot = document.querySelector('.footer-links a[href="/tw/social"]');
-if (socialFoot) socialFoot.href = link("social");
+document.querySelectorAll("[data-route]").forEach((a) => {
+  a.href = link(a.dataset.route);
+});
 document.body.dataset.page = route.split("/")[0] || "home";
 document.body.dataset.scene = "harbor";
 const languageNames = {
@@ -51,7 +52,7 @@ $("#language").innerHTML = ["tw", "en", "jp"]
   )
   .join("");
 $("#language").onchange = (e) =>
-  (location.href = `/${e.target.value}/${route}`);
+  (location.href = `/${e.target.value}/${route}${location.search}`);
 document.documentElement.lang = { tw: "zh-Hant-TW", en: "en-US", jp: "ja-JP" }[
   lang
 ];
@@ -92,8 +93,7 @@ async function api(path, options = {}) {
   if (!r.ok) throw Error(`${r.status}`);
   return r.json();
 }
-const pending = t("尚未連接", "Not connected", "未接続"),
-  empty = t(
+const empty = t(
     "還沒有公開內容。",
     "No public entries yet.",
     "公開記事はまだありません。",
@@ -222,6 +222,9 @@ const titles = {
     "Three dreams for a lifetime.",
     "一生をかけて叶えたい、三つの夢。",
   ),
+  search: t("在公開的句子裡找。", "Search the public pages.", "公開ページを探す。"),
+  now: t("現在公開的。", "Public right now.", "いま公開していること。"),
+  store: t("把喜歡的，帶進日常。", "A little wonder for everyday life.", "好きな景色を、日常に。"),
 };
 const planNames = [
   t("自己的動畫電影", "My animated film", "自分のアニメ映画"),
@@ -246,7 +249,7 @@ const planDesc = [
   ),
 ];
 const plansHTML = () =>
-  `<div class="plans-grid">${["animation", "ai", "metaverse"].map((p, i) => `<a class="plan tilt reveal" href="${link("plans/" + p)}"><small>0${i + 1} / ${t("構想中", "Concept", "構想段階")}</small><h3>${planNames[i]}</h3><p>${planDesc[i]}</p><span>↗</span></a>`).join("")}</div>`;
+  `<div class="plans-grid">${["animation", "ai", "metaverse"].map((p, i) => `<a class="plan tilt reveal" href="${link("plans/" + p)}"><small>0${i + 1}</small><h3>${planNames[i]}</h3><p>${planDesc[i]}</p><span>↗</span></a>`).join("")}</div>`;
 function sub(title, kicker = "", desc = "") {
   return `<section class="subhero"><small>${esc(kicker)}</small><h1>${esc(title)}</h1><p>${esc(desc)}</p></section>`;
 }
@@ -263,7 +266,7 @@ const districts = [
   ],
   [
     "market",
-    t("暮霞夜市", "Moohsia Night Market", "暮霞夜市"),
+    t("暮霞夜市", "Dusk Night Market", "暮霞夜市"),
     t("台灣攤火 × 昭和商店街", "Taiwan stalls × Showa arcade", "台湾屋台 × 昭和商店街"),
     t(
       "油煙、燈籠、招牌，全部亮到很晚。台灣夜市的熱鬧，混進昭和商店街的木門與紅燈籠。",
@@ -304,10 +307,10 @@ function home() {
     ["blog", "02", titles.blog, t("生活、美食、技術，和沿路的風景。", "Life, food, technology, and the road.", "暮らし、食、技術、道の途中の風景。")],
     ["wiki", "03", t("關於筳筳", "About Ting Ting", "筳筳について"), t("來自台灣，喜歡沒有邊界的想像。", "From Taiwan, with an unbounded imagination.", "台湾から、自由な想像とともに。")],
     ["world", "04", t("世界設定", "World bible", "世界設定"), t("海岸、夜市、電車與花火的設定集。", "Coast, night market, trams, fireworks.", "海岸、夜市、電車、花火。")],
-    ["games/aov", "05", t("對戰研究室", "Battle lab", "対戦研究室"), t("記錄每次遊玩，理解每次進步。", "Every match, a little practice.", "一戦ずつ、成長を振り返る。")],
-    ["social", "06", t("社群頻道", "Social channels", "ソーシャル"), t("Instagram、Threads、X。", "Instagram, Threads, and X.", "Instagram、Threads、X。")],
-    ["store", "07", t("小賣所", "Little shop", "売店"), t("周邊還在籌備，入口先亮著。", "Merch is in preparation. The door is lit.", "グッズ準備中。入口の灯は点いています。")],
-    ["plans", "08", t("人生計畫", "Lifetime plans", "人生の計画"), t("動畫、AI，與可以走進去的世界。", "Animation, AI, and a world you can enter.", "アニメ、AI、歩いて入れる世界。")],
+    ["social", "05", t("社群頻道", "Social channels", "ソーシャル"), t("Instagram、Threads、X。", "Instagram, Threads, and X.", "Instagram、Threads、X。")],
+    ["store", "06", t("小賣所", "Little shop", "売店"), t("個人周邊與支持的入口。", "Personal goods and support.", "品とサポートの入口。")],
+    ["plans", "07", t("人生計畫", "Lifetime plans", "人生の計画"), t("動畫、AI，與可以走進去的世界。", "Animation, AI, and a world you can enter.", "アニメ、AI、歩いて入れる世界。")],
+    ["search", "08", t("搜尋", "Search", "検索"), t("在公開頁面、手記與作品裡找一句話。", "Find a line across the public pages.", "公開ページの中から、一文を探す。")],
   ];
   const motto = t(
     "願我們相遇的世界，只有花火，沒有戰火。",
@@ -324,7 +327,7 @@ function home() {
       (row, i) =>
         `<button class="stall tilt reveal" type="button" data-burst="${i === 3 ? "lg" : "sm"}"><b>${t(row[0], row[1], row[2])}</b><span>${t(row[3], row[4], row[5])}</span></button>`,
     )
-    .join("")}</div></section><section class="section" id="portals"><div class="section-title"><div><small class="eyebrow">03 / PORTALS</small><h2>${t("從世界裡，走進公開內容。", "Step from the world into the public work.", "世界から、公開コンテンツへ。")}</h2></div><p>${t("維基、作品、手記、研究室、社群。都還是這個人的入口。", "Wiki, works, journal, lab, social. Still one person’s doors.", "ウィキ、作品、手記、研究室、ソーシャル。入口は、すべて私。")}</p></div><div class="portals">${portals
+    .join("")}</div></section><section class="section" id="portals"><div class="section-title"><div><small class="eyebrow">03 / PORTALS</small><h2>${t("從世界裡，走進公開內容。", "Step from the world into the public work.", "世界から、公開コンテンツへ。")}</h2></div><p>${t("維基、作品、手記、社群。都還是這個人的入口。", "Wiki, works, journal, social. Still one person’s doors.", "ウィキ、作品、手記、ソーシャル。入口は、すべて私。")}</p></div><div class="portals">${portals
     .map(
       ([p, n, h, d]) =>
         `<a class="portal tilt reveal" href="${link(p)}"><small>${n}</small><h3>${h}</h3><p>${d}</p></a>`,
@@ -371,15 +374,20 @@ function posts(items) {
     ? items
         .map(
           (x, i) =>
-            `<article class="post reveal"><small>${String(i + 1).padStart(3, "0")} / ${esc(x.updated || x.updated_at || "")}</small><h2>${esc(x.name)}</h2><p>${esc(x.body)}</p></article>`,
+            `<article class="post reveal" id="${esc(x.slug || "")}"><small>${String(i + 1).padStart(3, "0")} / ${esc(x.updated || x.updated_at || "")}</small><h2>${esc(x.name)}</h2><p>${esc(x.body)}</p></article>`,
         )
         .join("")
     : `<p class="empty">${empty}</p>`;
 }
 async function cms(kind) {
+  const loading = t("讀取中…", "Loading…", "読み込み中…");
+  const shelf =
+    kind === "wiki"
+      ? `<div class="wiki-layout"><figure class="portrait reveal"><img src="/assets/portrait.jpg" width="960" height="1280" alt="${t("筳筳", "Ting Ting", "筳筳")}"><figcaption>筳筳 · Wang Hao Ting</figcaption></figure><div id="entries">${loading}</div></div>`
+      : `<div id="entries">${loading}</div>`;
   main.innerHTML =
     sub(titles[kind] || kind, kind.toUpperCase()) +
-    `<section class="section"><div id="entries">${t("讀取中…", "Loading…", "読み込み中…")}</div></section>`;
+    `<section class="section">${shelf}</section>`;
   try {
     const items = await content(kind);
     $("#entries").innerHTML = posts(items);
@@ -401,8 +409,8 @@ async function cms(kind) {
 }
 function me() {
   const social = [
-    ["Instagram", "htw0702ig", "https://www.instagram.com/htw0702ig/"],
-    ["Threads", "@htw0702threads", "https://www.threads.com/@htw0702threads"],
+    ["Instagram", "htw0702ig", "https://instagram.com/htw0702ig"],
+    ["Threads", "@htw0702threads", "https://www.threads.net/@htw0702threads"],
     ["X", "@htw0702x", "https://x.com/htw0702x"],
     ["Discord", "@htw0702dc", null],
     [
@@ -419,7 +427,7 @@ function me() {
   const heading = route === "me" || route === "contact" ? titles.me : titles.social;
   main.innerHTML =
     sub(heading, "SOCIAL / HTW0702") +
-    `<section class="section"><p class="note">${t("Instagram、Threads、X 是目前的公開頻道。即時動態尚未串接，連結會打開個人頁。", "Instagram, Threads, and X are the public channels. Live feeds are not connected yet — these open the profiles.", "Instagram、Threads、X が公開チャンネルです。リアルタイム投稿は未接続で、リンクはプロフィールを開きます。")}</p><div class="social-grid">${social.map(([n, h, u]) => (u ? `<a class="social tilt reveal" href="${u}" target="_blank" rel="noopener"><b>${n} ↗</b><span>${h}</span></a>` : `<div class="social tilt reveal"><b>${n}</b><span>${h}</span><button class="button" id="copy-discord">${t("複製帳號", "Copy username", "ユーザー名をコピー")}</button></div>`)).join("")}</div><h2>${t("寫封信給我", "Send me a letter", "メールを送る")}</h2><a class="hud-btn plain" href="mailto:taiwan@htw0702.com">Taiwan · taiwan@htw0702.com</a><a class="hud-btn ghost plain" href="mailto:japan@htw0702.com">Japan · japan@htw0702.com</a></section>`;
+    `<section class="section"><p>${t("Instagram、Threads、X。點開就是我的頁面。", "Instagram, Threads, and X. Each one opens my page.", "Instagram、Threads、X。開くと、私のページです。")}</p><div class="social-grid">${social.map(([n, h, u]) => (u ? `<a class="social tilt reveal" href="${u}" target="_blank" rel="me noopener"><b>${n} ↗</b><span>${h}</span></a>` : `<div class="social tilt reveal"><b>${n}</b><span>${h}</span><button class="button" id="copy-discord">${t("複製帳號", "Copy username", "ユーザー名をコピー")}</button></div>`)).join("")}</div><h2>${t("寫封信給我", "Send me a letter", "メールを送る")}</h2><a class="hud-btn plain" href="mailto:taiwan@htw0702.com">Taiwan · taiwan@htw0702.com</a><a class="hud-btn ghost plain" href="mailto:japan@htw0702.com">Japan · japan@htw0702.com</a></section>`;
   $("#copy-discord").onclick = async (e) => {
     try {
       await navigator.clipboard.writeText("htw0702dc");
@@ -429,54 +437,6 @@ function me() {
     }
   };
 }
-const snapshot = [
-  {
-    hero: "娜塔亞",
-    playedAt: "2026-09-12 07:23",
-    kills: 15,
-    deaths: 4,
-    assists: 3,
-    result: "win",
-    teamKills: null,
-    minutes: null,
-    mode: "ranked",
-  },
-  {
-    hero: "",
-    playedAt: "2026-09-12 07:40",
-    kills: 2,
-    deaths: 8,
-    assists: 9,
-    result: "win",
-    teamKills: null,
-    minutes: null,
-    mode: "normal",
-  },
-  {
-    hero: "娜塔亞",
-    playedAt: "2026-09-12 08:44",
-    kills: 1,
-    deaths: 12,
-    assists: 3,
-    result: "loss",
-    teamKills: null,
-    minutes: null,
-    mode: "ranked",
-  },
-  {
-    hero: "娜塔亞",
-    playedAt: "2026-09-12 09:22",
-    kills: 2,
-    deaths: 5,
-    assists: 5,
-    result: "loss",
-    teamKills: 11,
-    minutes: 12 + 16 / 60,
-    gold: 6791,
-    rating: 7.9,
-    mode: "ranked",
-  },
-];
 const kda = (x) =>
   [x.kills, x.deaths, x.assists].every((v) => typeof v === "number")
     ? (x.kills + x.assists) / Math.max(1, x.deaths)
@@ -503,38 +463,36 @@ function review(x) {
       x.teamKills > 0 && x.kills != null && x.assists != null
         ? (((x.kills + x.assists) / x.teamKills) * 100).toFixed(1) + "%"
         : "—";
-  return `<p>KDA ${v === null ? "—" : v.toFixed(2)} · ${t("擊殺參與率", "Kill participation", "キル参加率")} ${kp}</p><p>${t("復盤練習：回看每次死亡前 20 秒，記錄當時視野、隊友位置，以及是否能提早撤退。", "Review exercise: inspect the 20 seconds before each death, noting vision, teammate positions, and earlier escape options.", "振り返り：デスの20秒前を確認し、視界・味方の位置・早めに撤退できたかを記録しましょう。")}</p><p class="note">${t("以上是依數值提出的檢查方向，並非已確認的操作弱點；沒有解析錄影。", "These are statistical review prompts, not verified gameplay weaknesses. No replay was analyzed.", "数値に基づく確認項目であり、確定した弱点ではありません。動画は解析していません。")}</p>`;
+  return `<p>KDA ${v === null ? "—" : v.toFixed(2)} · ${t("擊殺參與率", "Kill participation", "キル参加率")} ${kp}</p><p>${t("復盤時可以回看每次死亡前 20 秒，記下當時的視野、隊友位置，以及能不能提早撤退。", "When reviewing, look at the 20 seconds before each death: vision, teammate positions, and whether an earlier exit was possible.", "振り返るときは、デスの20秒前を見る。視界、味方の位置、早めに撤退できたか。")}</p><p class="note">${t("這些是依數字整理的檢查方向，沒有解析錄影。", "These prompts come from the numbers. No replay was analyzed.", "数字から整理した確認項目です。動画は解析していません。")}</p>`;
 }
-async function games(game) {
+async function games() {
   main.innerHTML =
     sub(
-      game === "aov"
-        ? t(
-            "對戰，也是一種練習。",
-            "Every match, a little practice.",
-            "一戦ずつ、学んでいく。",
-          )
-        : "League of Legends",
-      game === "aov" ? "htw0702aov" : "htw0702rg#0702",
+      "League of Legends",
+      "htw0702rg#0702",
+      t(
+        "公開的對戰紀錄列在這裡。只顯示已經同步的場次。",
+        "Public match records are listed here. Only synced games are shown.",
+        "公開された対戦記録を並べます。同期された試合だけです。",
+      ),
     ) +
-    `<section class="section"><div class="game-tabs"><a href="${link("games/aov")}">Arena of Valor</a><a href="${link("games/lol")}">League of Legends</a></div><div id="game">${t("讀取中…", "Loading…", "読み込み中…")}</div></section>`;
+    `<section class="section"><div id="game">${t("讀取中…", "Loading…", "読み込み中…")}</div></section>`;
   let items = [],
-    source = "";
+    source = t("公開紀錄", "Public records", "公開記録");
   try {
-    const d = await api(game + "/matches?locale=" + lang);
+    const d = await api("lol/matches?locale=" + lang);
     items = d.items || [];
-    source = d.configured
-      ? t("公開紀錄", "Public records", "公開記録")
-      : pending;
+    if (!d.configured && !items.length)
+      source = t(
+        "帳號 htw0702rg#0702。目前沒有已公開的場次。",
+        "Account htw0702rg#0702. No published matches are available.",
+        "アカウント htw0702rg#0702。公開された試合はまだありません。",
+      );
   } catch {
-    source = unavailable;
-  }
-  if (game === "aov" && !items.length) {
-    items = snapshot;
     source = t(
-      "來源：你提供的截圖，2026-09-12；不是即時同步。",
-      "Source: your screenshots, 2026-09-12; not a live feed.",
-      "出典：ご提供のスクリーンショット、2026-09-12。リアルタイムではありません。",
+      "帳號 htw0702rg#0702。這一頁暫時讀不到紀錄。",
+      "Account htw0702rg#0702. Records can’t be read right now.",
+      "アカウント htw0702rg#0702。いま記録を読み込めません。",
     );
   }
   const original = items;
@@ -542,18 +500,24 @@ async function games(game) {
     const a = original.filter((x) => filter === "all" || x.result === filter);
     const wins = a.filter((x) => x.result === "win").length;
     $("#game").innerHTML =
-      `<p class="note">${esc(source)}</p>${game === "aov" ? `<div class="panel"><small>${t("帳號總覽 · 截圖快照", "Account overview · screenshot snapshot", "アカウント概要 · スクリーンショット")}</small><div class="metrics"><div class="metric"><small>${t("總場次", "Total matches", "総試合数")}</small><b>36</b></div><div class="metric"><small>${t("總勝率", "Overall win rate", "全体勝率")}</small><b>75.0%</b></div><div class="metric"><small>${t("本賽季標準模式", "Season standard mode", "今シーズン標準モード")}</small><b>12 / 66.7%</b></div><div class="metric"><small>${t("本賽季排位", "Season ranked", "今シーズンランク")}</small><b>11 / 63.6%</b></div></div></div>` : ""}<h2>${t("逐場紀錄", "Match journal", "試合記録")}</h2><div class="filters">${[
-        ["all", t("全部", "All", "すべて")],
-        ["win", t("勝利", "Wins", "勝利")],
-        ["loss", t("敗北", "Losses", "敗北")],
-      ]
-        .map(
-          ([v, l]) =>
-            `<button data-filter="${v}" aria-pressed="${v === filter}">${l}</button>`,
-        )
-        .join(
-          "",
-        )}</div>${a.length ? `<div class="game-layout"><div class="panel"><h2>${t("KDA 變化", "KDA over matches", "KDA の推移")}</h2>${chart(a)}<p class="note">${t("橫軸為本次篩選的紀錄順序；圖表只代表以下樣本。", "The x-axis follows filtered record order. This chart covers only the records below.", "横軸は絞り込み後の記録順。以下のサンプルのみを表示しています。")}</p></div><div class="panel"><h2>${t("本次樣本", "Selected sample", "選択中のサンプル")}</h2><div class="metrics"><div class="metric"><small>${t("場次", "Matches", "試合数")}</small><b>${a.length}</b></div><div class="metric"><small>${t("勝率", "Win rate", "勝率")}</small><b>${((wins / a.length) * 100).toFixed(1)}%</b></div></div><p class="note">${t("雷達圖需先取得各維度的實際數值；不從截圖輪廓猜分數。", "A radar chart needs actual values for each dimension; scores are not guessed from a screenshot outline.", "レーダーチャートには各項目の実数値が必要です。画像の形から点数を推測しません。")}</p></div></div>${a.map((x) => `<details class="match"><summary><span>${esc(x.playedAt || x.updated || "")} · ${esc(x.hero || t("英雄待確認", "Hero unconfirmed", "ヒーロー未確認"))}</span><b class="${x.result === "win" ? "win" : "loss"}">${x.kills ?? "—"} / ${x.deaths ?? "—"} / ${x.assists ?? "—"} ↘</b></summary>${review(x)}${x.gold ? `<p>${t("經濟", "Gold", "ゴールド")}: ${x.gold} · ${t("評分", "Rating", "評価")}: ${x.rating}</p>` : ""}</details>`).join("")}` : `<p class="empty">${game === "lol" ? t("Riot 帳號尚未驗證。需要 API 金鑰與遊戲區域，才能讀取真實戰績。", "Riot account is not verified. An API key and game region are needed to load real matches.", "Riot アカウントは未確認です。実際の戦績取得には API キーと地域の設定が必要です。") : empty}</p>`}`;
+      `<p class="note">${esc(source)}</p>` +
+      (a.length
+        ? `<div class="filters">${[
+            ["all", t("全部", "All", "すべて")],
+            ["win", t("勝利", "Wins", "勝利")],
+            ["loss", t("敗北", "Losses", "敗北")],
+          ]
+            .map(
+              ([v, l]) =>
+                `<button data-filter="${v}" aria-pressed="${v === filter}">${l}</button>`,
+            )
+            .join("")}</div><div class="game-layout"><div class="panel"><h2>${t("KDA 變化", "KDA over matches", "KDA の推移")}</h2>${chart(a)}</div><div class="panel"><h2>${t("本次樣本", "Selected sample", "選択中のサンプル")}</h2><div class="metrics"><div class="metric"><small>${t("場次", "Matches", "試合数")}</small><b>${a.length}</b></div><div class="metric"><small>${t("勝率", "Win rate", "勝率")}</small><b>${((wins / a.length) * 100).toFixed(1)}%</b></div></div></div></div>${a
+            .map(
+              (x) =>
+                `<details class="match"><summary><span>${esc(x.playedAt || x.updated || "")} · ${esc(x.hero || t("英雄待確認", "Champion unconfirmed", "チャンピオン未確認"))}</span><b class="${x.result === "win" ? "win" : "loss"}">${x.kills ?? "—"} / ${x.deaths ?? "—"} / ${x.assists ?? "—"} ↘</b></summary>${review(x)}${x.gold ? `<p>${t("經濟", "Gold", "ゴールド")}: ${x.gold}</p>` : ""}</details>`,
+            )
+            .join("")}`
+        : `<p class="empty">${t("目前沒有已公開的場次。", "No published matches yet.", "公開された試合はまだありません。")}</p>`);
     document
       .querySelectorAll("[data-filter]")
       .forEach((b) => (b.onclick = () => draw(b.dataset.filter)));
@@ -575,7 +539,7 @@ async function plans() {
   }
   main.innerHTML =
     sub(planNames[i], "PLAN / 0" + (i + 1), planDesc[i]) +
-    `<section class="section"><p>${t("這是一個獨立的計畫專區，目前仍在構想階段。未來的獨立網站會在有可體驗的作品時加入。", "This is a dedicated project space, currently at the concept stage. A separate project website will be linked when a working experience is ready.", "構想段階の独立した計画ページです。体験できる作品ができたら、専用サイトを追加します。")}</p><div id="plan-feed"></div><h2>${t("其他夢想", "Other dreams", "ほかの夢")}</h2>${plansHTML()}</section>`;
+    `<section class="section"><div id="plan-feed"></div><h2>${t("其他夢想", "Other dreams", "ほかの夢")}</h2>${plansHTML()}</section>`;
   try {
     $("#plan-feed").innerHTML = posts(await content("plan-" + slug));
   } catch {
@@ -592,7 +556,7 @@ async function store() {
       ),
       "STORE",
     ) +
-    `<section class="section"><p>${t("周邊商品籌備中。", "Merchandise is in preparation.", "グッズを準備中です。")}</p><div id="products"></div><div id="payments"></div></section>`;
+    `<section class="section"><div id="products"></div><div id="payments"></div></section>`;
   try {
     $("#products").innerHTML = posts(await content("store"));
     const d = await api("payments");
@@ -614,13 +578,63 @@ async function store() {
     $("#products").textContent = unavailable;
   }
 }
+const kindLabel = (kind) =>
+  ({
+    blog: t("手記", "Journal", "手記"),
+    works: t("作品", "Works", "作品"),
+    wiki: t("維基", "Wiki", "ウィキ"),
+    world: t("世界", "World", "世界"),
+    store: t("小賣所", "Shop", "売店"),
+    now: t("現在", "Now", "いま"),
+    "plan-animation": planNames[0],
+    "plan-ai": planNames[1],
+    "plan-metaverse": planNames[2],
+    page: t("頁面", "Page", "ページ"),
+  })[kind] || kind;
+async function searchPage() {
+  const initial = new URLSearchParams(location.search).get("q") || "";
+  main.innerHTML =
+    sub(titles.search, "SEARCH") +
+    `<section class="section"><form class="search-form" id="search-form" role="search"><input id="q" name="q" value="${esc(initial)}" maxlength="80" autocomplete="off" aria-label="${t("搜尋公開內容", "Search public pages", "公開コンテンツを検索")}" placeholder="${t("手記、作品、花火、社群…", "Journal, works, fireworks, social…", "手記、作品、花火、ソーシャル…")}"><button class="hud-btn" type="submit">${t("搜尋", "Search", "検索")}</button></form><div id="results"></div></section>`;
+  const box = $("#results");
+  const input = $("#q");
+  let timer = 0;
+  async function run(q) {
+    const url = link("search") + (q ? `?q=${encodeURIComponent(q)}` : "");
+    history.replaceState(null, "", url);
+    box.innerHTML = `<p class="note">${t("讀取中…", "Loading…", "読み込み中…")}</p>`;
+    try {
+      const d = await api("search?locale=" + lang + "&q=" + encodeURIComponent(q));
+      const items = d.items || [];
+      box.innerHTML = items.length
+        ? items
+            .map(
+              (x) =>
+                `<a class="result" href="${esc(x.href)}"><small>${esc(kindLabel(x.kind))}</small><strong>${esc(x.name)}</strong><span>${esc(x.snippet || "")}</span></a>`,
+            )
+            .join("")
+        : `<p class="empty">${t("沒有符合的內容。", "Nothing matches.", "一致するものはありません。")}</p>`;
+    } catch {
+      box.textContent = unavailable;
+    }
+  }
+  $("#search-form").onsubmit = (e) => {
+    e.preventDefault();
+    run(input.value.trim());
+  };
+  input.oninput = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => run(input.value.trim()), 180);
+  };
+  await run(initial.trim());
+}
 function notFound() {
   main.innerHTML =
     sub(
-      "404",
+      t("這條路還沒有頁面。", "This path has no page.", "この道にはページがありません。"),
       t("還沒走過的小路", "An unexplored path", "まだ歩いていない道"),
     ) +
-    `<section class="section"><a class="line-link" href="${link("")}">${t("回到首頁", "Back home", "ホームへ")}</a></section>`;
+    `<section class="section lost"><p>${t("花火還在另一邊。你可以回到世界，或是直接去社群與搜尋。", "The fireworks are on another shore. Return to the world, or go straight to social and search.", "花火は、別の岸にあります。世界へ戻るか、ソーシャルと検索へ。")}</p><div class="cta-row"><a class="hud-btn" href="${link("")}">${t("回到首頁", "Back home", "ホームへ")}</a><a class="hud-btn ghost" href="${link("social")}">${t("社群", "Social", "ソーシャル")}</a><a class="hud-btn ghost" href="${link("search")}">${t("搜尋", "Search", "検索")}</a></div></section>`;
 }
 async function admin() {
   document.head.insertAdjacentHTML(
@@ -901,18 +915,15 @@ function mountMotion() {
   fit();
   addEventListener("resize", fit);
   const colors = ["#f0b27a", "#7ee7ff", "#ff4d6d", "#fff1d6", "#ffd0a8"];
-  window.__hudBurst = (x, y, power = 1) => {
-    if (!motionOK()) return;
-    const n = Math.round(34 * power);
-    for (let i = 0; i < n; i++) {
-      const a = (Math.PI * 2 * i) / n + Math.random() * 0.25;
-      const s = (1.3 + Math.random() * 3.1) * power;
-      parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 1.1, life: 1, color: colors[i % colors.length] });
-    }
-  };
+  let raf = 0;
   const loop = () => {
+    raf = 0;
     ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+    if (!motionOK()) {
+      parts = [];
+      return;
+    }
     parts = parts.filter((p) => p.life > 0);
     for (const p of parts) {
       p.vy += 0.034;
@@ -928,9 +939,21 @@ function mountMotion() {
       ctx.fill();
     }
     ctx.globalAlpha = 1;
-    requestAnimationFrame(loop);
+    if (parts.length) raf = requestAnimationFrame(loop);
   };
-  loop();
+  const arm = () => {
+    if (!raf && motionOK()) raf = requestAnimationFrame(loop);
+  };
+  window.__hudBurst = (x, y, power = 1) => {
+    if (!motionOK()) return;
+    const n = Math.round(34 * power);
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI * 2 * i) / n + Math.random() * 0.25;
+      const s = (1.3 + Math.random() * 3.1) * power;
+      parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 1.1, life: 1, color: colors[i % colors.length] });
+    }
+    arm();
+  };
   if (!route) {
     setInterval(() => {
       if (document.hidden || !motionOK() || route) return;
@@ -948,26 +971,33 @@ try {
   } catch {}
   if (saved === null) enabled = appearance.sound;
 } catch {}
-document.title =
-  (titles[route] ||
-    {
-      "games/aov": "Arena of Valor",
-      "games/lol": "League of Legends",
-      admin: "Studio",
-      store: "Store",
-    }[route] ||
-    "筳筳") + "｜htw0702";
+function applySeo() {
+  let pack = {};
+  try {
+    pack = JSON.parse(document.getElementById("seo")?.textContent || "{}");
+  } catch {}
+  const known = pack.locales?.[lang] || {};
+  const key = route === "me" || route === "contact" ? "social" : route || "home";
+  const page = known[key] || known["404"];
+  if (page?.title) document.title = page.title;
+  else document.title = (titles[route] || "筳筳") + "｜htw0702";
+  const desc = document.querySelector('meta[name="description"]');
+  if (page?.description && desc) desc.setAttribute("content", page.description);
+}
+applySeo();
 try {
   if (!route) home();
   else if (route === "me" || route === "contact" || route === "social") me();
   else if (route === "plans" || route.startsWith("plans/")) await plans();
-  else if (["games/aov", "games/lol"].includes(route))
-    await games(route.split("/")[1]);
+  else if (route === "games/lol") await games();
+  else if (route === "search") await searchPage();
   else if (route === "admin") await admin();
   else if (route === "store") await store();
   else if (["works", "wiki", "blog", "world", "now"].includes(route))
     await cms(route);
   else notFound();
+  const hash = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if (hash) document.getElementById(hash)?.scrollIntoView();
 } catch {
   main.insertAdjacentHTML(
     "beforeend",
