@@ -1,0 +1,203 @@
+{
+  "image": "https://htw0702.com/assets/og.jpg",
+  "locales": {
+    "tw": {
+      "home": {
+        "title": "筳筳｜htw0702",
+        "description": "筳筳的個人世界。來自台灣，把海岸、祭典、夜市與花火做成一座會回應你的網站。"
+      },
+      "wiki": {
+        "title": "個人維基｜筳筳",
+        "description": "王顥筳（筳筳）的公開維基。作品、興趣、旅行，以及正在建立的個人世界。"
+      },
+      "blog": {
+        "title": "沿岸手記｜筳筳",
+        "description": "筳筳的手記。生活、科技、旅行與沿路的想法，依更新時間排列。"
+      },
+      "works": {
+        "title": "作品｜筳筳",
+        "description": "筳筳的公開作品。目前收錄個人網站 htw0702.com，繁體中文為主，並提供英文與日文。"
+      },
+      "world": {
+        "title": "世界設定｜筳筳",
+        "description": "一座混合台灣生活感、日本祭典、海岸、夜市、電車與花火的架空世界。"
+      },
+      "store": {
+        "title": "小賣所｜筳筳",
+        "description": "個人周邊與支持的入口。公開品項列在這一頁；付款連結只在設定完成後出現。"
+      },
+      "social": {
+        "title": "社群｜筳筳",
+        "description": "筳筳的 Instagram、Threads 與 X，以及 taiwan@htw0702.com、japan@htw0702.com。"
+      },
+      "plans": {
+        "title": "人生計畫｜筳筳",
+        "description": "三個公開的長期方向：自己的動畫電影、自己的 AI 夥伴，以及可以走進去的世界。"
+      },
+      "plans/animation": {
+        "title": "動畫電影｜筳筳",
+        "description": "希望有一天完成一部屬於自己的動畫電影，用光、風景與音樂講一個相信相遇的故事。"
+      },
+      "plans/ai": {
+        "title": "AI 夥伴｜筳筳",
+        "description": "希望打造一位可靠的個人 AI 夥伴：理解文字與語音，協助生活，並尊重權限與隱私。"
+      },
+      "plans/metaverse": {
+        "title": "可以走進去的世界｜筳筳",
+        "description": "希望打造一個能走進去、探索與相遇的虛擬世界，延續這座網站的台日架空世界觀。"
+      },
+      "games/lol": {
+        "title": "League of Legends｜筳筳",
+        "description": "帳號 htw0702rg#0702 的公開對戰紀錄。只顯示已經同步、可以公開的場次。"
+      },
+      "search": {
+        "title": "搜尋｜筳筳",
+        "description": "搜尋筳筳的公開頁面、手記、作品、維基與世界設定。"
+      },
+      "now": {
+        "title": "現在｜筳筳",
+        "description": "現在公開的是這座個人網站。繁體中文為主，英文與日文在同一座世界裡。"
+      },
+      "admin": {
+        "title": "工作室｜筳筳",
+        "description": "私人內容工作室。"
+      },
+      "404": {
+        "title": "找不到這條路｜筳筳",
+        "description": "這條路還沒有頁面。回到筳筳的個人世界。"
+      }
+    },
+    "en": {
+      "home": {
+        "title": "Ting Ting｜htw0702",
+        "description": "Ting Ting’s personal world. From Taiwan: coast, festivals, night markets and fireworks, built as a site that answers back."
+      },
+      "wiki": {
+        "title": "Wiki｜Ting Ting",
+        "description": "Wang Hao Ting’s public wiki: projects, interests, travel, and a personal world still being built."
+      },
+      "blog": {
+        "title": "Journal｜Ting Ting",
+        "description": "Letters from the coast. Life, technology, travel, and ideas along the way."
+      },
+      "works": {
+        "title": "Works｜Ting Ting",
+        "description": "Public works. The site listed here is htw0702.com, Traditional Chinese first, with English and Japanese."
+      },
+      "world": {
+        "title": "World｜Ting Ting",
+        "description": "An imaginary world of Taiwanese everyday warmth, Japanese festivals, coastlines, night markets, trains and fireworks."
+      },
+      "store": {
+        "title": "Shop｜Ting Ting",
+        "description": "A door for personal goods and support. Public items are listed here; payment links appear only after they are configured."
+      },
+      "social": {
+        "title": "Social｜Ting Ting",
+        "description": "Instagram, Threads and X, plus taiwan@htw0702.com and japan@htw0702.com."
+      },
+      "plans": {
+        "title": "Plans｜Ting Ting",
+        "description": "Three public long-term directions: an animated film, an AI companion, and a world you can step into."
+      },
+      "plans/animation": {
+        "title": "Animated film｜Ting Ting",
+        "description": "A hope to one day finish an animated film about light, landscapes, and encounters worth remembering."
+      },
+      "plans/ai": {
+        "title": "AI companion｜Ting Ting",
+        "description": "A hope to build a reliable personal AI companion that respects permissions, privacy and security."
+      },
+      "plans/metaverse": {
+        "title": "A world you can enter｜Ting Ting",
+        "description": "A hope to build a virtual world people can step into, extending the imaginary world of this website."
+      },
+      "games/lol": {
+        "title": "League of Legends｜Ting Ting",
+        "description": "Public match records for htw0702rg#0702. Only synced, published games are shown."
+      },
+      "search": {
+        "title": "Search｜Ting Ting",
+        "description": "Search Ting Ting’s public pages, journal, works, wiki and world notes."
+      },
+      "now": {
+        "title": "Now｜Ting Ting",
+        "description": "What is public right now is this personal website, in Traditional Chinese, English and Japanese."
+      },
+      "admin": {
+        "title": "Studio｜Ting Ting",
+        "description": "Private content studio."
+      },
+      "404": {
+        "title": "Path not found｜Ting Ting",
+        "description": "This path has no page. Return to Ting Ting’s world."
+      }
+    },
+    "jp": {
+      "home": {
+        "title": "筳筳｜htw0702",
+        "description": "筳筳の個人世界。台湾から、海岸・祭り・夜市・花火を、触れると応えるサイトにしました。"
+      },
+      "wiki": {
+        "title": "ウィキ｜筳筳",
+        "description": "王顥筳（筳筳）の公開ウィキ。作品、興味、旅、そして育っていく個人の世界。"
+      },
+      "blog": {
+        "title": "手記｜筳筳",
+        "description": "海辺の手記。暮らし、技術、旅、そして道の途中の考え。"
+      },
+      "works": {
+        "title": "作品｜筳筳",
+        "description": "公開作品。いま収録しているのは個人サイト htw0702.com。繁体字中国語が中心で、英語と日本語もあります。"
+      },
+      "world": {
+        "title": "世界設定｜筳筳",
+        "description": "台湾の日常、日本の祭り、海岸、夜市、電車、花火を組み直した架空世界。"
+      },
+      "store": {
+        "title": "売店｜筳筳",
+        "description": "個人の品とサポートの入口。公開された品はここに並び、決済リンクは設定後だけ表示します。"
+      },
+      "social": {
+        "title": "ソーシャル｜筳筳",
+        "description": "Instagram、Threads、X。メールは taiwan@htw0702.com と japan@htw0702.com。"
+      },
+      "plans": {
+        "title": "計画｜筳筳",
+        "description": "三つの公開している長期の方向。アニメ映画、AIの相棒、歩いて入れる世界。"
+      },
+      "plans/animation": {
+        "title": "アニメ映画｜筳筳",
+        "description": "いつか自分のアニメ映画を完成させたい。光と風景と音楽で、出会いを信じる物語を。"
+      },
+      "plans/ai": {
+        "title": "AIの相棒｜筳筳",
+        "description": "文字と音声を理解し、暮らしを助け、権限とプライバシーを大切にする個人AIを作りたい。"
+      },
+      "plans/metaverse": {
+        "title": "歩いて入れる世界｜筳筳",
+        "description": "本当に中へ入り、探索し、出会える仮想世界を、このサイトの架空世界から広げたい。"
+      },
+      "games/lol": {
+        "title": "League of Legends｜筳筳",
+        "description": "htw0702rg#0702 の公開対戦記録。同期され、公開された試合だけを表示します。"
+      },
+      "search": {
+        "title": "検索｜筳筳",
+        "description": "筳筳の公開ページ、手記、作品、ウィキ、世界設定を検索します。"
+      },
+      "now": {
+        "title": "いま｜筳筳",
+        "description": "いま公開しているのはこの個人サイト。繁体字中国語が中心で、英語と日本語も同じ世界にあります。"
+      },
+      "admin": {
+        "title": "スタジオ｜筳筳",
+        "description": "非公開のコンテンツスタジオ。"
+      },
+      "404": {
+        "title": "ページがありません｜筳筳",
+        "description": "この道にはページがありません。筳筳の世界へ戻ります。"
+      }
+    }
+  }
+}
