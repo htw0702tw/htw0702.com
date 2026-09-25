@@ -72,7 +72,7 @@ function ledes() {
     blog: t("寫下來、並公開的文字。", "Writing that has been made public.", "書いて、公開した文章。"),
     world: t("可以走進去的世界仍是長期希望。這一頁不是場景介紹。", "A world you can step into is still a long-term hope. This page is not a tour.", "歩いて入れる世界は、まだ長期の希望です。見学ページではありません。"),
     now: t("現在願意公開的近況。", "What is public right now.", "いま公開していること。"),
-    store: t("個人周邊與支持的入口。目前沒有上架商品。", "Personal goods and support. Nothing is listed for sale.", "品とサポートの入口。いま販売している品はありません。"),
+    store: t("個人周邊與支持的入口。有設定的品項才會列在這裡。", "A door for personal goods and support. Items appear here only after they are configured.", "品とサポートの入口。設定した品だけを並べます。"),
   };
 }
 function planCopy() {
@@ -829,15 +829,22 @@ function bindMotion() {
       for (const entry of entries)
         if (entry.isIntersecting) {
           entry.target.classList.add("in");
+          entry.target.classList.remove("pending");
           io.unobserve(entry.target);
         }
     },
     { threshold: 0.16, rootMargin: "0px 0px -6% 0px" },
   );
   const arm = () =>
-    document.querySelectorAll(".reveal:not(.in)").forEach((el, i) => {
+    document.querySelectorAll(".reveal:not(.in):not(.pending)").forEach((el, i) => {
       if (!el.style.getPropertyValue("--i")) el.style.setProperty("--i", String(i % 8));
-      io.observe(el);
+      const r = el.getBoundingClientRect();
+      const seen = r.bottom > 0 && r.top < innerHeight * 0.92;
+      if (seen || !motionOK()) el.classList.add("in");
+      else {
+        el.classList.add("pending");
+        io.observe(el);
+      }
     });
   new MutationObserver(arm).observe(main, { childList: true, subtree: true });
   arm();

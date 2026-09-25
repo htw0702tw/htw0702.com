@@ -102,7 +102,7 @@
       "name": "小賣所｜個人周邊與支持",
       "slug": "store",
       "updated": "2026-09-12",
-      "body": "小賣所是個人周邊與支持的入口。目前沒有上架商品。公開的品項若有設定，會列在這裡；付款連結只在設定好之後出現。私鑰、付款憑證與登入資訊不會出現在這個網站上。"
+      "body": "小賣所是個人周邊與支持的入口。公開的品項若有設定，會列在這裡；付款連結只在設定好之後出現。私鑰、付款憑證與登入資訊不會出現在這個網站上。"
     },
     {
       "locale": "en",
@@ -110,7 +110,7 @@
       "name": "Shop｜Goods and support",
       "slug": "store",
       "updated": "2026-09-12",
-      "body": "This is the door for personal goods and support. Nothing is listed for sale right now. Public items appear here only after they are configured; payment links appear only after they are configured too. Private keys, payment credentials and sign-in secrets are never shown on this website."
+      "body": "This is the door for personal goods and support. Public items appear here only after they are configured; payment links appear only after they are configured too. Private keys, payment credentials and sign-in secrets are never shown on this website."
     },
     {
       "locale": "jp",
@@ -118,7 +118,7 @@
       "name": "売店｜品とサポート",
       "slug": "store",
       "updated": "2026-09-12",
-      "body": "売店は、個人の品とサポートの入口です。いま販売している品はありません。公開する品は設定してから並べ、決済リンクも設定が済んでから表示します。秘密鍵、決済情報、ログイン情報はこのサイトに出しません。"
+      "body": "売店は、個人の品とサポートの入口です。公開する品は設定してから並べ、決済リンクも設定が済んでから表示します。秘密鍵、決済情報、ログイン情報はこのサイトに出しません。"
     },
     {
       "locale": "tw",
