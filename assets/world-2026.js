@@ -176,7 +176,7 @@ function plansHTML() {
   return `<div class="plans-grid">${planCopy()
     .map(
       (p, i) =>
-        `<a class="plan magnetic reveal" href="${link("plans/" + p.slug)}" style="--i:${i}"><small>0${i + 1}</small><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p><em>↗</em></a>`,
+        `<a class="plan frame-card magnetic reveal" href="${link("plans/" + p.slug)}" style="--i:${i};--card-hue:${i * 18}deg"><small>0${i + 1}</small><span class="band" aria-hidden="true"></span><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p><em>${t("進入", "Open", "見る")} →</em></a>`,
     )
     .join("")}</div>`;
 }
@@ -184,7 +184,7 @@ function sceneCards() {
   return `<div class="scene-cards">${districts()
     .map(
       ([id, name, meta, copy], i) =>
-        `<a class="scene-card magnetic reveal" href="${link("")}#scene-${id}" style="--i:${i}"><small>0${i + 1}</small><strong>${esc(name)}</strong><p>${esc(copy)}</p><span>${esc(meta)}</span></a>`,
+        `<a class="scene-card frame-card magnetic reveal" href="${link("")}#scene-${id}" style="--i:${i};--card-hue:${i * 16}deg"><small>0${i + 1}</small><span class="band" aria-hidden="true"></span><strong>${esc(name)}</strong><p>${esc(copy)}</p><em>${esc(meta)}</em></a>`,
     )
     .join("")}</div>`;
 }
@@ -200,9 +200,24 @@ let appearance = {
     jp: "想像を、この世界に残そう。",
   },
 };
+function headlineLayers(text) {
+  const raw = String(text || "").replace(/[。．.]+$/u, "").trim();
+  const bits = raw.split(/[，,]/).map((s) => s.trim()).filter(Boolean);
+  if (bits.length >= 2) return [bits[0], bits.slice(1).join("，")];
+  const words = raw.split(/\s+/).filter(Boolean);
+  if (words.length >= 4) {
+    const mid = Math.ceil(words.length / 2);
+    return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
+  }
+  return [raw, ""];
+}
+function headlineHTML() {
+  const [a, b] = headlineLayers(appearance.hero?.[lang] || appearance.hero?.tw || "");
+  return `<span class="line-a">${kinetic(a)}</span>${b ? `<span class="line-b">${kinetic(b)}</span>` : ""}`;
+}
 function paintHeadline() {
   const h = document.querySelector("[data-headline]");
-  if (h) h.innerHTML = kinetic(appearance.hero?.[lang] || appearance.hero?.tw || "");
+  if (h) h.innerHTML = headlineHTML();
 }
 function applyAppearance(x) {
   appearance = x;
@@ -297,11 +312,30 @@ try {
   enabled = localStorage.getItem("world-sound") !== "off";
 } catch {}
 function soundLabel() {
-  const btn = $("#sound");
-  if (!btn) return;
   const running = enabled && audio?.state === "running";
-  btn.textContent = running ? t("♫ 海浪", "♫ Waves", "♫ 波音") : enabled ? t("♫ 點一下", "♫ Tap", "♫ タップ") : t("♫ 靜音", "♫ Muted", "♫ 消音");
-  btn.setAttribute("aria-pressed", String(enabled));
+  const dock = $("#sound");
+  if (dock) {
+    dock.textContent = running ? t("♫ 海浪", "♫ Waves", "♫ 波音") : enabled ? t("♫ 點一下", "♫ Tap", "♫ タップ") : t("♫ 靜音", "♫ Muted", "♫ 消音");
+    dock.setAttribute("aria-pressed", String(enabled));
+  }
+  const chip = $("#frame-sound");
+  if (chip) {
+    chip.textContent = enabled ? (running ? t("音 開", "Sound", "音") : t("音", "Sound", "音")) : t("靜音", "Muted", "消音");
+    chip.setAttribute("aria-pressed", String(enabled));
+  }
+}
+async function toggleSound() {
+  if (enabled && audio?.state === "running") {
+    enabled = false;
+    await audio.suspend();
+  } else {
+    enabled = true;
+    await startSound();
+  }
+  try {
+    localStorage.setItem("world-sound", enabled ? "on" : "off");
+  } catch {}
+  soundLabel();
 }
 async function startSound() {
   if (!enabled || route === "admin") return;
@@ -411,10 +445,11 @@ function home() {
         id === "festival"
           ? `<button class="btn ghost" type="button" data-firework="lg">${t("放一場花火", "Launch fireworks", "花火を上げる")}</button>`
           : "";
-      return `<article class="scene" id="scene-${id}" data-scene="${id}" data-watch="${id}"><div class="scene-bg" aria-hidden="true"></div><div class="scene-veil" aria-hidden="true"></div>${extra}<div class="scene-copy"><small>0${i + 1}  /  ${esc(meta)}</small><h2>${esc(name)}</h2><p>${esc(copy)}</p>${burst}</div></article>`;
+      return `<article class="scene" id="scene-${id}" data-scene="${id}" data-watch="${id}"><div class="scene-frame"><div class="scene-bg" aria-hidden="true"></div><div class="layer sweep" aria-hidden="true"></div><div class="scene-veil" aria-hidden="true"></div>${extra}<div class="scene-copy"><small>0${i + 1}</small><h2>${esc(name)}</h2><p>${esc(copy)}</p><p class="meta">${esc(meta)}</p>${burst}</div></div></article>`;
     })
     .join("");
-  main.innerHTML = `<section class="hero" id="intro" data-watch="harbor"><div class="hero-layers" aria-hidden="true"><div class="layer photo"></div><div class="layer haze"></div><div class="layer glow"></div></div><p class="vertical">${t("寫給，尚未相遇的你。", "For someone I have yet to meet.", "まだ出会っていない、あなたへ。")}</p><div class="hero-copy"><p class="kicker"><span>HTW0702</span><span>Taiwan × Japan</span></p><h1 class="kinetic" data-headline>${kinetic(appearance.hero[lang])}</h1><p class="lede">${t("我是筳筳，來自台灣。<br>喜歡海、花火，以及那些還沒成真的夢。<br>這裡，是我慢慢建造、也會對你做出反應的個人世界。", "I’m Ting Ting, from Taiwan.<br>I love the sea, fireworks, and dreams yet to come true.<br>This is the personal world I’m building — and it answers back.", "台湾の筳筳です。<br>海と花火、まだ叶っていない夢が好き。<br>ここは、少しずつ作っていて、触れると応える私の世界。")}</p><div class="cta-row"><a class="btn magnetic" href="#districts">${t("進入街區", "Enter the districts", "街区へ")}</a><button class="btn ghost magnetic" type="button" id="launch" data-firework="lg">${t("放一場花火", "Launch fireworks", "花火を上げる")}</button></div></div><p class="scroll-hint">${t("向下", "Scroll", "スクロール")}</p><div class="hero-meta"><span>Personal world</span><span id="hero-scene">01  Harbor</span></div></section><div class="marquee" aria-hidden="true"><div class="marquee-track"><span>${line}${line}</span><span>${line}${line}</span></div></div><nav class="scene-index" id="districts" aria-label="${t("街區", "Districts", "街区")}">${districts()
+  const paused = document.documentElement.dataset.play === "off";
+  main.innerHTML = `<section class="hero" id="intro" data-watch="harbor"><div class="frame" data-atmo="harbor"><div class="hero-layers" aria-hidden="true"><div class="layer photo"></div><div class="layer sweep"></div><div class="layer haze"></div><div class="layer glow"></div></div><div class="frame-tools"><button type="button" id="pause-motion" aria-pressed="${paused}"><b>${paused ? "01" : "00"}</b> <span>${paused ? t("播放", "Play", "再生") : t("暫停", "Pause", "停止")}</span></button><button type="button" id="frame-sound" aria-pressed="${enabled}">${t("音", "Sound", "音")}</button></div><p class="atmo-label" id="atmo-label">01  ${t("海風港町", "Harbor", "海風港町")}</p><div class="hero-copy"><p class="kicker"><span>HTW0702</span><span>Taiwan × Japan</span></p><h1 class="kinetic layered" data-headline>${headlineHTML()}</h1><div class="caption-row"><p class="paper">${t("我是筳筳，來自台灣。喜歡海、花火，以及那些還沒成真的夢。", "I’m Ting Ting, from Taiwan. I love the sea, fireworks, and dreams yet to come true.", "台湾の筳筳です。海と花火、まだ叶っていない夢が好き。")}</p><p class="paper">${t("這裡，是我慢慢建造、也會對你做出反應的個人世界。", "This is the personal world I’m building — and it answers back.", "ここは、少しずつ作っていて、触れると応える私の世界。")}</p></div><div class="cta-row"><a class="btn solid" href="#districts">${t("進入街區", "Enter the districts", "街区へ")} ↓</a><button class="btn ghost" type="button" id="launch" data-firework="lg">${t("放一場花火", "Launch fireworks", "花火を上げる")}</button></div></div></div></section><div class="marquee" aria-hidden="true"><div class="marquee-track"><span>${line}${line}</span><span>${line}${line}</span></div></div><nav class="scene-index" id="districts" aria-label="${t("街區", "Districts", "街区")}">${districts()
     .map(
       ([id, name], i) =>
         `<a class="magnetic" data-scene-link="${id}" href="#scene-${id}" ${id === "harbor" ? 'aria-current="true"' : ""}>0${i + 1}  ${esc(name)}</a>`,
@@ -422,12 +457,12 @@ function home() {
     .join("")}</nav>${scenes}<section class="block" id="market" data-watch="market"><div class="block-head"><div><small class="eyebrow">02</small><h2>${t("夜市沒有打烊。", "The night market stays open.", "夜市は、まだ開いている。")}</h2></div><p>${t("點亮燈籠，或打開射的遊戲屋。天空會回應。", "Light a lantern, or open the shooting stall. The sky answers.", "灯籠を灯すか、射的を押して。空が応える。")}</p></div><div class="lantern-row">${[0, 1, 2, 3, 4].map(() => `<button class="lantern" type="button" aria-pressed="false" aria-label="${t("燈籠", "Lantern", "灯籠")}"><i></i></button>`).join("")}</div><div class="stalls">${stalls()
     .map(
       (row, i) =>
-        `<button class="stall magnetic reveal" type="button" data-firework="${row[6]}" style="--i:${i}"><small>0${i + 1}</small><b>${t(row[0], row[1], row[2])}</b><span>${t(row[3], row[4], row[5])}</span></button>`,
+        `<button class="stall frame-card magnetic reveal" type="button" data-firework="${row[6]}" style="--i:${i};--card-hue:${i * 22}deg"><small>0${i + 1}</small><span class="band" aria-hidden="true"></span><b>${t(row[0], row[1], row[2])}</b><span>${t(row[3], row[4], row[5])}</span></button>`,
     )
     .join("")}</div></section><section class="block" id="portals"><div class="block-head"><div><small class="eyebrow">03</small><h2>${t("從世界裡，走進公開內容。", "Step from the world into the public work.", "世界から、公開コンテンツへ。")}</h2></div><p>${t("維基、作品、手記、社群。都還是這個人的入口。", "Wiki, works, journal, social. Still one person’s doors.", "ウィキ、作品、手記、ソーシャル。入口は、すべて私。")}</p></div><div class="portals">${portals
     .map(
       ([p, n, h, d], i) =>
-        `<a class="portal magnetic reveal" href="${link(p)}" style="--i:${i}"><small>${n}</small><h3>${esc(h)}</h3><p>${esc(d)}</p><span>↗</span></a>`,
+        `<a class="portal frame-card magnetic reveal" href="${link(p)}" style="--i:${i};--card-hue:${i * 14}deg"><small>${n}</small><span class="band" aria-hidden="true"></span><h3>${esc(h)}</h3><p>${esc(d)}</p><em>${t("進入", "Open", "見る")} →</em></a>`,
     )
     .join("")}</div></section><section class="promise" id="promise" data-watch="festival"><div class="promise-bg" aria-hidden="true"></div><div class="veil" aria-hidden="true"></div><div><small class="eyebrow">04</small><h2>${t("讓天空，只為花火亮起。", "Let the sky glow only with fireworks.", "空を照らすのは、花火だけで。")}</h2></div><div><p>${t("我想像的世界，有乾淨的河川、通往海邊的小路，和願意互相理解的人。把台灣的溫度、日本夏日的光，放進自己的故事裡。", "In the world I imagine, rivers run clear, paths lead to the sea, and people choose understanding. Taiwanese warmth and Japanese summer light become part of my own stories.", "澄んだ川、海へ続く小道、理解し合おうとする人たち。台湾の温かさと日本の夏の光を、自分の物語に込めて。")}</p><a class="btn magnetic" href="${link("world")}">${t("世界設定", "World bible", "世界の設定")}</a></div></section><section class="block" id="someday" data-watch="city"><small class="eyebrow">05</small><h2>${titles().plans}</h2>${plansHTML()}</section>`;
   setScene("harbor");
@@ -847,6 +882,38 @@ async function draw() {
   if (["works", "wiki", "blog", "world", "now"].includes(route)) return cms(route);
   return notFound();
 }
+let atmoTimer = 0;
+let atmoIndex = 0;
+const atmoIds = ["harbor", "market", "festival", "city"];
+function atmoName(id) {
+  return {
+    harbor: t("海風港町", "Harbor", "海風港町"),
+    market: t("暮霞夜市", "Night market", "暮霞夜市"),
+    festival: t("夏祭坂", "Festival", "夏祭坂"),
+    city: t("霓虹電車線", "Tram", "ネオン電車線"),
+  }[id];
+}
+function paintAtmo(i) {
+  const frame = document.querySelector(".hero .frame");
+  if (!frame) return;
+  const id = atmoIds[i % atmoIds.length];
+  frame.dataset.atmo = id;
+  const label = document.getElementById("atmo-label");
+  if (label) label.textContent = `0${(i % atmoIds.length) + 1}  ${atmoName(id)}`;
+}
+function armAtmo() {
+  clearInterval(atmoTimer);
+  atmoTimer = 0;
+  if (route || document.documentElement.dataset.play === "off" || !motionOK()) return;
+  if (!document.querySelector(".hero .frame")) return;
+  atmoTimer = setInterval(() => {
+    const hero = document.getElementById("intro");
+    if (!hero || route || document.documentElement.dataset.play === "off") return;
+    if (hero.getBoundingClientRect().bottom < 120) return;
+    atmoIndex = (atmoIndex + 1) % atmoIds.length;
+    paintAtmo(atmoIndex);
+  }, 7200);
+}
 async function render(opts = {}) {
   clearTimeout(searchTimer);
   const mine = ++renderToken;
@@ -866,6 +933,8 @@ async function render(opts = {}) {
     main.classList.add("page-enter");
   }
   watchStory();
+  soundLabel();
+  armAtmo();
   if (opts.focus) {
     const h = main.querySelector("h1");
     if (h) {
@@ -1086,6 +1155,7 @@ function bindMotion() {
         const bar = $("#progress");
         if (bar) bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
         document.body.classList.toggle("is-scrolled", y > 8);
+        $("#to-top")?.classList.toggle("show", y > 520);
         ticking = false;
       });
     },
@@ -1158,23 +1228,31 @@ function bindChrome() {
     if (painting) return;
     document.body.dataset.theme = e.target.value;
   };
-  $("#sound").onclick = async () => {
-    if (enabled && audio?.state === "running") {
-      enabled = false;
-      await audio.suspend();
-    } else {
-      enabled = true;
-      await startSound();
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#sound, #frame-sound")) {
+      e.preventDefault();
+      toggleSound();
     }
-    try {
-      localStorage.setItem("world-sound", enabled ? "on" : "off");
-    } catch {}
-    soundLabel();
-  };
+    const pause = e.target.closest("#pause-motion");
+    if (pause) {
+      const pausing = document.documentElement.dataset.play !== "off";
+      document.documentElement.dataset.play = pausing ? "off" : "on";
+      pause.setAttribute("aria-pressed", String(pausing));
+      const num = pause.querySelector("b");
+      const label = pause.querySelector("span");
+      if (num) num.textContent = pausing ? "01" : "00";
+      if (label) label.textContent = pausing ? t("播放", "Play", "再生") : t("暫停", "Pause", "停止");
+      if (pausing) {
+        clearInterval(atmoTimer);
+        atmoTimer = 0;
+      } else armAtmo();
+    }
+  });
+  $("#to-top").onclick = () => window.scrollTo({ top: 0, behavior: motionOK() ? "smooth" : "auto" });
   document.addEventListener(
     "pointerdown",
     (e) => {
-      if (!e.target.closest("#sound")) startSound();
+      if (!e.target.closest("#sound, #frame-sound, #pause-motion")) startSound();
     },
     { once: true },
   );
