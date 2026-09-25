@@ -1,13 +1,13 @@
 # htw0702.com
 
-Wang Hao Ting（筳筳）的個人世界官網。
+Wang Hao Ting（筳筳）的個人網站。來自台灣。公開頁面是維基、手記、作品、社群、小賣所、計畫、現在、搜尋，以及 League of Legends。
 
 ## Public routes
 - /tw /en /jp — multilingual home
 - /tw/wiki /en/wiki /jp/wiki — personal wiki & portfolio
 - /tw/blog /en/blog /jp/blog — blog
 - /tw/works /en/works /jp/works — public works
-- /tw/world /en/world /jp/world — Taiwan × Japan inspired imaginary world
+- /tw/world /en/world /jp/world — a short note that “a world you can step into” is a future plan, not a place that exists
 - /tw/store /en/store /jp/store — personal goods and support
 - /tw/social /en/social /jp/social — Instagram, Threads, and X. `/me` stays as an alias of the same page.
 - /tw/search /en/search /jp/search — site search over public pages

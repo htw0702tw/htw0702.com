@@ -45,8 +45,8 @@ const guides = {
   tw: [
     {
       path: "",
-      name: "筳筳的世界",
-      body: "首頁。海風港町、暮霞夜市、夏祭坂、霓虹電車線、花火。願我們相遇的世界，只有花火，沒有戰火。",
+      name: "筳筳",
+      body: "首頁。王顥筳，筳筳，來自台灣。維基、手記、作品、社群、小賣所、計畫、現在、搜尋、League of Legends。帳號 htw0702rg#0702。",
     },
     {
       path: "social",
@@ -62,8 +62,8 @@ const guides = {
   en: [
     {
       path: "",
-      name: "Ting Ting’s world",
-      body: "Home. Harbor quarter, dusk night market, festival hill, neon tram, fireworks. May the skies we share hold fireworks, never war.",
+      name: "Ting Ting",
+      body: "Home. Wang Hao Ting, Ting Ting, from Taiwan. Wiki, journal, works, social, shop, plans, now, search, and League of Legends. Account htw0702rg#0702.",
     },
     {
       path: "social",
@@ -79,8 +79,8 @@ const guides = {
   jp: [
     {
       path: "",
-      name: "筳筳の世界",
-      body: "ホーム。海風港町、暮霞夜市、夏祭坂、ネオン電車線、花火。出会う世界の空に、戦火ではなく花火を。",
+      name: "筳筳",
+      body: "ホーム。王顥筳、筳筳、台湾出身。ウィキ、手記、作品、ソーシャル、売店、計画、いま、検索、League of Legends。アカウント htw0702rg#0702。",
     },
     {
       path: "social",

@@ -4,7 +4,7 @@ Project: htw0702-com
 Frontend:
 - /assets/world-2026.css
 - /assets/world-2026.js
-- /assets/coast.webp
+- /images/IMG_5309.jpeg
 Architecture:
 - Worker serves locale pages, search, and SEO tags
 - Notion, D1 studio, Apple sign-in, Slack, and League of Legends sync stay in place
