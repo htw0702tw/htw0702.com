@@ -1,5 +1,5 @@
 {
-  "image": "https://htw0702.com/assets/og.jpg",
+  "image": "https://htw0702.com/assets/og.png",
   "locales": {
     "tw": {
       "home": {
@@ -33,6 +33,10 @@
       "now": {
         "title": "現在｜筳筳",
         "description": "現在公開的是這個個人網站。繁體中文為主，並有英文與日文。"
+      },
+      "games": {
+        "title": "遊戲｜筳筳",
+        "description": "遊戲入口。暮霞｜MOS 是另外的戰隊品牌。個人站不放對戰資料。"
       },
       "admin": {
         "title": "工作室｜筳筳",
@@ -76,6 +80,10 @@
         "title": "Now｜Ting Ting",
         "description": "What is public right now is this personal website, in Traditional Chinese, English and Japanese."
       },
+      "games": {
+        "title": "Games｜Ting Ting",
+        "description": "A games door. Muohsia MOS is a separate team. This personal site does not list match records."
+      },
       "admin": {
         "title": "Studio｜Ting Ting",
         "description": "Private content studio."
@@ -117,6 +125,10 @@
       "now": {
         "title": "いま｜筳筳",
         "description": "いま公開しているのはこの個人サイト。繁体字中国語が中心で、英語と日本語もあります。"
+      },
+      "games": {
+        "title": "ゲーム｜筳筳",
+        "description": "ゲームへの入口。暮霞｜MOS は別のチームです。この個人サイトに対戦記録は置きません。"
       },
       "admin": {
         "title": "スタジオ｜筳筳",

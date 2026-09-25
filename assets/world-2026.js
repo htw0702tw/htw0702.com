@@ -2,7 +2,7 @@ const $ = (s) => document.querySelector(s);
 const esc = (v) =>
   String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const REJECTED = new RegExp(
-  ["\u82b1\u706b", "\u591c\u5e02", "\u796d\u5178", "\u66ae\u971e", "\u6e2f\u753a", "\u590f\u796d", "fire" + "works", "night " + "market"].join("|"),
+  ["\u82b1\u706b", "\u591c\u5e02", "\u796d\u5178", "\u6e2f\u753a", "\u590f\u796d", "fire" + "works", "night " + "market"].join("|"),
   "i",
 );
 let lang = "tw";
@@ -33,9 +33,9 @@ const languageNames = {
 
 function themeOptions() {
   return [
-    ["dusk", t("紙色", "Paper", "紙")],
-    ["day", t("亮紙", "Bright", "明るい紙")],
-    ["night", t("夜讀", "Night", "夜")],
+    ["dusk", t("暮色", "Dusk", "ダスク")],
+    ["day", t("晨光", "Day", "昼")],
+    ["night", t("深空", "Deep", "深空")],
   ];
 }
 function navItems() {
@@ -43,6 +43,7 @@ function navItems() {
     ["wiki", t("維基", "Wiki", "ウィキ")],
     ["blog", t("手記", "Journal", "手記")],
     ["works", t("作品", "Works", "作品")],
+    ["games", t("遊戲", "Games", "ゲーム")],
     ["social", t("社群", "Social", "ソーシャル")],
     ["store", t("小賣所", "Shop", "売店")],
     ["now", t("現在", "Now", "いま")],
@@ -52,6 +53,7 @@ function navItems() {
 function titles() {
   return {
     works: t("作品", "Works", "作品"),
+    games: t("遊戲", "Games", "ゲーム"),
     wiki: t("關於筳筳", "About Ting Ting", "筳筳について"),
     blog: t("手記", "Journal", "手記"),
     me: t("社群", "Social", "ソーシャル"),
@@ -64,6 +66,7 @@ function titles() {
 function ledes() {
   return {
     works: t("完成並公開的作品。", "Work that is finished and public.", "完成して公開している作品。"),
+    games: t("這裡只放戰隊入口。對戰資料在戰隊的網站。", "Only the team door lives here. Match records stay on the team site.", "ここにあるのはチームへの入口だけ。対戦記録はチームのサイトにあります。"),
     wiki: t("公開維基。私人筆記不會出現在這裡。", "The public wiki. Private notes stay off this page.", "公開ウィキ。非公開のメモは載せません。"),
     blog: t("寫下來、並公開的文字。", "Writing that has been made public.", "書いて、公開した文章。"),
     now: t("現在願意公開的近況。", "What is public right now.", "いま公開していること。"),
@@ -78,7 +81,9 @@ function collection() {
       kicker: "WIKI",
       title: t("關於筳筳", "About Ting Ting", "筳筳について"),
       text: t("公開維基。Notion 裡設為公開的紀錄才會出現。", "The public wiki. Only records marked public in Notion appear.", "公開ウィキ。Notion で公開した記録だけが出ます。"),
-      photo: true,
+      mark: t("維", "W", "維"),
+      viz: "#2a1844",
+      vizKey: "wiki",
     },
     {
       href: "blog",
@@ -87,7 +92,8 @@ function collection() {
       title: t("手記", "Journal", "手記"),
       text: t("寫下來並公開的文字，依更新時間排列。", "Public writing, ordered by update time.", "書いて公開した文章を、更新順に並べます。"),
       mark: t("記", "Aa", "記"),
-      viz: "#e4ddd2",
+      viz: "#1a2740",
+      vizKey: "journal",
     },
     {
       href: "works",
@@ -96,7 +102,8 @@ function collection() {
       title: t("作品", "Works", "作品"),
       text: t("目前公開的作品是這座網站 htw0702.com。繁體中文為主，並有英文與日文。", "The public work listed now is this site, htw0702.com.", "いま公開している作品は、このサイト htw0702.com。"),
       mark: ".com",
-      viz: "#d9e0db",
+      viz: "#12303a",
+      vizKey: "works",
     },
     {
       href: "social",
@@ -105,7 +112,8 @@ function collection() {
       title: t("社群", "Social", "ソーシャル"),
       text: t("Instagram htw0702ig、Threads htw0702threads、X htw0702x。", "Instagram htw0702ig, Threads htw0702threads, and X htw0702x.", "Instagram htw0702ig、Threads htw0702threads、X htw0702x。"),
       mark: "@",
-      viz: "#e7e0d6",
+      viz: "#32182c",
+      vizKey: "social",
     },
     {
       href: "store",
@@ -114,7 +122,8 @@ function collection() {
       title: t("小賣所", "Shop", "売店"),
       text: t("目前沒有上架商品。付款連結只在設定完成後出現。", "Nothing is for sale yet. Payment links appear only after they are configured.", "いま販売している品はありません。決済リンクは設定後だけ表示します。"),
       mark: "—",
-      viz: "#ece7df",
+      viz: "#241c33",
+      vizKey: "shop",
     },
     {
       href: "now",
@@ -123,7 +132,8 @@ function collection() {
       title: t("現在", "Now", "いま"),
       text: t("現在公開的是這個網站。繁體中文為主，英文與日文也可以讀。", "What is public right now is this website, in three languages.", "いま公開しているのは、このサイトです。"),
       mark: "Now",
-      viz: "#e5ebe4",
+      viz: "#1c2438",
+      vizKey: "now",
     },
     {
       href: "search",
@@ -132,7 +142,8 @@ function collection() {
       title: t("搜尋", "Search", "検索"),
       text: t("在公開頁面、手記、作品與維基裡找一句話。", "Find a line across the public pages, journal, works, and wiki.", "公開ページ、手記、作品、ウィキから一文を探します。"),
       mark: "Aa",
-      viz: "#e6e2da",
+      viz: "#2c2148",
+      vizKey: "search",
     },
   ];
 }
@@ -142,7 +153,7 @@ const unavailableCopy = () =>
 
 let appearance = {
   theme: "dusk",
-  accent: "#234238",
+  accent: "#c4b5fd",
   motion: true,
   sound: false,
   hero: { tw: "筳筳。", en: "Ting Ting.", jp: "筳筳。" },
@@ -163,8 +174,11 @@ function applyAppearance(x) {
   appearance = x;
   document.body.dataset.theme = x.theme || "dusk";
   document.body.dataset.motion = String(x.motion !== false);
-  const accent = /^#e8b495$/i.test(x.accent || "") ? "#234238" : x.accent;
-  if (accent) document.documentElement.style.setProperty("--accent", accent);
+  const accent = String(x.accent || "").toLowerCase();
+  const legacy = accent === "#234238" || accent === "#e8b495";
+  if (accent && !legacy) document.documentElement.style.setProperty("--accent", x.accent);
+  else document.documentElement.style.removeProperty("--accent");
+  syncField();
   paintHeadline();
 }
 function syncPauseLabel() {
@@ -211,6 +225,7 @@ function paintChrome() {
     $("#language").value = lang;
     document.documentElement.lang = { tw: "zh-Hant-TW", en: "en-US", jp: "ja-JP" }[lang];
     $("#peace").textContent = t("來自台灣。", "From Taiwan.", "台湾出身。");
+    document.querySelector(".top-social")?.setAttribute("aria-label", t("社群", "Social", "ソーシャル"));
     const write = $("#write");
     if (write) write.innerHTML = `${t("寫信", "Write", "メール")} <i aria-hidden="true">↗</i>`;
     $("#to-top")?.setAttribute("aria-label", t("回到頂端", "Back to top", "上へ戻る"));
@@ -277,21 +292,28 @@ function posts(items) {
     : `<p class="empty">${emptyCopy()}</p>`;
 }
 function card(item, i) {
-  const media = item.photo
-    ? `<div class="viz"><img src="/images/IMG_5309.jpeg" alt=""></div>`
-    : `<div class="viz" style="--viz:${item.viz || "#e6e0d6"}"><b>${esc(item.mark || "·")}</b></div>`;
-  return `<a class="piece magnetic reveal" href="${esc(item.href.startsWith("/") ? item.href : link(item.href))}" style="--i:${i}"><div class="piece-top"><span class="num">${esc(item.no)}</span><small>${esc(item.kicker)}</small></div>${media}<h3>${esc(item.title)}</h3><p>${esc(item.text)}</p><em>${t("開啟", "Open", "開く")} →</em></a>`;
+  const external = /^https?:/i.test(item.href || "");
+  const href = external || String(item.href || "").startsWith("/") ? item.href : link(item.href);
+  const media = `<div class="viz viz-${esc(item.vizKey || "sigil")}" style="--viz:${item.viz || "#1b1630"}"><b>${esc(item.mark || "·")}</b><i aria-hidden="true"></i></div>`;
+  return `<a class="piece magnetic reveal" href="${esc(href)}" ${external ? 'target="_blank" rel="noopener"' : ""} style="--i:${i}"><div class="piece-top"><span class="num">${esc(item.no)}</span><small>${esc(item.kicker)}</small></div>${media}<h3>${esc(item.title)}</h3><p>${esc(item.text)}</p><em>${external ? "↗" : t("開啟", "Open", "開く") + " →"}</em></a>`;
 }
 function sub(title, kicker, desc = "") {
   return `<section class="page-hero"><p class="kicker"><span>${esc(kicker)}</span></p><h1>${esc(title)}</h1>${desc ? `<p class="lede">${esc(desc)}</p>` : ""}</section>`;
 }
 
+function mosCard() {
+  return `<a class="mos magnetic reveal" href="https://moohsia.com" target="_blank" rel="noopener"><span class="num">MOS</span><em>${esc(t("傳說戰隊", "Team", "チーム"))}</em><strong>暮霞｜MOS</strong><p>${esc(t("戰隊的網站。個人站只留這扇門，不放對戰資料。", "The team site. This personal site only keeps the door.", "チームのサイト。この個人サイトは入口だけです。"))}</p><span class="mos-go">${esc(t("前往 moohsia.com", "Open moohsia.com", "moohsia.com を開く"))} ↗</span></a>`;
+}
+function watchBlock() {
+  return `<section class="watch" id="watch" aria-labelledby="watch-title"><div class="watch-copy"><p class="kicker"><span>YOUTUBE</span><span>htw0702yt</span></p><h2 id="watch-title">${esc(t("影像", "Picture", "映像"))}</h2><p class="lede">${esc(t("頻道先放在這裡。畫面是可更換的預覽，靜音，捲到附近才載入。", "The channel sits here. The frame is a replaceable preview: muted, and loaded only when it scrolls near.", "チャンネルはここ。枠は差し替えできるプレビューで、ミュート、近くまで来てから読み込みます。"))}</p><p class="preview-flag" data-yt-flag hidden></p><a class="text-link" data-yt-channel href="https://www.youtube.com/@htw0702yt" target="_blank" rel="noopener">YouTube · htw0702yt ↗</a></div><div class="player" data-yt><button class="poster" type="button" data-yt-play><span class="poster-art" aria-hidden="true"></span><span class="play-disc" aria-hidden="true"></span><span class="poster-label">${esc(t("播放預覽", "Play preview", "プレビューを再生"))}</span></button></div></section>`;
+}
 function home() {
   const doors = collection();
-  const ticker = "王顥筳　·　WANG HAO TING　·　筳筳　·　HTW0702　·　TAIWAN　·　";
-  main.innerHTML = `<section class="stage" id="intro"><div class="frame"><div class="frame-media"><img class="hero-photo" src="/images/IMG_5309.jpeg" width="1500" height="2000" alt="${esc(t("王顥筳", "Wang Hao Ting", "王顥筳"))}"><div class="sweep" aria-hidden="true"></div><div class="veil" aria-hidden="true"></div></div><div class="frame-tools" id="pause-slot"></div><div class="hero-copy"><p class="kicker"><span>HTW0702</span><span>TAIWAN</span></p><h1><span class="line-a kinetic" data-headline>${kinetic(heroText())}</span><span class="line-b">${esc(t("公開的頁面。", "The public pages.", "公開しているページ。"))}</span></h1><div class="captions"><p class="paper">${esc(t("我是王顥筳（筳筳），來自台灣。公開的維基、手記、作品與社群都從這裡進去。", "I’m Wang Hao Ting — Ting Ting — from Taiwan. The public wiki, journal, works, and social pages start here.", "王顥筳、筳筳です。台湾出身。公開のウィキ、手記、作品、ソーシャルはここから入ります。"))}</p></div><a class="goto magnetic" href="#collection"><span>${esc(t("往下看", "Scroll", "スクロール"))}</span><i aria-hidden="true">↓</i></a></div></div></section><div class="marquee" aria-hidden="true"><div class="marquee-track"><span>${esc(ticker)}</span><span>${esc(ticker)}</span></div></div><section class="story" data-story id="collection" aria-labelledby="collection-title"><div class="story-pin"><div class="story-head"><p class="index"><span data-story-index>01</span> — <span data-story-end>${String(doors.length).padStart(2, "0")}</span></p><h2 id="collection-title">${esc(t("公開頁面", "Public pages", "公開ページ"))}</h2><p>${esc(t("往下捲，卡片會跟著移動。維基、手記、作品、社群、小賣所、現在、搜尋。", "Scroll, and the cards travel with you. Wiki, journal, works, social, shop, now, search.", "スクロールすると、カードが一緒に動きます。ウィキ、手記、作品、ソーシャル、売店、いま、検索。"))}</p><div class="story-bar" aria-hidden="true"><i data-story-bar></i></div></div><div class="rail-window"><div class="rail" data-rail>${doors.map(card).join("")}<div id="live-rail" class="live-rail"></div></div></div></div></section><div class="sheet"><section class="person" aria-labelledby="person-title"><figure class="reveal"><img src="/images/IMG_5309.jpeg" width="1500" height="2000" alt="${esc(t("王顥筳", "Wang Hao Ting", "王顥筳"))}"><figcaption>筳筳 · Wang Hao Ting</figcaption></figure><div><p class="kicker"><span>ABOUT</span></p><h2 id="person-title">王顥筳</h2><p class="lede">${esc(t("筳筳，htw0702。來自台灣。公開的頁面從這裡開始。", "Ting Ting, htw0702. From Taiwan. The public pages start here.", "筳筳、htw0702。台湾出身。公開ページはここから始まります。"))}</p><ul class="facts"><li><a href="mailto:taiwan@htw0702.com">taiwan@htw0702.com</a></li><li><a href="mailto:japan@htw0702.com">japan@htw0702.com</a></li><li><a href="https://instagram.com/htw0702ig" target="_blank" rel="me noopener">Instagram · htw0702ig</a></li><li><a href="https://www.threads.net/@htw0702threads" target="_blank" rel="me noopener">Threads · htw0702threads</a></li><li><a href="https://x.com/htw0702x" target="_blank" rel="me noopener">X · htw0702x</a></li></ul><a class="text-link" href="${link("wiki")}">${esc(t("維基裡的介紹", "Read the wiki", "ウィキを読む"))} →</a></div></section></div>`;
+  const ticker = "HTW0702　·　筳筳　·　WANG HAO TING　·　TAIWAN　·　";
+  main.innerHTML = `<section class="stage" id="intro"><div class="scene" aria-hidden="true"><div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div><div class="grid-floor"></div></div><div class="hero-copy"><p class="kicker"><span>HTW0702</span><span>TAIWAN</span><span>01</span></p><h1><span class="line-a kinetic" data-headline>${kinetic(heroText())}</span><span class="line-b">${esc(t("公開的頁面。", "The public pages.", "公開しているページ。"))}</span></h1><p class="paper">${esc(t("我是王顥筳（筳筳），來自台灣。公開的維基、手記、作品與社群都從這裡進去。", "I’m Wang Hao Ting — Ting Ting — from Taiwan. The public wiki, journal, works, and social pages start here.", "王顥筳、筳筳です。台湾出身。公開のウィキ、手記、作品、ソーシャルはここから入ります。"))}</p><div class="hero-actions"><span id="pause-slot"></span><a class="goto magnetic" href="#watch"><span>${esc(t("影像", "Picture", "映像"))}</span><i aria-hidden="true">↓</i></a><a class="goto ghost magnetic" href="#collection"><span>${esc(t("往下看", "Scroll", "スクロール"))}</span></a></div></div></section><div class="marquee" aria-hidden="true"><div class="marquee-track"><span>${esc(ticker)}</span><span>${esc(ticker)}</span></div></div>${watchBlock()}<section class="story" data-story id="collection" aria-labelledby="collection-title"><div class="story-pin"><div class="story-head"><p class="index"><span data-story-index>01</span> — <span data-story-end>${String(doors.length).padStart(2, "0")}</span></p><h2 id="collection-title">${esc(t("目錄", "Index", "目次"))}</h2><p>${esc(t("往下捲，卡片會跟著移動。維基、手記、作品、社群、小賣所、現在、搜尋。", "Scroll, and the cards travel with you. Wiki, journal, works, social, shop, now, search.", "スクロールすると、カードが一緒に動きます。ウィキ、手記、作品、ソーシャル、売店、いま、検索。"))}</p><div class="story-bar" aria-hidden="true"><i data-story-bar></i></div></div><div class="rail-window"><div class="rail" data-rail>${doors.map(card).join("")}<div id="live-rail" class="live-rail"></div></div></div></div></section><section class="games" id="games" aria-labelledby="games-title"><p class="kicker"><span>GAMES</span><span>08</span></p><h2 id="games-title">${esc(t("遊戲", "Games", "ゲーム"))}</h2><p class="lede">${esc(t("個人品牌留在這個網站。戰隊是另一扇門。", "The personal brand stays on this site. The team is another door.", "個人のブランドはこのサイト。チームは別の扉です。"))}</p>${mosCard()}</section><div class="sheet"><section class="person" aria-labelledby="person-title"><div class="sigil reveal" aria-hidden="true"><span>筳</span></div><div><p class="kicker"><span>ABOUT</span></p><h2 id="person-title">王顥筳</h2><p class="lede">${esc(t("筳筳，htw0702。來自台灣。公開的頁面從這裡開始。", "Ting Ting, htw0702. From Taiwan. The public pages start here.", "筳筳、htw0702。台湾出身。公開ページはここから始まります。"))}</p><ul class="facts"><li><a href="mailto:taiwan@htw0702.com">taiwan@htw0702.com</a></li><li><a href="mailto:japan@htw0702.com">japan@htw0702.com</a></li><li><a href="https://www.youtube.com/@htw0702yt" target="_blank" rel="noopener">YouTube · htw0702yt</a></li></ul><a class="text-link" href="${link("wiki")}">${esc(t("維基裡的介紹", "Read the wiki", "ウィキを読む"))} →</a></div></section></div>`;
   fillLive();
   sizeStory();
+  hydrateWatch();
 }
 
 async function fillLive() {
@@ -319,7 +341,8 @@ async function fillLive() {
           title: x.name || specs[i][2],
           text: String(x.body || "").replace(/\s+/g, " ").slice(0, 96),
           mark: String(x.name || "·").slice(0, 1),
-          viz: "#efeae2",
+          viz: "#1b1630",
+          vizKey: "sigil",
         });
       });
     });
@@ -373,10 +396,7 @@ function storyFrame() {
 async function cms(kind) {
   const mine = renderToken;
   const loading = t("讀取中…", "Loading…", "読み込み中…");
-  const shelf =
-    kind === "wiki"
-      ? `<div class="wiki-layout"><figure class="portrait reveal"><img src="/images/IMG_5309.jpeg" width="1500" height="2000" alt="${esc(t("王顥筳", "Wang Hao Ting", "王顥筳"))}"><figcaption>筳筳 · Wang Hao Ting</figcaption></figure><div id="entries">${loading}</div></div>`
-      : `<div id="entries">${loading}</div>`;
+  const shelf = `<div id="entries">${loading}</div>`;
   const kick = { works: "Works", wiki: "Wiki", blog: "Journal", now: "Now" }[kind] || kind;
   main.innerHTML = sub(titles()[kind] || kind, kick, ledes()[kind] || "") + `<section class="section">${shelf}</section>`;
   try {
@@ -397,6 +417,7 @@ async function cms(kind) {
 
 function me() {
   const social = [
+    ["YouTube", "htw0702yt", "https://www.youtube.com/@htw0702yt"],
     ["Instagram", "htw0702ig", "https://instagram.com/htw0702ig"],
     ["Threads", "@htw0702threads", "https://www.threads.net/@htw0702threads"],
     ["X", "@htw0702x", "https://x.com/htw0702x"],
@@ -663,9 +684,15 @@ async function admin() {
   await refresh();
 }
 
+function games() {
+  main.innerHTML =
+    sub(titles().games, "Games", ledes().games) +
+    `<section class="section">${mosCard()}</section>`;
+}
 async function draw() {
   if (!route) return home();
   if (route === "me" || route === "contact" || route === "social") return me();
+  if (route === "games") return games();
   if (route === "search") return searchPage();
   if (route === "admin") return admin();
   if (route === "store") return store();
@@ -817,6 +844,7 @@ function bindChrome() {
     const pausing = document.documentElement.dataset.play !== "off";
     document.documentElement.dataset.play = pausing ? "off" : "on";
     syncPauseLabel();
+    syncField();
   });
   $("#to-top").onclick = () => window.scrollTo({ top: 0, behavior: motionOK() ? "smooth" : "auto" });
   document.addEventListener("click", (e) => {
@@ -855,9 +883,139 @@ function clock() {
     new Intl.DateTimeFormat(locale, { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit" }).format(new Date()) + " · Taipei";
 }
 
+let media = {
+  youtube: {
+    handle: "htw0702yt",
+    channelUrl: "https://www.youtube.com/@htw0702yt",
+    videoId: "",
+    placeholder: true,
+  },
+};
+async function loadMedia() {
+  try {
+    const r = await fetch("/assets/media.json");
+    if (!r.ok) return;
+    const data = await r.json();
+    if (data?.youtube && typeof data.youtube === "object") media = { ...media, ...data, youtube: { ...media.youtube, ...data.youtube } };
+  } catch {}
+}
+function hydrateWatch(root = document) {
+  const box = root.querySelector("[data-yt]");
+  if (!box || box.dataset.ready === "1") return;
+  box.dataset.ready = "1";
+  const yt = media.youtube || {};
+  const id = String(yt.videoId || "");
+  const ok = /^[A-Za-z0-9_-]{6,20}$/.test(id);
+  const flag = root.querySelector("[data-yt-flag]");
+  if (flag) {
+    const preview = yt.placeholder !== false;
+    flag.hidden = !preview;
+    flag.textContent = preview ? t("預覽片段", "Preview clip", "プレビュー") : "";
+  }
+  const channel = root.querySelector("[data-yt-channel]");
+  if (channel && /^https:\/\/(www\.)?youtube\.com\//.test(yt.channelUrl || "")) channel.href = yt.channelUrl;
+  let started = false;
+  const play = () => {
+    if (started || !ok) return;
+    started = true;
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1`;
+    iframe.title = t("YouTube 預覽", "YouTube preview", "YouTube プレビュー");
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.loading = "lazy";
+    iframe.setAttribute("allowfullscreen", "");
+    box.classList.add("is-live");
+    box.replaceChildren(iframe);
+  };
+  box.querySelector("[data-yt-play]")?.addEventListener("click", play);
+  if (ok && motionOK()) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        play();
+        io.disconnect();
+      }
+    }, { rootMargin: "160px" });
+    io.observe(box);
+  }
+}
+function bindField() {
+  const canvas = document.getElementById("field");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return;
+  const dots = Array.from({ length: 70 }, () => ({
+    x: Math.random(),
+    y: Math.random(),
+    z: 0.35 + Math.random() * 0.65,
+    r: 0.6 + Math.random() * 1.5,
+  }));
+  let w = 0;
+  let h = 0;
+  let raf = 0;
+  let running = false;
+  let px = 0.5;
+  let py = 0.35;
+  let tx = 0.5;
+  let ty = 0.35;
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+    w = canvas.width = Math.floor(innerWidth * dpr);
+    h = canvas.height = Math.floor(innerHeight * dpr);
+  };
+  const frame = (time) => {
+    if (!running) return;
+    raf = requestAnimationFrame(frame);
+    px += (tx - px) * 0.05;
+    py += (ty - py) * 0.05;
+    ctx.clearRect(0, 0, w, h);
+    const dpr = w / Math.max(innerWidth, 1);
+    for (let i = 0; i < dots.length; i++) {
+      const d = dots[i];
+      const drift = (time * 0.00002 + i * 0.01) * d.z;
+      const x = ((d.x + drift) % 1) * w + (px - 0.5) * 36 * d.z * dpr;
+      const y = ((d.y + drift * 0.45) % 1) * h + (py - 0.5) * 24 * d.z * dpr;
+      ctx.beginPath();
+      ctx.fillStyle = d.z > 0.72 ? "rgba(196,181,253,0.55)" : "rgba(122,215,234,0.38)";
+      ctx.arc(x, y, d.r * dpr * d.z, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  };
+  const start = () => {
+    if (running) return;
+    if (!motionOK() || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+    running = true;
+    raf = requestAnimationFrame(frame);
+  };
+  const stop = () => {
+    running = false;
+    cancelAnimationFrame(raf);
+  };
+  resize();
+  addEventListener("resize", () => {
+    resize();
+    if (!running) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  });
+  addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    tx = e.clientX / Math.max(innerWidth, 1);
+    ty = e.clientY / Math.max(innerHeight, 1);
+  });
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  window.syncField = () => (motionOK() ? start() : stop());
+  start();
+}
+function syncField() {
+  window.syncField?.();
+}
 readRoute();
 bindChrome();
 bindMotion();
+bindField();
+await loadMedia();
 await render({ enter: false });
 try {
   applyAppearance(await api("appearance"));

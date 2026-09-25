@@ -16,6 +16,7 @@ export const KNOWN = new Set([
   "search",
   "admin",
   "now",
+  "games",
 ]);
 
 function esc(s) {
@@ -70,7 +71,7 @@ export function renderDocument(html, { locale, route, status, query }) {
     alternateName: ["筳筳", "Wang Hao Ting", "htw0702"],
     url: "https://htw0702.com/tw",
     email: "taiwan@htw0702.com",
-    image: origin + "/assets/portrait.jpg",
+    image: origin + "/assets/og.png",
     sameAs: [
       "https://instagram.com/htw0702ig",
       "https://www.threads.net/@htw0702threads",

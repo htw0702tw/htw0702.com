@@ -1,3 +1,3 @@
-export const defaults={theme:'dusk',accent:'#234238',motion:true,sound:false,hero:{tw:'筳筳。',en:'Ting Ting.',jp:'筳筳。'}};
+export const defaults={theme:'dusk',accent:'#c4b5fd',motion:true,sound:false,hero:{tw:'筳筳。',en:'Ting Ting.',jp:'筳筳。'}};
 export function validateSettings(x){if(!['dusk','night','day'].includes(x.theme)||!/^#[0-9a-f]{6}$/i.test(x.accent)||typeof x.motion!=='boolean'||typeof x.sound!=='boolean')throw Error('invalid appearance');for(const l of ['tw','en','jp'])if(typeof x.hero?.[l]!=='string'||!x.hero[l].trim()||x.hero[l].length>120)throw Error('invalid headline');return {theme:x.theme,accent:x.accent,motion:x.motion,sound:x.sound,hero:Object.fromEntries(['tw','en','jp'].map(l=>[l,x.hero[l].trim()]))};}
 export async function settings(env){if(!env.DB)return defaults;const r=await env.DB.prepare("SELECT value FROM sync_state WHERE name='appearance'").first();return r?validateSettings(JSON.parse(r.value)):defaults;}

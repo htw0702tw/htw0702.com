@@ -1,0 +1,9 @@
+{
+  "youtube": {
+    "handle": "htw0702yt",
+    "channelUrl": "https://www.youtube.com/@htw0702yt",
+    "videoId": "aqz-KE-bpKQ",
+    "placeholder": true,
+    "note": "Swap videoId for an upload from the htw0702yt channel. While placeholder is true the site labels the embed as a preview clip (currently the Blender Foundation open film Big Buck Bunny, not a video from this channel)."
+  }
+}
