@@ -7,14 +7,15 @@ Frontend:
 - /images/IMG_5309.jpeg
 Architecture:
 - Worker serves locale pages, search, and SEO tags
-- Notion, D1 studio, Apple sign-in, Slack, and League of Legends sync stay in place
-- Battle-lab game pages are not part of the public site
+- Notion is the public content source of truth
+- D1 studio, Apple sign-in, and Slack stay in place
+- Plan pages, world notes, and League of Legends are not part of the public site
 Core routes:
 - /tw
 - /tw/wiki
 - /tw/blog
 - /tw/works
-- /tw/world
 - /tw/social
+- /tw/store
+- /tw/now
 - /tw/search
-- /tw/plans/*

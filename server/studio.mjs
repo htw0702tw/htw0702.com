@@ -1,4 +1,3 @@
-import {syncRiot,riotReady} from './riot.mjs';
 import {notifySlack} from './slack.mjs';
 import {settings,validateSettings} from './settings.mjs';
 import {normalize,decodeEntry} from './core.mjs';
@@ -20,9 +19,8 @@ export async function onRequest({request:req,env}){
  const user=await session(req,env);if(!user)return json({error:'unauthorized'},401);
  if(!['GET','HEAD'].includes(method)&&(req.headers.get('Origin')!==env.ADMIN_ORIGIN||req.headers.get('X-CSRF-Token')!==user.csrf))return json({error:'forbidden'},403);
  if(path==='appearance'&&method==='POST'){let x;try{x=validateSettings(await smallJson(req));}catch{return json({error:'invalid appearance'},400);}await env.DB.prepare("INSERT INTO sync_state(name,value) VALUES('appearance',?) ON CONFLICT(name) DO UPDATE SET value=excluded.value").bind(JSON.stringify(x)).run();return json(x);}
- if(path==='riot/sync'&&method==='POST')return json(await syncRiot(env));
  if(path==='slack/test'&&method==='POST')return json(await notifySlack(env));
- if(path==='me'&&method==='GET')return json({csrf:user.csrf,connections:{auth:true,database:!!env.DB,notion:!!(env.NOTION_TOKEN&&env.NOTION_DATA_SOURCE_ID),riot:riotReady(env),slack:!!env.SLACK_WEBHOOK_URL}});
+ if(path==='me'&&method==='GET')return json({csrf:user.csrf,connections:{auth:true,database:!!env.DB,notion:!!(env.NOTION_TOKEN&&env.NOTION_DATA_SOURCE_ID),slack:!!env.SLACK_WEBHOOK_URL}});
  if(path==='auth/logout'&&method==='POST'){await env.DB.prepare('DELETE FROM sessions WHERE token_hash=?').bind(await hash(cookie(req,'__Host-studio'))).run();const r=json({ok:true});r.headers.append('Set-Cookie','__Host-studio=; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=0');return r;}
  if(path==='entries'&&method==='GET'){const r=await env.DB.prepare('SELECT * FROM entries ORDER BY updated_at DESC LIMIT 500').all();return json({entries:r.results.map(decodeEntry)});}
  if(path==='entries'&&method==='POST'){

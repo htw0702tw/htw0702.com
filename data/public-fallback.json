@@ -5,111 +5,63 @@
       "kind": "wiki",
       "name": "個人維基｜關於筳筳",
       "slug": "about",
-      "updated": "2026-09-12",
-      "body": "這裡是王顥筳（筳筳）的個人維基與作品入口。記錄願意公開的作品、專案、興趣與旅行。私人筆記不會出現在這裡。筳筳來自台灣。這不是履歷的終點，而是會持續更新的公開檔案。這個網站 htw0702.com 本身也是一件作品，主要語言是繁體中文，並提供英文與日文。"
+      "updated": "2026-09-25",
+      "body": "王顥筳（筳筳，Wang Hao Ting）。台灣。這個頁面是公開維基。內容以 Notion 中 Publish 為 true、Visibility 為 public 的紀錄為準。私人筆記不會出現在這裡。網站 htw0702.com 提供繁體中文、英文與日文。"
     },
     {
       "locale": "en",
       "kind": "wiki",
       "name": "Personal Wiki｜About Ting Ting",
       "slug": "about",
-      "updated": "2026-09-12",
-      "body": "This is Wang Hao Ting’s public personal wiki and portfolio hub: projects, interests, and travel that are meant to be public. Private notes stay off this page. Ting Ting is from Taiwan. This is a living public archive, not a finished résumé. The site htw0702.com is itself a work, in Traditional Chinese first, with English and Japanese."
+      "updated": "2026-09-25",
+      "body": "Wang Hao Ting (筳筳). Taiwan. This page is the public wiki. Entries appear only when Notion marks them Publish and Visibility public. Private notes stay off this page. htw0702.com is available in Traditional Chinese, English, and Japanese."
     },
     {
       "locale": "jp",
       "kind": "wiki",
       "name": "個人Wiki｜筳筳について",
       "slug": "about",
-      "updated": "2026-09-12",
-      "body": "ここは王顥筳（筳筳）の公開個人Wikiとポートフォリオです。公開する作品、プロジェクト、興味、旅を記録します。非公開のメモは載せません。筳筳は台湾出身です。完成した履歴書ではなく、更新されていく公開アーカイブです。このサイト htw0702.com 自体が作品で、繁体字中国語が中心、英語と日本語もあります。"
-    },
-    {
-      "locale": "tw",
-      "kind": "blog",
-      "name": "手記｜Hello",
-      "slug": "hello",
-      "updated": "2026-09-12",
-      "body": "歡迎。這裡會放生活、科技、學習、旅行、作品，以及偶爾突然冒出的想法。沒有寫下來的，就不會出現在這一頁。希望它不是一個冷冰冰的網站，而是每次回來都可能有一點變化的地方。"
-    },
-    {
-      "locale": "en",
-      "kind": "blog",
-      "name": "Journal｜Hello",
-      "slug": "hello",
-      "updated": "2026-09-12",
-      "body": "Hello. I write here about life, technology, learning, travel, projects, and the occasional stray idea. If it is not written down, it is not on this page. I want the site to feel alive when you come back, not like a static brochure."
-    },
-    {
-      "locale": "jp",
-      "kind": "blog",
-      "name": "手記｜Hello",
-      "slug": "hello",
-      "updated": "2026-09-12",
-      "body": "こんにちは。暮らし、技術、学び、旅、作品、そして時々浮かぶ考えをここに残します。書いていないことは、このページには出ません。冷たい案内ではなく、戻ってくるたびに少し変化している場所にしたいです。"
-    },
-    {
-      "locale": "tw",
-      "kind": "world",
-      "name": "未來的計畫｜可以走進去的世界",
-      "slug": "world",
       "updated": "2026-09-25",
-      "body": "這不是一個已經存在的地方，也沒有場景可以參觀。一個可以走進去的世界，是三個長期計畫之一。目前只有這個方向，沒有公開進度。請從計畫頁閱讀。"
-    },
-    {
-      "locale": "en",
-      "kind": "world",
-      "name": "A future plan｜A world you can step into",
-      "slug": "world",
-      "updated": "2026-09-25",
-      "body": "This is not a place that exists, and there is no scene to visit. A world you can step into is one of three long-term plans. There is a direction, and no public progress yet. Read it on the plans page."
-    },
-    {
-      "locale": "jp",
-      "kind": "world",
-      "name": "これからの計画｜歩いて入れる世界",
-      "slug": "world",
-      "updated": "2026-09-25",
-      "body": "これは、すでに存在する場所ではありません。見学できる場面もありません。歩いて入れる世界は三つの長期計画の一つです。いまあるのは方向だけで、公開できる進捗はありません。計画のページを見てください。"
+      "body": "王顥筳（筳筳、Wang Hao Ting）。台湾。このページは公開ウィキです。Notion で Publish が true、Visibility が public の記録だけを載せます。非公開のメモは出しません。htw0702.com は繁体字中国語、英語、日本語です。"
     },
     {
       "locale": "tw",
       "kind": "works",
       "name": "htw0702.com｜個人網站",
       "slug": "htw0702-com",
-      "updated": "2026-09-12",
-      "body": "公開作品放在這一頁。現在收錄的是 htw0702.com，筳筳的個人網站：繁體中文為主，並提供英文與日文。"
+      "updated": "2026-09-25",
+      "body": "公開作品放在這一頁。現在收錄的是 htw0702.com，王顥筳的個人網站：繁體中文為主，並提供英文與日文。"
     },
     {
       "locale": "en",
       "kind": "works",
       "name": "htw0702.com｜Personal site",
       "slug": "htw0702-com",
-      "updated": "2026-09-12",
-      "body": "Public works live on this page. Listed now is htw0702.com, Ting Ting’s personal website: Traditional Chinese first, with English and Japanese."
+      "updated": "2026-09-25",
+      "body": "Public works live on this page. Listed now is htw0702.com, Wang Hao Ting’s personal website: Traditional Chinese first, with English and Japanese."
     },
     {
       "locale": "jp",
       "kind": "works",
       "name": "htw0702.com｜個人サイト",
       "slug": "htw0702-com",
-      "updated": "2026-09-12",
-      "body": "公開作品はこのページに置きます。いま収録しているのは htw0702.com、筳筳の個人サイトです。繁体字中国語が中心で、英語と日本語もあります。"
+      "updated": "2026-09-25",
+      "body": "公開作品はこのページに置きます。いま収録しているのは htw0702.com、王顥筳の個人サイトです。繁体字中国語が中心で、英語と日本語もあります。"
     },
     {
       "locale": "tw",
       "kind": "store",
       "name": "小賣所｜個人周邊與支持",
       "slug": "store",
-      "updated": "2026-09-12",
-      "body": "小賣所是個人周邊與支持的入口。公開的品項若有設定，會列在這裡；付款連結只在設定好之後出現。私鑰、付款憑證與登入資訊不會出現在這個網站上。"
+      "updated": "2026-09-25",
+      "body": "小賣所是個人周邊與支持的入口。公開品項若有設定，會列在這裡；付款連結只在設定好之後出現。私鑰、付款憑證與登入資訊不會出現在這個網站上。"
     },
     {
       "locale": "en",
       "kind": "store",
       "name": "Shop｜Goods and support",
       "slug": "store",
-      "updated": "2026-09-12",
+      "updated": "2026-09-25",
       "body": "This is the door for personal goods and support. Public items appear here only after they are configured; payment links appear only after they are configured too. Private keys, payment credentials and sign-in secrets are never shown on this website."
     },
     {
@@ -117,80 +69,8 @@
       "kind": "store",
       "name": "売店｜品とサポート",
       "slug": "store",
-      "updated": "2026-09-12",
+      "updated": "2026-09-25",
       "body": "売店は、個人の品とサポートの入口です。公開する品は設定してから並べ、決済リンクも設定が済んでから表示します。秘密鍵、決済情報、ログイン情報はこのサイトに出しません。"
-    },
-    {
-      "locale": "tw",
-      "kind": "plan-animation",
-      "name": "一部自己的動畫電影",
-      "slug": "animation",
-      "updated": "2026-09-12",
-      "body": "希望有一天完成一部屬於自己的動畫電影，用光、風景、人物與音樂，講一個值得被記住的故事。這裡只展示公開進度與作品，不公開內部學習筆記。"
-    },
-    {
-      "locale": "en",
-      "kind": "plan-animation",
-      "name": "My Own Animated Film",
-      "slug": "animation",
-      "updated": "2026-09-12",
-      "body": "One day I want to create my own animated film — using light, landscapes, characters and music to tell a story worth remembering. Only public milestones and works appear here."
-    },
-    {
-      "locale": "jp",
-      "kind": "plan-animation",
-      "name": "自分のアニメーション映画",
-      "slug": "animation",
-      "updated": "2026-09-12",
-      "body": "いつか自分だけのアニメーション映画を完成させたい。光、風景、人物、音楽で、覚えておきたくなる物語を描きます。ここには公開できる作品と進捗だけを載せます。"
-    },
-    {
-      "locale": "tw",
-      "kind": "plan-ai",
-      "name": "一位自己的 AI 助理",
-      "slug": "ai",
-      "updated": "2026-09-12",
-      "body": "希望打造一位真正可靠的個人 AI 助理：能理解文字與語音、查找資料、協助工作與生活，並尊重權限、隱私與安全。公開頁只展示作品與能力進度。"
-    },
-    {
-      "locale": "en",
-      "kind": "plan-ai",
-      "name": "My Own AI Assistant",
-      "slug": "ai",
-      "updated": "2026-09-12",
-      "body": "I want to build a genuinely useful personal AI assistant that can understand text and voice, research information, help with work and daily life, and respect permissions, privacy and security."
-    },
-    {
-      "locale": "jp",
-      "kind": "plan-ai",
-      "name": "自分だけのAIアシスタント",
-      "slug": "ai",
-      "updated": "2026-09-12",
-      "body": "文字と音声を理解し、情報を調べ、仕事や日常を助けながら、権限・プライバシー・安全を大切にする、本当に頼れる個人AIアシスタントを作りたいです。"
-    },
-    {
-      "locale": "tw",
-      "kind": "plan-metaverse",
-      "name": "一個可以走進去的世界",
-      "slug": "metaverse",
-      "updated": "2026-09-25",
-      "body": "希望將來做出一個真的能走進去、探索、相遇與創作的虛擬世界。它現在還不存在。這一頁只放公開的方向，不把還沒有的地方寫成已經完成的場景。"
-    },
-    {
-      "locale": "en",
-      "kind": "plan-metaverse",
-      "name": "A World You Can Step Into",
-      "slug": "metaverse",
-      "updated": "2026-09-25",
-      "body": "I hope to one day build a virtual world people can step into, explore, meet and create in. It does not exist yet. This page only records the public direction."
-    },
-    {
-      "locale": "jp",
-      "kind": "plan-metaverse",
-      "name": "歩いて入れる世界",
-      "slug": "metaverse",
-      "updated": "2026-09-25",
-      "body": "いつか、本当に中へ入り、探索し、出会い、創作できる仮想世界を作りたいです。いまは存在しません。このページには、公開している方向だけを書きます。"
     },
     {
       "locale": "tw",
@@ -198,7 +78,7 @@
       "name": "現在公開的",
       "slug": "now",
       "updated": "2026-09-25",
-      "body": "現在，公開的是這個網站本身。繁體中文是主要語言，英文與日文也可以讀。手記、作品、維基、社群、小賣所、計畫、搜尋與 League of Legends 都從首頁走得到。"
+      "body": "現在公開的是這個網站。繁體中文是主要語言，英文與日文也可以讀。手記、作品、維基、社群、小賣所與搜尋都從首頁走得到。尚未在 Notion 發布的內容不會出現。"
     },
     {
       "locale": "en",
@@ -206,7 +86,7 @@
       "name": "Public right now",
       "slug": "now",
       "updated": "2026-09-25",
-      "body": "What is public right now is this website. Traditional Chinese is the primary language, with English and Japanese alongside it. The journal, works, wiki, social channels, shop, plans, search and League of Legends are all reached from the home page."
+      "body": "What is public right now is this website. Traditional Chinese is the primary language, with English and Japanese alongside it. The journal, works, wiki, social channels, shop, and search are reached from the home page. Anything not published in Notion stays off the site."
     },
     {
       "locale": "jp",
@@ -214,7 +94,7 @@
       "name": "いま公開していること",
       "slug": "now",
       "updated": "2026-09-25",
-      "body": "いま公開しているのは、このサイトそのものです。繁体字中国語が主な言語で、英語と日本語でも読めます。手記、作品、ウィキ、ソーシャル、売店、計画、検索、League of Legends はホームから行けます。"
+      "body": "いま公開しているのは、このサイトそのものです。繁体字中国語が主な言語で、英語と日本語でも読めます。手記、作品、ウィキ、ソーシャル、売店、検索はホームから行けます。Notion で公開していない内容は出ません。"
     }
   ]
 }
