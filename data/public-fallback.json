@@ -6,15 +6,15 @@
       "name": "個人維基｜關於筳筳",
       "slug": "about",
       "updated": "2026-09-12",
-      "body": "這裡是王顥筳（筳筳）的個人維基與作品入口。記錄公開作品、專案、興趣、旅行，以及正在建立的個人世界。這不是履歷的終點，而是一個會持續長大的公開檔案。"
+      "body": "這裡是王顥筳（筳筳）的個人維基與作品入口。記錄願意公開的作品、專案、興趣與旅行。私人筆記不會出現在這裡。筳筳來自台灣。這不是履歷的終點，而是會持續更新的公開檔案。這個網站 htw0702.com 本身也是一件作品，主要語言是繁體中文，並提供英文與日文。"
     },
     {
       "locale": "en",
       "kind": "wiki",
-      "name": "Personal Wiki｜About Ting",
+      "name": "Personal Wiki｜About Ting Ting",
       "slug": "about",
       "updated": "2026-09-12",
-      "body": "This is Wang Hao Ting’s public personal wiki and portfolio hub: a living archive of projects, interests, travel, and a personal world that keeps evolving."
+      "body": "This is Wang Hao Ting’s public personal wiki and portfolio hub: projects, interests, and travel that are meant to be public. Private notes stay off this page. Ting Ting is from Taiwan. This is a living public archive, not a finished résumé. The site htw0702.com is itself a work, in Traditional Chinese first, with English and Japanese."
     },
     {
       "locale": "jp",
@@ -22,55 +22,55 @@
       "name": "個人Wiki｜筳筳について",
       "slug": "about",
       "updated": "2026-09-12",
-      "body": "ここは王顥筳（筳筳）の公開個人Wikiとポートフォリオです。作品、プロジェクト、興味、旅、そして少しずつ育っていく自分だけの世界を記録します。"
+      "body": "ここは王顥筳（筳筳）の公開個人Wikiとポートフォリオです。公開する作品、プロジェクト、興味、旅を記録します。非公開のメモは載せません。筳筳は台湾出身です。完成した履歴書ではなく、更新されていく公開アーカイブです。このサイト htw0702.com 自体が作品で、繁体字中国語が中心、英語と日本語もあります。"
     },
     {
       "locale": "tw",
       "kind": "blog",
-      "name": "沿岸手記｜Hello World",
+      "name": "手記｜Hello",
       "slug": "hello",
       "updated": "2026-09-12",
-      "body": "歡迎來到我的個人世界。這裡會放生活、科技、學習、旅行、作品與偶爾突然冒出的奇怪想法。希望它不是一個冷冰冰的網站，而是一個每次回來都會有些變化的地方。"
+      "body": "歡迎。這裡會放生活、科技、學習、旅行、作品，以及偶爾突然冒出的想法。沒有寫下來的，就不會出現在這一頁。希望它不是一個冷冰冰的網站，而是每次回來都可能有一點變化的地方。"
     },
     {
       "locale": "en",
       "kind": "blog",
-      "name": "Coastal Notes｜Hello World",
+      "name": "Journal｜Hello",
       "slug": "hello",
       "updated": "2026-09-12",
-      "body": "Welcome to my personal world. I write about life, technology, learning, travel, projects, and the occasional impossible idea. I want this site to feel alive, not static."
+      "body": "Hello. I write here about life, technology, learning, travel, projects, and the occasional stray idea. If it is not written down, it is not on this page. I want the site to feel alive when you come back, not like a static brochure."
     },
     {
       "locale": "jp",
       "kind": "blog",
-      "name": "海辺の手記｜Hello World",
+      "name": "手記｜Hello",
       "slug": "hello",
       "updated": "2026-09-12",
-      "body": "私の個人世界へようこそ。生活、技術、学び、旅、作品、そして時々突然生まれる不思議なアイデアをここに残していきます。静かなページではなく、帰ってくるたび少し変化する場所にしたいです。"
+      "body": "こんにちは。暮らし、技術、学び、旅、作品、そして時々浮かぶ考えをここに残します。書いていないことは、このページには出ません。冷たい案内ではなく、戻ってくるたびに少し変化している場所にしたいです。"
     },
     {
       "locale": "tw",
       "kind": "world",
-      "name": "暮霞世界｜台日架空世界",
+      "name": "未來的計畫｜可以走進去的世界",
       "slug": "world",
-      "updated": "2026-09-12",
-      "body": "一個混合台灣生活感、日本祭典、海岸、乾淨河川、山城、電車、夜市與花火的架空世界。它不複製任何真實城市，而是把我喜歡的元素重新組成一個沒有戰火、可以安心相遇與探索的地方。"
+      "updated": "2026-09-25",
+      "body": "這不是一個已經存在的地方，也沒有場景可以參觀。一個可以走進去的世界，是三個長期計畫之一。目前只有這個方向，沒有公開進度。請從計畫頁閱讀。"
     },
     {
       "locale": "en",
       "kind": "world",
-      "name": "Twilight World｜A Taiwan–Japan Imaginary World",
+      "name": "A future plan｜A world you can step into",
       "slug": "world",
-      "updated": "2026-09-12",
-      "body": "An imaginary world blending Taiwanese everyday warmth with Japanese festivals, coastlines, clear rivers, mountain towns, trains, night markets and fireworks — a peaceful place built from the parts of the world I love."
+      "updated": "2026-09-25",
+      "body": "This is not a place that exists, and there is no scene to visit. A world you can step into is one of three long-term plans. There is a direction, and no public progress yet. Read it on the plans page."
     },
     {
       "locale": "jp",
       "kind": "world",
-      "name": "暮霞世界｜台湾×日本の架空世界",
+      "name": "これからの計画｜歩いて入れる世界",
       "slug": "world",
-      "updated": "2026-09-12",
-      "body": "台湾の日常の温かさ、日本の祭り、海岸、澄んだ川、山の町、電車、夜市、花火を混ぜ合わせた架空世界。現実の都市をコピーするのではなく、好きな風景を組み直して、戦火のない世界を描きます。"
+      "updated": "2026-09-25",
+      "body": "これは、すでに存在する場所ではありません。見学できる場面もありません。歩いて入れる世界は三つの長期計画の一つです。いまあるのは方向だけで、公開できる進捗はありません。計画のページを見てください。"
     },
     {
       "locale": "tw",
@@ -78,7 +78,7 @@
       "name": "htw0702.com｜個人網站",
       "slug": "htw0702-com",
       "updated": "2026-09-12",
-      "body": "公開作品放在這一頁。現在收錄的是 htw0702.com，筳筳的個人網站：繁體中文為主，並提供英文與日文。頁面上的海岸、夜市、祭典與花火，是我把自己喜歡的風景做成一座會動的世界。"
+      "body": "公開作品放在這一頁。現在收錄的是 htw0702.com，筳筳的個人網站：繁體中文為主，並提供英文與日文。"
     },
     {
       "locale": "en",
@@ -86,7 +86,7 @@
       "name": "htw0702.com｜Personal site",
       "slug": "htw0702-com",
       "updated": "2026-09-12",
-      "body": "Public works live on this page. Listed now is htw0702.com, Ting Ting’s personal website: Traditional Chinese first, with English and Japanese. The coast, night market, festivals and fireworks are a moving world made from landscapes I like."
+      "body": "Public works live on this page. Listed now is htw0702.com, Ting Ting’s personal website: Traditional Chinese first, with English and Japanese."
     },
     {
       "locale": "jp",
@@ -94,7 +94,7 @@
       "name": "htw0702.com｜個人サイト",
       "slug": "htw0702-com",
       "updated": "2026-09-12",
-      "body": "公開作品はこのページに置きます。いま収録しているのは htw0702.com、筳筳の個人サイトです。繁体字中国語が中心で、英語と日本語もあります。海岸、夜市、祭り、花火は、好きな風景を動かして作った世界です。"
+      "body": "公開作品はこのページに置きます。いま収録しているのは htw0702.com、筳筳の個人サイトです。繁体字中国語が中心で、英語と日本語もあります。"
     },
     {
       "locale": "tw",
@@ -102,7 +102,7 @@
       "name": "小賣所｜個人周邊與支持",
       "slug": "store",
       "updated": "2026-09-12",
-      "body": "小賣所是個人周邊與支持的入口。公開的品項會列在這裡；付款連結只在設定好之後出現。私鑰、付款憑證與登入資訊不會出現在這個網站上。"
+      "body": "小賣所是個人周邊與支持的入口。公開的品項若有設定，會列在這裡；付款連結只在設定好之後出現。私鑰、付款憑證與登入資訊不會出現在這個網站上。"
     },
     {
       "locale": "en",
@@ -110,7 +110,7 @@
       "name": "Shop｜Goods and support",
       "slug": "store",
       "updated": "2026-09-12",
-      "body": "This is the door for personal goods and support. Public items are listed here; payment links appear only after they are configured. Private keys, payment credentials and sign-in secrets are never shown on this website."
+      "body": "This is the door for personal goods and support. Public items appear here only after they are configured; payment links appear only after they are configured too. Private keys, payment credentials and sign-in secrets are never shown on this website."
     },
     {
       "locale": "jp",
@@ -118,7 +118,7 @@
       "name": "売店｜品とサポート",
       "slug": "store",
       "updated": "2026-09-12",
-      "body": "売店は、個人の品とサポートの入口です。公開された品はここに並びます。決済リンクは、設定が済んでから表示します。秘密鍵、決済情報、ログイン情報はこのサイトに出しません。"
+      "body": "売店は、個人の品とサポートの入口です。公開する品は設定してから並べ、決済リンクも設定が済んでから表示します。秘密鍵、決済情報、ログイン情報はこのサイトに出しません。"
     },
     {
       "locale": "tw",
@@ -126,7 +126,7 @@
       "name": "一部自己的動畫電影",
       "slug": "animation",
       "updated": "2026-09-12",
-      "body": "希望有一天完成一部屬於自己的動畫電影，用光、風景、人物與音樂，講一個值得被記住、相信和平與相遇的故事。這裡只展示公開進度與作品，不公開內部學習筆記。"
+      "body": "希望有一天完成一部屬於自己的動畫電影，用光、風景、人物與音樂，講一個值得被記住的故事。這裡只展示公開進度與作品，不公開內部學習筆記。"
     },
     {
       "locale": "en",
@@ -134,7 +134,7 @@
       "name": "My Own Animated Film",
       "slug": "animation",
       "updated": "2026-09-12",
-      "body": "One day I want to create my own animated film — using light, landscapes, characters and music to tell a story worth remembering, about peace and human connection. Only public milestones and works appear here."
+      "body": "One day I want to create my own animated film — using light, landscapes, characters and music to tell a story worth remembering. Only public milestones and works appear here."
     },
     {
       "locale": "jp",
@@ -142,7 +142,7 @@
       "name": "自分のアニメーション映画",
       "slug": "animation",
       "updated": "2026-09-12",
-      "body": "いつか自分だけのアニメーション映画を完成させたい。光、風景、人物、音楽で、平和と出会いを信じる物語を描きます。ここには公開できる作品と進捗だけを載せます。"
+      "body": "いつか自分だけのアニメーション映画を完成させたい。光、風景、人物、音楽で、覚えておきたくなる物語を描きます。ここには公開できる作品と進捗だけを載せます。"
     },
     {
       "locale": "tw",
@@ -173,48 +173,48 @@
       "kind": "plan-metaverse",
       "name": "一個可以走進去的世界",
       "slug": "metaverse",
-      "updated": "2026-09-12",
-      "body": "希望打造一個真的能走進去、探索、相遇與創作的虛擬世界。它會延續網站的台日架空世界觀，但公開頁只展示概念、作品與里程碑。"
+      "updated": "2026-09-25",
+      "body": "希望將來做出一個真的能走進去、探索、相遇與創作的虛擬世界。它現在還不存在。這一頁只放公開的方向，不把還沒有的地方寫成已經完成的場景。"
     },
     {
       "locale": "en",
       "kind": "plan-metaverse",
       "name": "A World You Can Step Into",
       "slug": "metaverse",
-      "updated": "2026-09-12",
-      "body": "I want to build a virtual world people can truly step into, explore, meet and create in — extending the Taiwan–Japan-inspired imaginary world of this website."
+      "updated": "2026-09-25",
+      "body": "I hope to one day build a virtual world people can step into, explore, meet and create in. It does not exist yet. This page only records the public direction."
     },
     {
       "locale": "jp",
       "kind": "plan-metaverse",
       "name": "歩いて入れる世界",
       "slug": "metaverse",
-      "updated": "2026-09-12",
-      "body": "本当に中へ入り、探索し、出会い、創作できる仮想世界を作りたいです。このサイトの台湾×日本の架空世界観を、そのまま広げていきます。"
+      "updated": "2026-09-25",
+      "body": "いつか、本当に中へ入り、探索し、出会い、創作できる仮想世界を作りたいです。いまは存在しません。このページには、公開している方向だけを書きます。"
     },
     {
       "locale": "tw",
       "kind": "now",
       "name": "現在公開的",
       "slug": "now",
-      "updated": "2026-09-12",
-      "body": "現在，公開的是這座網站本身。繁體中文是主要語言，英文與日文留在同一座世界裡。手記、作品、維基與社群都從首頁走得到。"
+      "updated": "2026-09-25",
+      "body": "現在，公開的是這個網站本身。繁體中文是主要語言，英文與日文也可以讀。手記、作品、維基、社群、小賣所、計畫、搜尋與 League of Legends 都從首頁走得到。"
     },
     {
       "locale": "en",
       "kind": "now",
       "name": "Public right now",
       "slug": "now",
-      "updated": "2026-09-12",
-      "body": "What is public right now is this website. Traditional Chinese is the primary language, with English and Japanese in the same world. The journal, works, wiki and social channels are all reached from the home page."
+      "updated": "2026-09-25",
+      "body": "What is public right now is this website. Traditional Chinese is the primary language, with English and Japanese alongside it. The journal, works, wiki, social channels, shop, plans, search and League of Legends are all reached from the home page."
     },
     {
       "locale": "jp",
       "kind": "now",
       "name": "いま公開していること",
       "slug": "now",
-      "updated": "2026-09-12",
-      "body": "いま公開しているのは、このサイトそのものです。繁体字中国語が主な言語で、英語と日本語も同じ世界にあります。手記、作品、ウィキ、ソーシャルはホームから行けます。"
+      "updated": "2026-09-25",
+      "body": "いま公開しているのは、このサイトそのものです。繁体字中国語が主な言語で、英語と日本語でも読めます。手記、作品、ウィキ、ソーシャル、売店、計画、検索、League of Legends はホームから行けます。"
     }
   ]
 }
